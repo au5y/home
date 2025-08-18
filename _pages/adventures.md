@@ -1,0 +1,219 @@
+---
+title: "Adventures"
+permalink: /adventures/
+layout: single
+---
+
+Here are some of the adventures I'm on.
+
+---
+
+### All 50 States
+
+- [ ] Alabama
+- [ ] Alaska
+- [x] Arizona
+- [ ] Arkansas
+- [x] California
+- [x] Colorado
+- [x] Connecticut
+- [x] Delaware
+- [x] Florida
+- [x] Georgia
+- [ ] Hawaii
+- [x] Idaho
+- [x] Illinois
+- [x] Indiana
+- [x] Iowa
+- [ ] Kansas
+- [x] Kentucky
+- [x] Louisiana
+- [x] Maine
+- [x] Maryland
+- [x] Massachusetts
+- [x] Michigan
+- [ ] Minnesota
+- [ ] Mississippi
+- [x] Missouri
+- [x] Montana
+- [x] Nebraska
+- [x] Nevada
+- [x] New Hampshire
+- [x] New Jersey
+- [ ] New Mexico
+- [x] New York
+- [ ] North Carolina
+- [ ] North Dakota
+- [x] Ohio
+- [ ] Oklahoma
+- [x] Oregon
+- [x] Pennsylvania
+- [x] Rhode Island
+- [x] South Carolina
+- [ ] South Dakota
+- [ ] Tennessee
+- [x] Texas
+- [x] Utah
+- [x] Vermont
+- [x] Virginia
+- [x] Washington
+- [ ] West Virginia
+- [ ] Wisconsin
+- [x] Wyoming
+
+---
+
+### MLB Ballparks
+
+- [ ] American Family Field (Milwaukee Brewers)
+- [ ] Angel Stadium (Los Angeles Angels)
+- [x] Busch Stadium (St. Louis Cardinals)
+- [ ] Chase Field (Arizona Diamondbacks)
+- [x] Citi Field (New York Mets)
+- [x] Citizens Bank Park (Philadelphia Phillies)
+- [ ] Comerica Park (Detroit Tigers)
+- [x] Coors Field (Colorado Rockies)
+- [ ] Daikin Park (Houston Astros)
+- [ ] Dodger Stadium (Los Angeles Dodgers)
+- [x] Fenway Park (Boston Red Sox)
+- [ ] Globe Life Field (Texas Rangers)
+- [x] Great American Ball Park (Cincinnati Reds)
+- [x] Kauffman Stadium (Kansas City Royals)
+- [x] LoanDepot Park (Miami Marlins)
+- [x] Nationals Park (Washington Nationals)
+- [x] Oracle Park (San Francisco Giants)
+- [x] Oriole Park at Camden Yards (Baltimore Orioles)
+- [ ] Petco Park (San Diego Padres)
+- [ ] PNC Park (Pittsburgh Pirates)
+- [ ] Progressive Field (Cleveland Guardians)
+- [ ] Rate Field (Chicago White Sox)
+- [ ] Rogers Centre (Toronto Blue Jays)
+- [ ] Sutter Health Park (Athletics)
+- [ ] T-Mobile Park (Seattle Mariners)
+- [ ] Target Field (Minnesota Twins)
+- [ ] Tropicana Field (Tampa Bay Rays)
+- [x] Steinbrenner Field - Temporary Location (Tampa Bay Rays)
+- [x] Truist Park (Atlanta Braves)
+- [ ] Wrigley Field (Chicago Cubs)
+- [x] Yankee Stadium (New York Yankees)
+
+---
+
+### U.S. National Parks
+
+- [ ] Acadia, Maine
+- [ ] Arches, Utah
+- [ ] Badlands, South Dakota
+- [ ] Big Bend, Texas
+- [x] Biscayne, Florida
+- [ ] Black Canyon of the Gunnison, Colorado
+- [ ] Bryce Canyon, Utah
+- [ ] Canyonlands, Utah
+- [ ] Capitol Reef, Utah
+- [ ] Carlsbad Caverns, New Mexico
+- [ ] Channel Islands, California
+- [ ] Congaree, South Carolina
+- [x] Crater Lake, Oregon
+- [ ] Cuyahoga Valley, Ohio
+- [x] Death Valley, California, Nevada
+- [ ] Denali, Alaska
+- [ ] Dry Tortugas, Florida
+- [x] Everglades, Florida
+- [ ] Gates of the Arctic, Alaska
+- [x] Gateway Arch, Missouri
+- [x] Glacier, Montana
+- [ ] Glacier Bay, Alaska
+- [x] Grand Canyon, Arizona
+- [x] Grand Teton, Wyoming
+- [x] Great Basin, Nevada
+- [ ] Great Sand Dunes, Colorado
+- [ ] Great Smoky Mountains, North Carolina, Tennessee
+- [ ] Guadalupe Mountains, Texas
+- [ ] Haleakalā, Hawaii
+- [ ] Hawaiʻi Volcanoes, Hawaii
+- [ ] Hot Springs, Arkansas
+- [ ] Indiana Dunes, Indiana
+- [ ] Isle Royale, Michigan
+- [ ] Joshua Tree, California
+- [ ] Katmai, Alaska
+- [ ] Kenai Fjords, Alaska
+- [ ] Kings Canyon, California
+- [ ] Kobuk Valley, Alaska
+- [ ] Lake Clark, Alaska
+- [ ] Lassen Volcanic, California
+- [ ] Mammoth Cave, Kentucky
+- [ ] Mesa Verde, Colorado
+- [ ] Mount Rainier, Washington
+- [ ] National Park of American Samoa, American Samoa
+- [ ] New River Gorge, West Virginia
+- [ ] North Cascades, Washington
+- [ ] Olympic, Washington
+- [ ] Petrified Forest, Arizona
+- [ ] Pinnacles, California
+- [x] Redwood, California
+- [ ] Rocky Mountain, Colorado
+- [ ] Saguaro, Arizona
+- [x] Sequoia, California
+- [ ] Shenandoah, Virginia
+- [ ] Theodore Roosevelt, North Dakota
+- [ ] Virgin Islands, U.S. Virgin Islands
+- [ ] Voyageurs, Minnesota
+- [ ] White Sands, New Mexico
+- [ ] Wind Cave, South Dakota
+- [ ] Wrangell–St. Elias, Alaska
+- [x] Yellowstone, Wyoming, Montana, Idaho
+- [x] Yosemite, California
+- [x] Zion, Utah
+
+---
+
+### New Hampshire 4000 Footers
+
+- [ ] Mount Washington
+- [ ] Mount Adams
+- [ ] Mount Jefferson
+- [ ] Mount Monroe
+- [ ] Mount Madison
+- [x] Mount Lafayette
+- [x] Mount Lincoln
+- [ ] South Twin Mountain
+- [ ] Carter Dome
+- [ ] Mount Moosilauke
+- [ ] Mount Eisenhower
+- [ ] North Twin Mountain
+- [ ] Mount Carrigain
+- [ ] Mount Bond
+- [ ] Middle Carter Mountain
+- [ ] West Bond
+- [x] Mount Garfield
+- [x] Mount Liberty
+- [ ] South Carter Mountain
+- [ ] Wildcat Mountain (A Peak)
+- [ ] Mount Hancock
+- [ ] South Kinsman Mountain
+- [ ] Mount Field
+- [ ] Mount Osceola
+- [x] Mount Flume
+- [ ] South Hancock
+- [ ] Mount Pierce
+- [x] North Kinsman Mountain
+- [ ] Mount Willey
+- [ ] Bondcliff
+- [ ] Zealand Mountain
+- [ ] North Tripyramid
+- [ ] Mount Cabot
+- [ ] East Osceola
+- [ ] Middle Tripyramid
+- [ ] Cannon Mountain
+- [ ] Mount Hale
+- [ ] Mount Jackson
+- [ ] Mount Tom
+- [ ] Wildcat D
+- [ ] Mount Moriah
+- [ ] Mount Passaconaway
+- [ ] Owl's Head
+- [ ] Galehead Mountain
+- [ ] Mount Whiteface
+- [ ] Mount Waumbek
+- [ ] Mount Isolation
+- [ ] Mount Tecumseh
