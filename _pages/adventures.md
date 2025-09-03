@@ -25,7 +25,7 @@ Here are some of the adventures I'm on.
 - [x] Illinois
 - [x] Indiana
 - [x] Iowa
-- [ ] Kansas
+- [x] Kansas
 - [x] Kentucky
 - [x] Louisiana
 - [x] Maine
@@ -58,7 +58,7 @@ Here are some of the adventures I'm on.
 - [x] Virginia
 - [x] Washington
 - [ ] West Virginia
-- [ ] Wisconsin
+- [x] Wisconsin
 - [x] Wyoming
 
 ---
