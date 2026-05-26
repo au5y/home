@@ -42,7 +42,7 @@ Here are some of the adventures I'm on.
 - [x] New Jersey
 - [ ] New Mexico
 - [x] New York
-- [ ] North Carolina
+- [x] North Carolina
 - [ ] North Dakota
 - [x] Ohio
 - [ ] Oklahoma
@@ -51,7 +51,7 @@ Here are some of the adventures I'm on.
 - [x] Rhode Island
 - [x] South Carolina
 - [ ] South Dakota
-- [ ] Tennessee
+- [x] Tennessee
 - [x] Texas
 - [x] Utah
 - [x] Vermont
@@ -104,7 +104,7 @@ Here are some of the adventures I'm on.
 - [ ] Acadia, Maine
 - [ ] Arches, Utah
 - [ ] Badlands, South Dakota
-- [ ] Big Bend, Texas
+- [x] Big Bend, Texas
 - [x] Biscayne, Florida
 - [ ] Black Canyon of the Gunnison, Colorado
 - [ ] Bryce Canyon, Utah
@@ -127,7 +127,7 @@ Here are some of the adventures I'm on.
 - [x] Grand Teton, Wyoming
 - [x] Great Basin, Nevada
 - [ ] Great Sand Dunes, Colorado
-- [ ] Great Smoky Mountains, North Carolina, Tennessee
+- [x] Great Smoky Mountains, North Carolina, Tennessee
 - [ ] Guadalupe Mountains, Texas
 - [ ] Haleakalā, Hawaii
 - [ ] Hawaiʻi Volcanoes, Hawaii
@@ -215,5 +215,5 @@ Here are some of the adventures I'm on.
 - [ ] Galehead Mountain
 - [ ] Mount Whiteface
 - [ ] Mount Waumbek
-- [ ] Mount Isolation
+- [x] Mount Isolation
 - [ ] Mount Tecumseh
