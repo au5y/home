@@ -210,10 +210,10 @@ Here are some of the adventures I'm on.
 - [ ] Mount Tom
 - [ ] Wildcat D
 - [ ] Mount Moriah
-- [ ] Mount Passaconaway
+- [x] Mount Passaconaway
 - [ ] Owl's Head
 - [ ] Galehead Mountain
-- [ ] Mount Whiteface
+- [x] Mount Whiteface
 - [ ] Mount Waumbek
 - [x] Mount Isolation
 - [ ] Mount Tecumseh
