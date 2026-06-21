@@ -2,17 +2,48 @@
 :root {
     --color-background: #1a2420;
     --color-text: #f4e4b8;
+    --font-serif: "Gelasio", serif;
+    --font-mono: "Atkinson Hyperlegible Mono", monospace;
+    --font-handwritten: "Shadows Into Light", cursive;
+    --font-sans-serif: "Inter", sans-serif;
 }
 
 body {
     background-color: var(--color-background);
+    line-height: 1.3;
+    font-size: 1rem;
 }
 
 h1 {
-    font-family: "Arial", sans-serif;
+    font-family: var(--font-serif);
+    color: var(--color-text);
+}
+
+.temp-tag {
+    font-family: var(--font-mono);
+    color: var(--color-text);
+}
+
+.comparison {
+    font-family: var(--font-sans-serif);
     color: var(--color-text);
 }
 
 *, *::before, *::after {
     box-sizing: border-box;
+}
+
+.shadows-into-light-regular {
+  font-family: "Shadows Into Light", cursive;
+  font-weight: 400;
+  font-style: normal;
+  color: var(--color-text)
+}
+
+.gelasio-regular {
+  font-family: "Gelasio", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  color: var(--color-text);
 }
