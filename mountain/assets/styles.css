@@ -1,32 +1,31 @@
 /* First stylesheet */
 :root {
-    --color-background: #1a2420;
+    --color-background: #22442a;
     --color-text: #f4e4b8;
     --font-serif: "Gelasio", serif;
     --font-mono: "Atkinson Hyperlegible Mono", monospace;
     --font-handwritten: "Shadows Into Light", cursive;
     --font-sans-serif: "Inter", sans-serif;
+    --card-background: #d8c399;
+    --card-text-color: #161c1b;
+    --card-border-color: #38251e;
+    --card-muted-number-color: #6f7977;
 }
 
 body {
     background-color: var(--color-background);
     line-height: 1.3;
     font-size: 1rem;
+    color: var(--color-text);
 }
 
 h1 {
     font-family: var(--font-serif);
-    color: var(--color-text);
 }
 
-.temp-tag {
-    font-family: var(--font-mono);
-    color: var(--color-text);
-}
-
-.comparison {
-    font-family: var(--font-sans-serif);
-    color: var(--color-text);
+h2 {
+    font-family: var(--font-serif);
+    font-style: italic;
 }
 
 *, *::before, *::after {
@@ -46,4 +45,56 @@ h1 {
   font-weight: 400;
   font-style: normal;
   color: var(--color-text);
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 8px;
+}
+
+.card {
+    background-color: var(--card-background);
+    color: var(--card-text-color);
+    padding: 16px;
+    border: 4px solid var(--card-border-color);
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.card-tbd {
+    border: 4px dashed var(--card-border-color);
+}
+
+.card-number {
+    font-family: var(--font-mono);
+    color: var(--card-muted-number-color);
+    display: inline-block;
+    font-size: 0.7rem;
+}
+
+.tech-list {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--card-muted-number-color);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 2px 8px;
+      margin: 0;
+  }
+
+.tech-list dt {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.tech-list dd {
+    margin: 0;
+}
+
+.card-description {
+    font-family: var(--font-handwritten);
+    font-size: 0.9rem;
 }

@@ -30,8 +30,8 @@
 
 ### HTML structure
 
-- [ ] **Step 1** — Create a container element (e.g. `<div class="card-grid">`) to hold all three cards
-- [ ] **Step 2** — Inside it, create three card elements. Each card needs:
+- [x] **Step 1** — Create a container element (e.g. `<div class="card-grid">`) to hold all three cards
+- [x] **Step 2** — Inside it, create three card elements. Each card needs:
   - A number label (`01`, `02`, `03`) — use a `<span>` or `<p>` with a class like `.card-number`
   - A game title in a heading tag — which level makes semantic sense here? (Hint: `<h1>` is already used)
   - A one-sentence description in a `<p>`
@@ -39,16 +39,16 @@
 
 ### CSS layout
 
-- [ ] **Step 3** — Give `.card-grid` a `display: grid` and `grid-template-columns` using `repeat()`
+- [x] **Step 3** — Give `.card-grid` a `display: grid` and `grid-template-columns` using `repeat()`
   - Target: 2 columns on wide screens. Don't hardcode pixel widths — use `1fr` units.
-- [ ] **Step 4** — Add a `gap` between cards. It must be a multiple of 8 (e.g. `16px`, `24px`, `32px`)
+- [x] **Step 4** — Add a `gap` between cards. It must be a multiple of 8 (e.g. `16px`, `24px`, `32px`)
 
 ### Card styling
 
-- [ ] **Step 5** — Give each card internal padding. Use multiples of 8 only.
-- [ ] **Step 6** — Add a border to each card using a new `--color-border` custom property
-- [ ] **Step 7** — Set `border-radius` to 0, 2px, or 3px max — sharp corners only
-- [ ] **Step 8** — No hardcoded colors anywhere. Every color must reference a custom property.
+- [x] **Step 5** — Give each card internal padding. Use multiples of 8 only.
+- [x] **Step 6** — Add a border to each card using a new `--color-border` custom property
+- [x] **Step 7** — Set `border-radius` to 0, 2px, or 3px max — sharp corners only
+- [x] **Step 8** — No hardcoded colors anywhere. Every color must reference a custom property.
 
 ### Typography hierarchy
 
