@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <meta name="theme-color" content="#1a2420"/>
 <title>Austin Miller — the climb</title>
+<link rel="icon" href="assets/favicon/favicon.ico"/>
 <link rel="stylesheet" href="css/site.css"/>
 </head>
 <body>
@@ -168,8 +169,8 @@
 <header class="nav-strip">
   <span class="logo">Austin Miller</span>
   <nav class="links">
-    <a href="experience.html">resume</a>
-    <a href="portfolio.html">projects</a>
+    <a href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true">resume</a>
+    <a href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true">projects</a>
     <a href="#summit">contact</a>
     <a href="canvas.html" style="opacity:0.55;">↗ explorations</a>
   </nav>
@@ -211,7 +212,7 @@
         Draper's mission solving important national challenges.</p>
       <p class="small">Before Draper: MathWorks &amp; 101edu. On the side:
         Officer in the US Army Reserves (S-3, 325th MI BN).</p>
-      <a class="btn" href="experience.html">full resume</a>
+      <a class="btn" href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true">full resume</a>
     </div>
   </section>
 
@@ -225,16 +226,16 @@
       <p>A small, growing garden of personal projects. Card games today;
         who knows tomorrow.</p>
       <div class="proj-tiles">
-        <a class="ptile" href="portfolio.html">
+        <a class="ptile" href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true">
           <div class="ttl">Spite &amp; Malice</div>
           <div class="desc">a digital take on the classic two-player card game</div>
         </a>
-        <a class="ptile" href="portfolio.html">
+        <a class="ptile" href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true">
           <div class="ttl">5 Clowns</div>
           <div class="desc">party-friendly card game · wild rounds, weirder rules</div>
         </a>
       </div>
-      <a class="btn" href="portfolio.html">open the pile</a>
+      <a class="btn" href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true">open the pile</a>
     </div>
   </section>
 
@@ -243,14 +244,11 @@
     <div class="card" data-card style="max-width:520px;">
       <div class="tape alt"></div>
       <div class="kicker"><span class="marker">marker 03 · 5,600 ft</span><span>50 states</span></div>
-      <h2>32 of 50 states.</h2>
+      <h2 id="statesCount">— of 50 states.</h2>
       <div class="sub">still missing the upper plains &amp; the islands</div>
-      <div class="pct"><div class="bar"><i style="width:64%"></i></div><div class="num">64%</div></div>
+      <div class="pct" id="statesPct"><div class="bar"><i style="width:0%"></i></div><div class="num">—%</div></div>
       <div class="us-map" id="usMap"></div>
-      <p class="small" style="margin-top:14px;">Still on the list:
-        <strong>Alaska</strong>, <strong>Hawaii</strong>, Minnesota, Mississippi,
-        North &amp; South Dakota, Oklahoma, Tennessee, North Carolina,
-        New Mexico, West Virginia, Arkansas, Alabama.</p>
+      <p class="small" style="margin-top:14px;" id="statesRemaining"></p>
     </div>
   </section>
 
@@ -259,9 +257,9 @@
     <div class="card" data-card style="max-width:540px;">
       <div class="pin red"></div>
       <div class="kicker"><span class="marker">marker 04 · 8,800 ft</span><span>peanuts &amp; crackerjacks</span></div>
-      <h2>13 of 30 ballparks.</h2>
+      <h2 id="ballparksCount">— of — ballparks.</h2>
       <div class="sub">there's no place like Fenway at golden hour</div>
-      <div class="pct"><div class="bar"><i style="width:43%"></i></div><div class="num">43%</div></div>
+      <div class="pct" id="ballparksPct"><div class="bar"><i style="width:0%"></i></div><div class="num">—%</div></div>
       <div class="ballparks-list" id="ballparksList"></div>
       <p class="small" style="margin-top:12px;">Next up: Wrigley — it's been
         on the list for years. Looking at you, Cubs schedule.</p>
@@ -274,9 +272,9 @@
       <div class="tape"></div>
       <div class="pin"></div>
       <div class="kicker"><span class="marker">marker 05 · 11,200 ft</span><span>parks passport</span></div>
-      <h2>12 of 63 parks.</h2>
+      <h2 id="parksCount">— of — parks.</h2>
       <div class="sub">a stamp on every page is the dream</div>
-      <div class="pct"><div class="bar"><i style="width:19%"></i></div><div class="num">19%</div></div>
+      <div class="pct" id="parksPct"><div class="bar"><i style="width:0%"></i></div><div class="num">—%</div></div>
 
       <div style="display:flex;gap:14px;margin-top:14px;flex-wrap:wrap;align-items:flex-start;">
         <div class="polaroid">
@@ -289,10 +287,7 @@
           <div class="cap">— Grand Canyon, '21</div>
         </div>
         <div style="flex:1;min-width:170px;">
-          <p style="margin:0;font-size:14px;"><strong>Visited:</strong> Yellowstone ·
-            Yosemite · Zion · Glacier · Grand Canyon · Grand Teton · Sequoia ·
-            Redwood · Death Valley · Everglades · Biscayne · Crater Lake ·
-            Great Basin · Gateway Arch.</p>
+          <p style="margin:0;font-size:14px;"><strong>Visited:</strong> <span id="parksVisitedList"></span></p>
         </div>
       </div>
     </div>
@@ -303,11 +298,11 @@
     <div class="card" data-card style="max-width:540px;">
       <div class="pin green"></div>
       <div class="kicker"><span class="marker">marker 06 · 13,400 ft</span><span>white mountains</span></div>
-      <h2>6 of the NH 48.</h2>
+      <h2 id="peaksCount">— of the NH 48.</h2>
       <div class="sub">the actual mountains, not metaphor</div>
-      <div class="pct"><div class="bar"><i style="width:13%"></i></div><div class="num">13%</div></div>
+      <div class="pct" id="peaksPct"><div class="bar"><i style="width:0%"></i></div><div class="num">—%</div></div>
       <p>Every 4,000-foot peak in New Hampshire. Bag all 48 and you're in
-        the club. Six down — Franconia Ridge in one push was the highlight so far.</p>
+        the club — Franconia Ridge in one push was the highlight so far.</p>
       <div class="peaks-list" id="peaksList"></div>
     </div>
   </section>
@@ -322,8 +317,8 @@
       <a href="mailto:hello@example.com">✉ email</a>
       <a href="#">↗ github</a>
       <a href="#">↗ linkedin</a>
-      <a href="experience.html">resume</a>
-      <a href="portfolio.html">projects</a>
+      <a href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true">resume</a>
+      <a href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true">projects</a>
     </div>
     <p style="margin-top:40px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-dim);">
       © Austin Miller · 2026 · built with too much coffee

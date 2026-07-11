@@ -1,8 +1,3 @@
----
-title: "Projects"
-permalink: /projects/
-layout: single
----
 
 ### Home Lab Server & Application Stack
 * Designed and managed a personal server running a stack of containerized applications using Docker.

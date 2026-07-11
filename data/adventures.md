@@ -1,8 +1,3 @@
----
-title: "Adventures"
-permalink: /adventures/
-layout: single
----
 
 Here are some of the adventures I'm on.
 

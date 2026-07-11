@@ -1,17 +1,27 @@
-// === Austin Miller personal site — data + scroll-driven hiker ===
+// === Austin Miller personal site — data-driven scroll + hiker ===
+//
+// All tracker numbers (states, ballparks, national parks, NH 4000-footers)
+// are read at runtime from data/adventures.md — that file is the single
+// source of truth. Nothing here hardcodes progress; update the checkboxes
+// in that file to update the site.
 
-// STATES — checked = visited
-const STATES = {
-  AL:false, AK:false, AZ:true, AR:false, CA:true, CO:true, CT:true,
-  DE:true, FL:true, GA:true, HI:false, ID:true, IL:true, IN:true,
-  IA:true, KS:true, KY:true, LA:true, ME:true, MD:true, MA:true,
-  MI:true, MN:false, MS:false, MO:true, MT:true, NE:true, NV:true,
-  NH:true, NJ:true, NM:false, NY:true, NC:false, ND:false, OH:true,
-  OK:false, OR:true, PA:true, RI:true, SC:true, SD:false, TN:false,
-  TX:true, UT:true, VT:true, VA:true, WA:true, WV:false, WI:true, WY:true
+const ADVENTURES_URL = 'data/adventures.md';
+
+// Reference data only (not progress data): state name -> map code, and
+// the 12x8 grid layout used to draw the tile map.
+const STATE_NAME_TO_CODE = {
+  'Alabama':'AL','Alaska':'AK','Arizona':'AZ','Arkansas':'AR','California':'CA',
+  'Colorado':'CO','Connecticut':'CT','Delaware':'DE','Florida':'FL','Georgia':'GA',
+  'Hawaii':'HI','Idaho':'ID','Illinois':'IL','Indiana':'IN','Iowa':'IA',
+  'Kansas':'KS','Kentucky':'KY','Louisiana':'LA','Maine':'ME','Maryland':'MD',
+  'Massachusetts':'MA','Michigan':'MI','Minnesota':'MN','Mississippi':'MS','Missouri':'MO',
+  'Montana':'MT','Nebraska':'NE','Nevada':'NV','New Hampshire':'NH','New Jersey':'NJ',
+  'New Mexico':'NM','New York':'NY','North Carolina':'NC','North Dakota':'ND','Ohio':'OH',
+  'Oklahoma':'OK','Oregon':'OR','Pennsylvania':'PA','Rhode Island':'RI','South Carolina':'SC',
+  'South Dakota':'SD','Tennessee':'TN','Texas':'TX','Utah':'UT','Vermont':'VT',
+  'Virginia':'VA','Washington':'WA','West Virginia':'WV','Wisconsin':'WI','Wyoming':'WY'
 };
 
-// Tile-map layout of the US (12 cols × 8 rows)
 const TILE_MAP = [
   ['',  '',  '',  '',  '',  '',  '',  '',  '',  '',  '',  'ME'],
   ['',  '',  '',  '',  '',  '',  '',  '',  '',  'VT','NH', ''  ],
@@ -23,132 +33,124 @@ const TILE_MAP = [
   ['AK','',  'TX','',  '',  'FL','',  '',  '',  '',  '',  ''  ]
 ];
 
-// BALLPARKS — in order they appear on the list, [name, team, visited]
-const BALLPARKS = [
-  ['Fenway Park',       'Red Sox',         true ],
-  ['Yankee Stadium',    'Yankees',         true ],
-  ['Camden Yards',      'Orioles',         true ],
-  ['Citi Field',        'Mets',            true ],
-  ['Citizens Bank',     'Phillies',        true ],
-  ['Nationals Park',    'Nationals',       true ],
-  ['Truist Park',       'Braves',          true ],
-  ['LoanDepot Park',    'Marlins',         true ],
-  ['Great American',    'Reds',            true ],
-  ['Busch Stadium',     'Cardinals',       true ],
-  ['Kauffman Stadium',  'Royals',          true ],
-  ['Coors Field',       'Rockies',         true ],
-  ['Oracle Park',       'Giants',          true ],
-  ['Steinbrenner Fld',  'Rays · temp',     true ],
-  ['Wrigley Field',     'Cubs',            false],
-  ['Progressive Fld',   'Guardians',       false],
-  ['Rate Field',        'White Sox',       false],
-  ['Target Field',      'Twins',           false],
-  ['Comerica Park',     'Tigers',          false],
-  ['American Family',   'Brewers',         false],
-  ['PNC Park',          'Pirates',         false],
-  ['Daikin Park',       'Astros',          false],
-  ['Globe Life Field',  'Rangers',         false],
-  ['Angel Stadium',     'Angels',          false],
-  ['Dodger Stadium',    'Dodgers',         false],
-  ['Petco Park',        'Padres',          false],
-  ['Chase Field',       'Diamondbacks',    false],
-  ['T-Mobile Park',     'Mariners',        false],
-  ['Rogers Centre',     'Blue Jays',       false],
-  ['Sutter Health',     'Athletics',       false]
-];
+// === Parse the tracker markdown into { "Section Title": [{label, done}] } ===
+function parseAdventures(markdown) {
+  const sections = {};
+  let current = null;
+  markdown.split('\n').forEach(line => {
+    const heading = line.match(/^###\s+(.+?)\s*$/);
+    if (heading) {
+      current = [];
+      sections[heading[1]] = current;
+      return;
+    }
+    const item = line.match(/^-\s*\[([ xX])\]\s*(.+?)\s*$/);
+    if (item && current) {
+      current.push({ label: item[2], done: item[1].toLowerCase() === 'x' });
+    }
+  });
+  return sections;
+}
 
-// NH 4000-FOOTERS (list order = the official 48-peak list)
-const PEAKS = [
-  ['Mt. Washington',    false],
-  ['Mt. Adams',         false],
-  ['Mt. Jefferson',     false],
-  ['Mt. Monroe',        false],
-  ['Mt. Madison',       false],
-  ['Mt. Lafayette',     true ],
-  ['Mt. Lincoln',       true ],
-  ['South Twin',        false],
-  ['Carter Dome',       false],
-  ['Mt. Moosilauke',    false],
-  ['Mt. Eisenhower',    false],
-  ['North Twin',        false],
-  ['Mt. Carrigain',     false],
-  ['Mt. Bond',          false],
-  ['Middle Carter',     false],
-  ['West Bond',         false],
-  ['Mt. Garfield',      true ],
-  ['Mt. Liberty',       true ],
-  ['South Carter',      false],
-  ['Wildcat (A)',       false],
-  ['Mt. Hancock',       false],
-  ['South Kinsman',     false],
-  ['Mt. Field',         false],
-  ['Mt. Osceola',       false],
-  ['Mt. Flume',         true ],
-  ['South Hancock',     false],
-  ['Mt. Pierce',        false],
-  ['North Kinsman',     true ],
-  ['Mt. Willey',        false],
-  ['Bondcliff',         false],
-  ['Zealand Mtn',       false],
-  ['N. Tripyramid',     false],
-  ['Mt. Cabot',         false],
-  ['East Osceola',      false],
-  ['M. Tripyramid',     false],
-  ['Cannon Mtn',        false],
-  ['Mt. Hale',          false],
-  ['Mt. Jackson',       false],
-  ['Mt. Tom',           false],
-  ['Wildcat D',         false],
-  ['Mt. Moriah',        false],
-  ['Mt. Passaconaway',  false],
-  ["Owl's Head",        false],
-  ['Galehead',          false],
-  ['Mt. Whiteface',     false],
-  ['Mt. Waumbek',       false],
-  ['Mt. Isolation',     false],
-  ['Mt. Tecumseh',      false]
-];
+function renderPct(pctEl, done, total) {
+  if (!pctEl) return;
+  const pct = total ? Math.round((done / total) * 100) : 0;
+  const bar = pctEl.querySelector('.bar i');
+  const num = pctEl.querySelector('.num');
+  if (bar) bar.style.width = pct + '%';
+  if (num) num.textContent = pct + '%';
+}
 
-// === Render lists once DOM is ready ===
-function renderLists() {
-  // US map
+function renderStates(items) {
+  const done = items.filter(i => i.done);
   const usMap = document.getElementById('usMap');
   if (usMap) {
+    usMap.innerHTML = '';
+    const visited = new Set(done.map(i => STATE_NAME_TO_CODE[i.label]));
     TILE_MAP.forEach(row => {
       row.forEach(code => {
         const div = document.createElement('div');
         if (!code) {
           div.className = 'cell empty';
         } else {
-          div.className = 'cell' + (STATES[code] ? ' done' : '');
+          div.className = 'cell' + (visited.has(code) ? ' done' : '');
           div.textContent = code;
-          div.title = code + (STATES[code] ? ' ✓' : '');
+          div.title = code + (visited.has(code) ? ' ✓' : '');
         }
         usMap.appendChild(div);
       });
     });
   }
 
-  // Ballparks
-  const bp = document.getElementById('ballparksList');
-  if (bp) {
-    BALLPARKS.forEach(([name, team, done]) => {
+  const countEl = document.getElementById('statesCount');
+  if (countEl) countEl.textContent = done.length + ' of ' + items.length + ' states.';
+  renderPct(document.getElementById('statesPct'), done.length, items.length);
+
+  const remainingEl = document.getElementById('statesRemaining');
+  if (remainingEl) {
+    const remaining = items.filter(i => !i.done).map(i => i.label);
+    remainingEl.textContent = remaining.length
+      ? 'Still on the list: ' + remaining.join(', ') + '.'
+      : 'All 50 states, done.';
+  }
+}
+
+function renderChecklist(items, listElId, countElId, pctElId, suffix) {
+  const listEl = document.getElementById(listElId);
+  if (listEl) {
+    listEl.innerHTML = '';
+    items.forEach(({ label, done }) => {
       const row = document.createElement('div');
       row.className = 'row-chk' + (done ? ' done' : '');
-      row.innerHTML = '<span class="box"></span><span>' + name + '</span>';
-      bp.appendChild(row);
+      row.innerHTML = '<span class="box"></span><span></span>';
+      row.lastChild.textContent = label;
+      listEl.appendChild(row);
     });
   }
+  const done = items.filter(i => i.done).length;
+  const countEl = document.getElementById(countElId);
+  if (countEl) countEl.textContent = done + ' of ' + items.length + suffix;
+  renderPct(document.getElementById(pctElId), done, items.length);
+}
 
-  // Peaks
-  const peaksEl = document.getElementById('peaksList');
-  if (peaksEl) {
-    PEAKS.forEach(([name, done]) => {
-      const row = document.createElement('div');
-      row.className = 'row-chk' + (done ? ' done' : '');
-      row.innerHTML = '<span class="box"></span><span>' + name + '</span>';
-      peaksEl.appendChild(row);
-    });
+function renderBallparks(items) {
+  // Ballpark entries are formatted "Name (Team)" — show just the name.
+  const shortened = items.map(i => ({
+    label: i.label.replace(/\s*\([^)]*\)\s*$/, ''),
+    done: i.done
+  }));
+  renderChecklist(shortened, 'ballparksList', 'ballparksCount', 'ballparksPct', ' ballparks.');
+}
+
+function renderParks(items) {
+  const done = items.filter(i => i.done);
+  const countEl = document.getElementById('parksCount');
+  if (countEl) countEl.textContent = done.length + ' of ' + items.length + ' parks.';
+  renderPct(document.getElementById('parksPct'), done.length, items.length);
+
+  const visitedEl = document.getElementById('parksVisitedList');
+  if (visitedEl) {
+    // Park entries are formatted "Name, State[, State...]" — show just the name.
+    visitedEl.textContent = done.map(i => i.label.split(',')[0].trim()).join(' · ');
+  }
+}
+
+function renderPeaks(items) {
+  renderChecklist(items, 'peaksList', 'peaksCount', 'peaksPct', ' of the NH 48.');
+}
+
+async function loadAdventures() {
+  try {
+    const res = await fetch(ADVENTURES_URL, { cache: 'no-store' });
+    if (!res.ok) throw new Error('adventures fetch failed: ' + res.status);
+    const sections = parseAdventures(await res.text());
+
+    if (sections['All 50 States']) renderStates(sections['All 50 States']);
+    if (sections['MLB Ballparks']) renderBallparks(sections['MLB Ballparks']);
+    if (sections['U.S. National Parks']) renderParks(sections['U.S. National Parks']);
+    if (sections['New Hampshire 4000 Footers']) renderPeaks(sections['New Hampshire 4000 Footers']);
+  } catch (err) {
+    console.error('Could not load adventures tracker:', err);
   }
 }
 
@@ -239,7 +241,7 @@ function initCards() {
 
 // boot
 document.addEventListener('DOMContentLoaded', () => {
-  renderLists();
+  loadAdventures();
   initHiker();
   initCards();
 });

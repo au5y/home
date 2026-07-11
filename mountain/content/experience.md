@@ -1,8 +1,3 @@
----
-title: "Experience & Qualifications"
-permalink: /experience/
-layout: single
----
 
 ## Professional Experience
 
