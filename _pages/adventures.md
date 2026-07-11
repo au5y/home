@@ -66,7 +66,7 @@ Here are some of the adventures I'm on.
 ### MLB Ballparks
 
 - [ ] American Family Field (Milwaukee Brewers)
-- [ ] Angel Stadium (Los Angeles Angels)
+- [x] Angel Stadium (Los Angeles Angels)
 - [x] Busch Stadium (St. Louis Cardinals)
 - [ ] Chase Field (Arizona Diamondbacks)
 - [x] Citi Field (New York Mets)
@@ -74,7 +74,7 @@ Here are some of the adventures I'm on.
 - [ ] Comerica Park (Detroit Tigers)
 - [x] Coors Field (Colorado Rockies)
 - [ ] Daikin Park (Houston Astros)
-- [ ] Dodger Stadium (Los Angeles Dodgers)
+- [x] Dodger Stadium (Los Angeles Dodgers)
 - [x] Fenway Park (Boston Red Sox)
 - [ ] Globe Life Field (Texas Rangers)
 - [x] Great American Ball Park (Cincinnati Reds)
@@ -83,7 +83,7 @@ Here are some of the adventures I'm on.
 - [x] Nationals Park (Washington Nationals)
 - [x] Oracle Park (San Francisco Giants)
 - [x] Oriole Park at Camden Yards (Baltimore Orioles)
-- [ ] Petco Park (San Diego Padres)
+- [x] Petco Park (San Diego Padres)
 - [ ] PNC Park (Pittsburgh Pirates)
 - [ ] Progressive Field (Cleveland Guardians)
 - [ ] Rate Field (Chicago White Sox)
