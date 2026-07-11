@@ -1,0 +1,245 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Kalam:wght@300;400;700&family=Patrick+Hand&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root{
+  --bg:#1a2420; --bg-2:#0d1f15; --green:#2d5a3d; --green-2:#6b9b6c;
+  --cream:#f4e4b8; --paper:#f4e4b8; --paper-2:#ede0b5;
+  --paper-text:#2a261b; --ink:#e6dfc8; --ink-dim:#9aa28b;
+  --warn:#e89a4a; --red:#c45a5a; --blue:#6a8aa8;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);overflow-x:hidden;}
+body{font-family:'Kalam',cursive;-webkit-font-smoothing:antialiased;}
+
+/* Mountain bg, fixed. 100dvh keeps the peak from jumping/gapping when mobile
+   browser chrome shows/hides; vh stays as a fallback for older browsers. */
+.mountain-bg{position:fixed;inset:0;width:100vw;height:100vh;height:100dvh;z-index:0;pointer-events:none;}
+.mountain-bg svg{width:100%;height:100%;display:block;}
+
+/* Hiker, fixed positioned via JS, walks up trail */
+.hiker-fixed{
+  position:fixed;left:0;top:0;z-index:5;pointer-events:none;
+  will-change:transform;
+  transform-origin:center center;
+  transition:transform 0.08s linear;
+}
+
+/* Nav */
+.nav-strip{
+  position:fixed;top:18px;left:30px;right:30px;
+  top:calc(18px + env(safe-area-inset-top));
+  left:calc(30px + env(safe-area-inset-left));
+  right:calc(30px + env(safe-area-inset-right));
+  display:flex;justify-content:space-between;align-items:center;
+  z-index:10;
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  color:var(--ink-dim);letter-spacing:0.12em;text-transform:uppercase;
+}
+.nav-strip .logo{
+  font-family:'Caveat',cursive;font-size:28px;color:var(--cream);
+  letter-spacing:0;text-transform:none;line-height:1;transform:rotate(-2deg);
+}
+.nav-strip .links{display:flex;gap:20px;}
+.nav-strip a{
+  color:var(--ink-dim);text-decoration:none;
+  border-bottom:1px dashed transparent;padding-bottom:2px;
+  transition:color .15s,border-color .15s;
+}
+.nav-strip a:hover{color:var(--cream);border-bottom-color:var(--cream);}
+
+/* Altitude indicator (right rail) */
+.altimeter{position:fixed;right:30px;top:50%;transform:translateY(-50%);z-index:6;pointer-events:none;}
+.altimeter .track{width:3px;height:260px;background:rgba(244,228,184,0.16);border-radius:2px;position:relative;margin:0 auto;}
+.altimeter .progress{position:absolute;left:-2px;top:0;width:7px;background:var(--cream);border-radius:3px;height:0;box-shadow:0 0 8px rgba(244,228,184,0.4);}
+.altimeter .label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-dim);text-align:center;margin-top:8px;}
+.altimeter .alt-now{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cream);text-align:center;margin-top:2px;}
+
+/* Sections */
+main{position:relative;z-index:2;}
+section{
+  min-height:100vh;min-height:100dvh;display:flex;align-items:center;
+  padding:80px 60px;position:relative;
+}
+section.right{justify-content:flex-end;}
+section.left{justify-content:flex-start;}
+section.center{justify-content:center;text-align:center;flex-direction:column;}
+
+/* INTRO */
+.intro{justify-content:flex-start;padding-top:18vh;}
+.intro h1{font-family:'Caveat',cursive;font-size:120px;line-height:0.95;color:var(--cream);margin:0;text-shadow:3px 4px 0 rgba(0,0,0,0.5);transform:rotate(-2deg);}
+.intro .tag{font-family:'Patrick Hand',cursive;font-size:22px;color:var(--ink);max-width:560px;margin:20px auto 0;line-height:1.4;}
+.intro .scroll-cue{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--green-2);margin-top:36px;}
+.intro .scroll-cue::after{content:" ↓";display:inline-block;margin-left:6px;animation:bounce 1.6s infinite ease-in-out;}
+@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(8px);}}
+.intro .kicker-base{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--green-2);margin-bottom:16px;}
+
+/* SUMMIT */
+.summit h2{font-family:'Caveat',cursive;font-size:130px;line-height:1;color:var(--cream);margin:0;text-shadow:3px 4px 0 rgba(0,0,0,0.5);transform:rotate(-1deg);}
+.summit .tag{font-family:'Patrick Hand',cursive;font-size:22px;color:var(--ink);max-width:600px;margin:40px auto 36px;line-height:1.4;}
+.summit-links{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+.summit-links a{
+  display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--cream);
+  font-family:'Patrick Hand',cursive;font-size:18px;padding:10px 22px;
+  border:2px solid var(--cream);
+  border-radius:14px 22px 18px 24px / 22px 14px 24px 18px;
+  text-decoration:none;
+  transition:transform .15s,background .15s;
+  transform:rotate(-0.6deg);
+}
+.summit-links a:hover{background:rgba(244,228,184,0.1);transform:rotate(-1.4deg);}
+.summit .kicker-base{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--green-2);margin-bottom:20px;}
+
+/* CARD — paper index card */
+.card{
+  max-width:460px;width:100%;background:var(--paper);color:var(--paper-text);
+  padding:28px 30px 26px;
+  box-shadow:6px 9px 0 rgba(0,0,0,0.5),0 0 0 1px rgba(0,0,0,0.08);
+  border-radius:2px;position:relative;
+  background-image:
+    repeating-linear-gradient(0deg,rgba(0,0,0,0.025) 0,rgba(0,0,0,0.025) 1px,transparent 1px,transparent 28px),
+    radial-gradient(circle at 20% 30%,rgba(0,0,0,0.04),transparent 60%),
+    radial-gradient(circle at 80% 70%,rgba(0,0,0,0.035),transparent 50%);
+  opacity:0;transform:translateY(50px) rotate(var(--rot,-1.2deg));
+  transition:opacity .8s ease,transform .9s cubic-bezier(.2,.7,.3,1);
+}
+.card.in{opacity:1;transform:translateY(0) rotate(var(--rot,-1.2deg));}
+
+.card .tape{
+  position:absolute;top:-14px;left:50%;transform:translateX(-50%) rotate(-3deg);
+  width:120px;height:24px;background:rgba(154,200,180,0.55);
+  border:1px solid rgba(0,0,0,0.06);box-shadow:0 2px 0 rgba(0,0,0,0.15);
+}
+.card .tape.alt{
+  background:rgba(232,154,74,0.5);left:auto;right:30px;
+  transform:rotate(8deg);width:90px;
+}
+.card .pin{
+  position:absolute;top:-9px;left:24px;width:20px;height:20px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,#ffc89a,#e89a4a 55%,#a05a1c 100%);
+  box-shadow:inset -2px -2px 0 rgba(0,0,0,0.25),3px 4px 4px rgba(0,0,0,0.4);
+}
+.card .pin.green{background:radial-gradient(circle at 30% 30%,#b8d49a,#6b9b6c 55%,#365a36 100%);}
+.card .pin.red{background:radial-gradient(circle at 30% 30%,#ffaaaa,#c45a5a 55%,#7a2a2a 100%);}
+
+.card .kicker{
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.18em;
+  text-transform:uppercase;color:#6a5a3a;margin-bottom:8px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.card .kicker .marker{color:#1a2420;font-weight:600;}
+.card h2{font-family:'Caveat',cursive;font-size:48px;line-height:0.92;margin:0 0 4px;color:#1a2420;font-weight:700;}
+.card .sub{font-family:'Patrick Hand',cursive;font-size:18px;color:#5a4a2b;margin-bottom:14px;}
+.card p{font-family:'Kalam',cursive;font-size:16px;line-height:1.5;color:#2a261b;margin:8px 0;}
+.card p strong{font-weight:700;color:#1a2420;}
+.card p.small{font-size:14px;color:#5a4a2b;}
+
+.card .pct{display:flex;align-items:center;gap:12px;margin:14px 0 10px;}
+.card .pct .bar{flex:1;height:9px;background:rgba(0,0,0,0.13);border-radius:5px;position:relative;overflow:hidden;}
+.card .pct .bar i{position:absolute;left:0;top:0;bottom:0;background:#2d5a3d;border-radius:5px;}
+.card .pct .num{font-family:'JetBrains Mono',monospace;font-size:14px;color:#1a2420;font-weight:600;}
+
+.card a.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  background:#1a2420;color:#f4e4b8;
+  font-family:'Patrick Hand',cursive;font-size:17px;
+  padding:7px 16px;border-radius:14px;
+  text-decoration:none;margin-top:10px;
+  transform:rotate(-1.5deg);transition:transform .15s;
+  box-shadow:2px 3px 0 rgba(0,0,0,0.25);
+}
+.card a.btn:hover{transform:rotate(-2.5deg) scale(1.05);}
+.card a.btn::after{content:"→";}
+
+/* US tile map */
+.us-map{
+  display:grid;grid-template-columns:repeat(12,1fr);gap:3px;
+  margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:9px;
+  max-width:440px;
+}
+.us-map .cell{
+  aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+  border-radius:2px;color:#5a4a2b;background:rgba(0,0,0,0.07);
+  font-weight:600;letter-spacing:0.04em;
+  transition:transform .15s,background .15s;
+}
+.us-map .cell:hover{transform:scale(1.15);z-index:2;}
+.us-map .cell.done{background:#2d5a3d;color:var(--cream);box-shadow:1px 1px 0 rgba(0,0,0,0.2);}
+.us-map .cell.empty{background:transparent;pointer-events:none;}
+
+/* Ballparks list */
+.ballparks-list{
+  margin-top:10px;font-family:'Kalam',cursive;font-size:13px;
+  column-count:2;column-gap:16px;
+}
+.ballparks-list .row-chk{break-inside:avoid;padding:2px 0;}
+.row-chk{display:flex;align-items:center;gap:6px;color:#8a7a5a;line-height:1.25;}
+.row-chk.done{color:#1a2420;}
+.row-chk .box{
+  display:inline-block;width:12px;height:12px;
+  border:1.5px solid #5a4a2b;flex:0 0 12px;
+  transform:rotate(-2deg);position:relative;
+}
+.row-chk.done .box{background:#2d5a3d;border-color:#2d5a3d;}
+.row-chk.done .box::after{
+  content:"✓";position:absolute;left:-1px;top:-9px;
+  color:var(--cream);font-family:'Caveat',cursive;
+  font-size:17px;line-height:1;font-weight:700;
+}
+
+/* NH 48 list */
+.peaks-list{
+  margin-top:10px;font-family:'Kalam',cursive;font-size:13px;
+  columns:2;column-gap:14px;
+}
+.peaks-list .row-chk{break-inside:avoid;}
+
+/* Projects mini tiles */
+.proj-tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;}
+.proj-tiles .ptile{
+  background:#1a2420;color:#f4e4b8;
+  padding:14px 12px;border-radius:6px;
+  text-decoration:none;
+  transition:transform .15s;
+}
+.proj-tiles .ptile:hover{transform:rotate(-1deg) scale(1.04);}
+.proj-tiles .ptile .ttl{font-family:'Caveat',cursive;font-size:26px;line-height:1.15;margin-bottom:4px;white-space:nowrap;}
+.proj-tiles .ptile .desc{font-family:'Patrick Hand',cursive;font-size:13px;color:#9aa28b;margin-top:2px;}
+
+/* Polaroid */
+.polaroid{
+  display:inline-block;background:#fff;
+  padding:8px 8px 28px;
+  box-shadow:3px 4px 0 rgba(0,0,0,0.2);
+  transform:rotate(-3deg);
+}
+.polaroid .img{
+  width:170px;height:120px;
+  display:flex;align-items:center;justify-content:center;
+}
+.polaroid .img.canyon{background:linear-gradient(180deg,#8a4530 0%,#c47840 50%,#e8a060 100%);}
+.polaroid .img.forest{background:linear-gradient(180deg,#3a5a3a 0%,#5a8a5e 100%);}
+.polaroid .img.sky{background:linear-gradient(180deg,#5a7ab8 0%,#8aa8c4 100%);}
+.polaroid .cap{font-family:'Caveat',cursive;font-size:18px;color:#1a2420;text-align:center;margin-top:6px;line-height:1;}
+
+/* small SVG illustration in polaroid */
+.polaroid svg{display:block;width:100%;height:100%;}
+
+@media (max-width:760px){
+  section{padding:60px 24px;}
+  .intro{padding-top:22vh;}
+  .intro h1{font-size:68px;}
+  .intro .tag{font-size:18px;}
+  .summit h2{font-size:64px;}
+  .card{max-width:100%;}
+  .card h2{font-size:36px;}
+  .altimeter{display:none;}
+  .nav-strip{font-size:9px;left:calc(18px + env(safe-area-inset-left));right:calc(18px + env(safe-area-inset-right));}
+  .nav-strip .logo{font-size:22px;}
+  .nav-strip .links{gap:14px;}
+  .us-map{font-size:7px;}
+  .ballparks-list{column-count:1;}
+  .peaks-list{columns:1;}
+}
+
+@media (max-width:420px){
+  .nav-strip .links{gap:10px;font-size:8px;}
+}

@@ -1,4 +1,338 @@
----
-layout: home
-author_profile: true
----
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#1a2420"/>
+<title>Austin Miller — the climb</title>
+<link rel="stylesheet" href="css/site.css"/>
+</head>
+<body>
+
+<!-- =================== MOUNTAIN BACKGROUND (fixed) =================== -->
+<div class="mountain-bg" aria-hidden="true">
+  <svg viewBox="0 0 1000 1000" preserveAspectRatio="none">
+    <defs>
+      <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="7"/>
+        <feDisplacementMap in="SourceGraphic" scale="2.6"/>
+      </filter>
+      <pattern id="hatch" patternUnits="userSpaceOnUse" width="9" height="9" patternTransform="rotate(35)">
+        <line x1="0" y1="0" x2="0" y2="9" stroke="#0d1f15" stroke-width="1" opacity="0.5"/>
+      </pattern>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#0a1810"/>
+        <stop offset="55%" stop-color="#152620"/>
+        <stop offset="100%" stop-color="#1a2420"/>
+      </linearGradient>
+    </defs>
+
+    <!-- sky -->
+    <rect width="1000" height="1000" fill="url(#sky)"/>
+
+    <!-- stars -->
+    <g fill="#f4e4b8" opacity="0.8">
+      <circle cx="120" cy="100" r="1.2"/><circle cx="320" cy="80"  r="1"/>
+      <circle cx="540" cy="120" r="1.4"/><circle cx="780" cy="60"  r="1"/>
+      <circle cx="900" cy="180" r="1.2"/><circle cx="180" cy="220" r="0.8"/>
+      <circle cx="640" cy="240" r="1"/>  <circle cx="430" cy="180" r="0.8"/>
+      <circle cx="200" cy="350" r="1"/>  <circle cx="800" cy="320" r="0.9"/>
+      <circle cx="60"  cy="400" r="0.7"/><circle cx="700" cy="420" r="0.8"/>
+      <circle cx="380" cy="380" r="0.9"/>
+    </g>
+
+    <!-- moon -->
+    <circle cx="180" cy="200" r="36" fill="#f4e4b8" opacity="0.9"/>
+    <circle cx="195" cy="190" r="32" fill="#1a2420" opacity="0.4"/>
+
+    <!-- FAR ridges -->
+    <path filter="url(#rough)"
+      d="M0 1000 L 0 460 L 90 400 L 170 445 L 260 370 L 340 430 L 430 340 L 520 400
+         L 610 310 L 690 380 L 770 330 L 860 410 L 940 355 L 1000 400 L 1000 1000 Z"
+      fill="#0a1810"/>
+
+    <!-- MID ridges -->
+    <path filter="url(#rough)"
+      d="M0 1000 L 0 640 L 100 585 L 190 630 L 270 545 L 350 605 L 420 520 L 500 600
+         L 590 500 L 660 570 L 740 490 L 830 560 L 910 500 L 1000 555 L 1000 1000 Z"
+      fill="#142a22"/>
+
+    <!-- MAIN massif — single dominant summit at (500,190), wide enough near the
+         top for a real switchback trail to climb it; lower secondary peak/shoulder
+         off to the right for realism -->
+    <path filter="url(#rough)"
+      d="M0 1000 L 0 880
+         L 90 825 L 170 860 L 240 780 L 300 810 L 360 720 L 410 750
+         L 450 660 L 430 625 L 470 545 L 452 505 L 482 425 L 490 345
+         L 497 265 L 500 190
+         L 512 300 L 505 360 L 525 420 L 518 470 L 545 540 L 560 600
+         L 540 650 L 580 700 L 610 655 L 650 555 L 670 615 L 700 575
+         L 740 655 L 790 605 L 840 695 L 900 645 L 960 725 L 1000 695
+         L 1000 1000 Z"
+      fill="#2d5a3d"/>
+    <path filter="url(#rough)"
+      d="M0 1000 L 0 880
+         L 90 825 L 170 860 L 240 780 L 300 810 L 360 720 L 410 750
+         L 450 660 L 430 625 L 470 545 L 452 505 L 482 425 L 490 345
+         L 497 265 L 500 190
+         L 512 300 L 505 360 L 525 420 L 518 470 L 545 540 L 560 600
+         L 540 650 L 580 700 L 610 655 L 650 555 L 670 615 L 700 575
+         L 740 655 L 790 605 L 840 695 L 900 645 L 960 725 L 1000 695
+         L 1000 1000 Z"
+      fill="url(#hatch)" opacity="0.35"/>
+
+    <!-- crag shading: darker facets on the shadowed (right-facing) side of each rib -->
+    <g fill="#1c3d29" opacity="0.55" filter="url(#rough)">
+      <path d="M500 190 L 497 265 L 490 345 L 482 425 L 452 505 L 470 545 L 525 420 L 512 300 Z" opacity="0.35"/>
+      <path d="M430 625 L 470 545 L 452 505 L 482 425 Z" opacity="0.55"/>
+      <path d="M650 555 L 610 655 L 580 700 L 540 650 L 560 600 L 545 540 L 518 470 Z" opacity="0.45"/>
+      <path d="M240 780 L 300 810 L 360 720 L 410 750 L 450 660 L 430 625 Z" opacity="0.35"/>
+    </g>
+
+    <!-- snow caps — jagged patches hugging the ridgeline near each summit -->
+    <path d="M494 260 L 498 210 L 500 190 L 503 215 L 510 300 L 505 250 L 499 275 Z"
+      fill="#f4e4b8" opacity="0.9"/>
+    <path d="M486 400 L 490 345 L 497 265 L 494 320 Z" fill="#f4e4b8" opacity="0.5"/>
+    <path d="M636 570 L 645 558 L 650 555 L 658 570 L 665 600 L 652 585 L 641 602 Z"
+      fill="#f4e4b8" opacity="0.65"/>
+    <path d="M446 590 L 452 505 L 460 570 L 456 605 Z" fill="#f4e4b8" opacity="0.45"/>
+
+    <!-- foreground evergreens at the base -->
+    <g fill="#0a1810" stroke="#1a2420" stroke-width="1">
+      <g transform="translate(80,920)">
+        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
+        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
+      </g>
+      <g transform="translate(200,940) scale(0.8)">
+        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
+        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
+      </g>
+      <g transform="translate(820,920) scale(1.2)">
+        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
+        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
+      </g>
+      <g transform="translate(920,950) scale(0.9)">
+        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
+        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
+      </g>
+      <g transform="translate(380,960) scale(0.7)">
+        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
+        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
+      </g>
+      <g transform="translate(630,960) scale(0.7)">
+        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
+        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
+      </g>
+    </g>
+
+    <!-- TRAIL — a real switchback ascent: wide zigzags low on the wide base,
+         narrowing to a direct final push up the tight summit spike -->
+    <path id="trail-path"
+      d="M 500 950
+         Q 460 900 420 860
+         Q 500 825 570 800
+         Q 500 760 440 730
+         Q 495 690 540 660
+         Q 505 620 475 590
+         Q 500 555 515 530
+         Q 498 495 490 470
+         Q 500 435 505 410
+         Q 500 375 497 350
+         Q 502 315 503 290
+         Q 500 250 500 225
+         L 500 190"
+      stroke="#f4e4b8" stroke-width="3.5" fill="none"
+      stroke-dasharray="8 8" stroke-linecap="round"/>
+
+    <!-- switchback blazes: small trail markers at each turn -->
+    <g fill="#f4e4b8" opacity="0.85">
+      <circle cx="420" cy="860" r="3.2"/>
+      <circle cx="570" cy="800" r="3.2"/>
+      <circle cx="440" cy="730" r="3.2"/>
+      <circle cx="540" cy="660" r="3"/>
+      <circle cx="475" cy="590" r="2.6"/>
+      <circle cx="515" cy="530" r="2.4"/>
+      <circle cx="490" cy="470" r="2"/>
+    </g>
+
+    <!-- summit flag -->
+    <line x1="500" y1="190" x2="500" y2="140" stroke="#c4a574" stroke-width="3"/>
+    <path d="M500 140 L 528 150 L 500 161 Z" fill="#e89a4a"/>
+  </svg>
+</div>
+
+<!-- =================== HIKER (animated, follows trail) =================== -->
+<div class="hiker-fixed" id="hikerFixed" aria-hidden="true"></div>
+
+<!-- =================== NAV =================== -->
+<header class="nav-strip">
+  <span class="logo">Austin Miller</span>
+  <nav class="links">
+    <a href="experience.html">resume</a>
+    <a href="portfolio.html">projects</a>
+    <a href="#summit">contact</a>
+    <a href="canvas.html" style="opacity:0.55;">↗ explorations</a>
+  </nav>
+</header>
+
+<!-- =================== ALTIMETER =================== -->
+<aside class="altimeter" aria-hidden="true">
+  <div class="track"><div class="progress" id="altProgress"></div></div>
+  <div class="alt-now" id="altNow">0 ft</div>
+  <div class="label">altitude</div>
+</aside>
+
+<!-- =================== CONTENT =================== -->
+<main>
+
+  <!-- 1 · BASE CAMP -->
+  <section class="intro center" data-screen-label="01 Base Camp" data-alt="0">
+    <div class="kicker-base">⌖ Base Camp · 0 ft</div>
+    <h1>hi, I'm<br/>Austin.</h1>
+    <p class="tag">
+      Software engineer, Army Reserves officer, lifelong climber of
+      mountains both real and metaphorical. Welcome to the trail.
+    </p>
+    <div class="scroll-cue">begin the climb</div>
+  </section>
+
+  <!-- 2 · DAY JOB -->
+  <section class="right" data-screen-label="02 Day Job" data-alt="1400" style="--rot:-1.5deg;">
+    <div class="card" data-card>
+      <div class="tape"></div>
+      <div class="kicker"><span class="marker">marker 01 · 1,400 ft</span><span>day job</span></div>
+      <h2>Engineering at Draper.</h2>
+      <div class="sub">Software Engineer · Cambridge, MA</div>
+      <p>I design and develop secure, high-performance systems with
+        <strong>C++</strong>, <strong>Python</strong>, and modern
+        <strong>DevSecOps</strong> practices.</p>
+      <p>Day-to-day I build robust software architectures and containerized
+        applications, and push CI/CD pipelines forward — all in service of
+        Draper's mission solving important national challenges.</p>
+      <p class="small">Before Draper: MathWorks &amp; 101edu. On the side:
+        Officer in the US Army Reserves (S-3, 325th MI BN).</p>
+      <a class="btn" href="experience.html">full resume</a>
+    </div>
+  </section>
+
+  <!-- 3 · SIDE PROJECTS -->
+  <section class="left" data-screen-label="03 Side Projects" data-alt="3200" style="--rot:1.6deg;">
+    <div class="card" data-card>
+      <div class="pin green"></div>
+      <div class="kicker"><span class="marker">marker 02 · 3,200 ft</span><span>side trail</span></div>
+      <h2>The Tinker Pile.</h2>
+      <div class="sub">things I build when no one's paying me to</div>
+      <p>A small, growing garden of personal projects. Card games today;
+        who knows tomorrow.</p>
+      <div class="proj-tiles">
+        <a class="ptile" href="portfolio.html">
+          <div class="ttl">Spite &amp; Malice</div>
+          <div class="desc">a digital take on the classic two-player card game</div>
+        </a>
+        <a class="ptile" href="portfolio.html">
+          <div class="ttl">5 Clowns</div>
+          <div class="desc">party-friendly card game · wild rounds, weirder rules</div>
+        </a>
+      </div>
+      <a class="btn" href="portfolio.html">open the pile</a>
+    </div>
+  </section>
+
+  <!-- 4 · STATES -->
+  <section class="right" data-screen-label="04 States" data-alt="5600" style="--rot:-1deg;">
+    <div class="card" data-card style="max-width:520px;">
+      <div class="tape alt"></div>
+      <div class="kicker"><span class="marker">marker 03 · 5,600 ft</span><span>50 states</span></div>
+      <h2>32 of 50 states.</h2>
+      <div class="sub">still missing the upper plains &amp; the islands</div>
+      <div class="pct"><div class="bar"><i style="width:64%"></i></div><div class="num">64%</div></div>
+      <div class="us-map" id="usMap"></div>
+      <p class="small" style="margin-top:14px;">Still on the list:
+        <strong>Alaska</strong>, <strong>Hawaii</strong>, Minnesota, Mississippi,
+        North &amp; South Dakota, Oklahoma, Tennessee, North Carolina,
+        New Mexico, West Virginia, Arkansas, Alabama.</p>
+    </div>
+  </section>
+
+  <!-- 5 · BALLPARKS -->
+  <section class="left" data-screen-label="05 Ballparks" data-alt="8800" style="--rot:1.4deg;">
+    <div class="card" data-card style="max-width:540px;">
+      <div class="pin red"></div>
+      <div class="kicker"><span class="marker">marker 04 · 8,800 ft</span><span>peanuts &amp; crackerjacks</span></div>
+      <h2>13 of 30 ballparks.</h2>
+      <div class="sub">there's no place like Fenway at golden hour</div>
+      <div class="pct"><div class="bar"><i style="width:43%"></i></div><div class="num">43%</div></div>
+      <div class="ballparks-list" id="ballparksList"></div>
+      <p class="small" style="margin-top:12px;">Next up: Wrigley — it's been
+        on the list for years. Looking at you, Cubs schedule.</p>
+    </div>
+  </section>
+
+  <!-- 6 · NATIONAL PARKS -->
+  <section class="right" data-screen-label="06 National Parks" data-alt="11200" style="--rot:-1.6deg;">
+    <div class="card" data-card style="max-width:520px;">
+      <div class="tape"></div>
+      <div class="pin"></div>
+      <div class="kicker"><span class="marker">marker 05 · 11,200 ft</span><span>parks passport</span></div>
+      <h2>12 of 63 parks.</h2>
+      <div class="sub">a stamp on every page is the dream</div>
+      <div class="pct"><div class="bar"><i style="width:19%"></i></div><div class="num">19%</div></div>
+
+      <div style="display:flex;gap:14px;margin-top:14px;flex-wrap:wrap;align-items:flex-start;">
+        <div class="polaroid">
+          <div class="img canyon">
+            <svg viewBox="0 0 170 120" width="100%" height="100%">
+              <path d="M0 120 L 0 80 L 30 60 L 50 70 L 80 40 L 110 65 L 140 50 L 170 75 L 170 120 Z" fill="rgba(0,0,0,0.35)"/>
+              <path d="M0 120 L 0 95 L 40 85 L 75 95 L 120 80 L 170 90 L 170 120 Z" fill="rgba(0,0,0,0.25)"/>
+            </svg>
+          </div>
+          <div class="cap">— Grand Canyon, '21</div>
+        </div>
+        <div style="flex:1;min-width:170px;">
+          <p style="margin:0;font-size:14px;"><strong>Visited:</strong> Yellowstone ·
+            Yosemite · Zion · Glacier · Grand Canyon · Grand Teton · Sequoia ·
+            Redwood · Death Valley · Everglades · Biscayne · Crater Lake ·
+            Great Basin · Gateway Arch.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · NH 48 -->
+  <section class="left" data-screen-label="07 NH 48" data-alt="13400" style="--rot:1.2deg;">
+    <div class="card" data-card style="max-width:540px;">
+      <div class="pin green"></div>
+      <div class="kicker"><span class="marker">marker 06 · 13,400 ft</span><span>white mountains</span></div>
+      <h2>6 of the NH 48.</h2>
+      <div class="sub">the actual mountains, not metaphor</div>
+      <div class="pct"><div class="bar"><i style="width:13%"></i></div><div class="num">13%</div></div>
+      <p>Every 4,000-foot peak in New Hampshire. Bag all 48 and you're in
+        the club. Six down — Franconia Ridge in one push was the highlight so far.</p>
+      <div class="peaks-list" id="peaksList"></div>
+    </div>
+  </section>
+
+  <!-- 8 · SUMMIT -->
+  <section class="summit center" id="summit" data-screen-label="08 Summit" data-alt="14720">
+    <div class="kicker-base">⌖ summit · 14,720 ft</div>
+    <h2>You made it.</h2>
+    <p class="tag">There's always another peak. If you want to climb one
+      together — talk shop, swap trail recs, build something — say hi.</p>
+    <div class="summit-links">
+      <a href="mailto:hello@example.com">✉ email</a>
+      <a href="#">↗ github</a>
+      <a href="#">↗ linkedin</a>
+      <a href="experience.html">resume</a>
+      <a href="portfolio.html">projects</a>
+    </div>
+    <p style="margin-top:40px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-dim);">
+      © Austin Miller · 2026 · built with too much coffee
+    </p>
+  </section>
+
+</main>
+
+<script src="js/hiker.js"></script>
+<script src="js/site.js"></script>
+</body>
+</html>
