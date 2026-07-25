@@ -132,7 +132,7 @@ Here are some of the adventures I'm on.
 - [ ] Joshua Tree, California
 - [ ] Katmai, Alaska
 - [ ] Kenai Fjords, Alaska
-- [ ] Kings Canyon, California
+- [x] Kings Canyon, California
 - [ ] Kobuk Valley, Alaska
 - [ ] Lake Clark, Alaska
 - [ ] Lassen Volcanic, California
