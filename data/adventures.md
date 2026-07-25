@@ -27,7 +27,7 @@ Here are some of the adventures I'm on.
 - [x] Maryland
 - [x] Massachusetts
 - [x] Michigan
-- [ ] Minnesota
+- [x] Minnesota
 - [ ] Mississippi
 - [x] Missouri
 - [x] Montana
@@ -45,7 +45,7 @@ Here are some of the adventures I'm on.
 - [x] Pennsylvania
 - [x] Rhode Island
 - [x] South Carolina
-- [ ] South Dakota
+- [x] South Dakota
 - [x] Tennessee
 - [x] Texas
 - [x] Utah
@@ -98,7 +98,7 @@ Here are some of the adventures I'm on.
 
 - [ ] Acadia, Maine
 - [ ] Arches, Utah
-- [ ] Badlands, South Dakota
+- [x] Badlands, South Dakota
 - [x] Big Bend, Texas
 - [x] Biscayne, Florida
 - [ ] Black Canyon of the Gunnison, Colorado
@@ -109,7 +109,7 @@ Here are some of the adventures I'm on.
 - [ ] Channel Islands, California
 - [ ] Congaree, South Carolina
 - [x] Crater Lake, Oregon
-- [ ] Cuyahoga Valley, Ohio
+- [x] Cuyahoga Valley, Ohio
 - [x] Death Valley, California, Nevada
 - [ ] Denali, Alaska
 - [ ] Dry Tortugas, Florida
@@ -127,7 +127,7 @@ Here are some of the adventures I'm on.
 - [ ] Haleakalā, Hawaii
 - [ ] Hawaiʻi Volcanoes, Hawaii
 - [ ] Hot Springs, Arkansas
-- [ ] Indiana Dunes, Indiana
+- [x] Indiana Dunes, Indiana
 - [ ] Isle Royale, Michigan
 - [ ] Joshua Tree, California
 - [ ] Katmai, Alaska
@@ -154,7 +154,7 @@ Here are some of the adventures I'm on.
 - [ ] Virgin Islands, U.S. Virgin Islands
 - [ ] Voyageurs, Minnesota
 - [ ] White Sands, New Mexico
-- [ ] Wind Cave, South Dakota
+- [x] Wind Cave, South Dakota
 - [ ] Wrangell–St. Elias, Alaska
 - [x] Yellowstone, Wyoming, Montana, Idaho
 - [x] Yosemite, California
