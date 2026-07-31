@@ -5,7 +5,7 @@
 // source of truth. Nothing here hardcodes progress; update the checkboxes
 // in that file to update the site.
 
-const ADVENTURES_URL = 'data/adventures.md';
+const ADVENTURES_URL = 'data/adventures.md?v=20260731';
 
 // Reference data only (not progress data): state name -> map code, and
 // the 12x8 grid layout used to draw the tile map.
@@ -299,7 +299,7 @@ function renderPeaks(items) {
 
 async function loadAdventures() {
   try {
-    const res = await fetch(ADVENTURES_URL, { cache: 'no-store' });
+    const res = await fetch(ADVENTURES_URL);
     if (!res.ok) throw new Error('adventures fetch failed: ' + res.status);
     const sections = parseAdventures(await res.text());
 
@@ -436,6 +436,16 @@ function skyHourForScrollT(t) {
   return 5 + t * 15; // 5:00am at the trailhead -> 8:00pm at the summit
 }
 
+// Recoloring the sky gradient + repositioning sun/moon every scroll frame
+// is cheap on desktop but visibly janky on mobile, where it repaints
+// alongside several expensive feTurbulence/feDisplacementMap filters on
+// the mountain geometry. Below this breakpoint (matches the existing CSS
+// mobile cutoff), the sky is left at its initial static state instead of
+// animating with scroll.
+const mobileSkyQuery = window.matchMedia('(max-width: 760px)');
+let skyAnimates = !mobileSkyQuery.matches;
+mobileSkyQuery.addEventListener('change', e => { skyAnimates = !e.matches; });
+
 function applySkyColors(hour) {
   const colors = skyColorsAt(hour);
   const top = document.getElementById('sky-stop-top');
@@ -568,19 +578,42 @@ function initHiker() {
 
   const pathLength = trail.getTotalLength();
   let currentFacing = 1;
+  let lastAlt = -1;
+
+  // getScreenCTM() forces a style/layout recalc and never changes from
+  // scrolling alone (mountain-bg is position:fixed) — only from resize/
+  // orientation changes, so it's cached instead of recomputed every tick.
+  let ctm = null;
+  function refreshCTM() { ctm = trail.getScreenCTM(); }
+
+  // Section positions are likewise stable between layout passes; reading
+  // them here (once, on setup/resize) instead of calling
+  // getBoundingClientRect() inside the scroll handler avoids forcing a
+  // layout read right after the transform write below on every tick.
+  const altSections = Array.from(document.querySelectorAll('[data-alt]'));
+  let altOffsets = [];
+  function refreshAltOffsets() {
+    const scrollNow = window.scrollY;
+    altOffsets = altSections.map(s => ({
+      top: s.getBoundingClientRect().top + scrollNow,
+      alt: parseInt(s.dataset.alt, 10) || 0
+    }));
+  }
+
+  const progEl = document.getElementById('altProgress');
+  const nowEl = document.getElementById('altNow');
 
   function update() {
     const scroll = window.scrollY;
     const max = document.documentElement.scrollHeight - window.innerHeight;
     const t = Math.max(0, Math.min(1, scroll / Math.max(1, max)));
 
-    applySkyColors(skyHourForScrollT(t));
+    if (skyAnimates) applySkyColors(skyHourForScrollT(t));
+
+    if (!ctm) return;
 
     const pt = trail.getPointAtLength(pathLength * t);
     const pt2 = trail.getPointAtLength(Math.min(pathLength, pathLength * t + 4));
-
-    const ctm = trail.getScreenCTM();
-    if (!ctm) return;
 
     const sp1 = svg.createSVGPoint();
     sp1.x = pt.x; sp1.y = pt.y;
@@ -604,20 +637,21 @@ function initHiker() {
       'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) scaleX(' + currentFacing + ')';
 
     // Altimeter
-    const altSections = document.querySelectorAll('[data-alt]');
+    const thresholdY = scroll + window.innerHeight * 0.55;
     let currentAlt = 0;
-    altSections.forEach(s => {
-      const rect = s.getBoundingClientRect();
-      if (rect.top <= window.innerHeight * 0.55) {
-        currentAlt = parseInt(s.dataset.alt, 10) || 0;
-      }
+    altOffsets.forEach(({ top, alt }) => {
+      if (top <= thresholdY) currentAlt = alt;
     });
-    const prog = document.getElementById('altProgress');
-    const now = document.getElementById('altNow');
-    if (prog) prog.style.height = (t * 100) + '%';
-    if (now) now.textContent = currentAlt.toLocaleString() + ' ft';
-    setActiveAltTick(currentAlt);
-    updateTrailFlags(currentAlt);
+
+    if (progEl) progEl.style.height = (t * 100) + '%';
+    // Skip the class-toggle/text-write work below when the checkpoint
+    // hasn't actually changed since the last frame.
+    if (currentAlt !== lastAlt) {
+      lastAlt = currentAlt;
+      if (nowEl) nowEl.textContent = currentAlt.toLocaleString() + ' ft';
+      setActiveAltTick(currentAlt);
+      updateTrailFlags(currentAlt);
+    }
   }
 
   // The hiker's walk-cycle animation only plays while the page is actively
@@ -628,21 +662,43 @@ function initHiker() {
     const rig = wrap.querySelector('.hiker-rig');
     if (rig) rig.classList.toggle('walking', active);
   }
+
+  // Native scroll events can fire far more often than the display repaints
+  // (especially touch scroll / high-refresh mobile screens); coalescing to
+  // one rAF-scheduled update per frame avoids piling up redundant work.
+  let rafScheduled = false;
+  function scheduleUpdate() {
+    if (rafScheduled) return;
+    rafScheduled = true;
+    requestAnimationFrame(() => {
+      rafScheduled = false;
+      update();
+    });
+  }
+
   function onScroll() {
     setWalking(true);
     clearTimeout(walkStopTimer);
     walkStopTimer = setTimeout(() => setWalking(false), 150);
+    scheduleUpdate();
+  }
+
+  function onResize() {
+    refreshCTM();
+    refreshAltOffsets();
     update();
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', update);
-  window.addEventListener('orientationchange', update);
-  window.addEventListener('load', update);
+  window.addEventListener('resize', onResize);
+  window.addEventListener('orientationchange', onResize);
+  window.addEventListener('load', onResize);
   // run a couple times to settle after fonts load / mobile viewport resize
+  refreshCTM();
+  refreshAltOffsets();
   update();
-  setTimeout(update, 200);
-  setTimeout(update, 800);
+  setTimeout(onResize, 200);
+  setTimeout(onResize, 800);
 }
 
 // === Card entrance via IntersectionObserver ===

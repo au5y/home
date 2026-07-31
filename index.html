@@ -6,6 +6,9 @@
 <meta name="theme-color" content="#1a2420"/>
 <title>Austin Miller — the climb</title>
 <link rel="icon" href="assets/favicon/favicon.ico"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Kalam:wght@300;400;700&family=Patrick+Hand&family=JetBrains+Mono:wght@400;500&display=swap"/>
 <link rel="stylesheet" href="css/site.css?v=20260731"/>
 </head>
 <body>
@@ -316,12 +319,14 @@
 
   <!-- 1 · BASE CAMP -->
   <section class="intro center" data-screen-label="01 Base Camp" data-alt="0">
+    <div class="hero-scrim">
     <div class="kicker-base">⌖ Base Camp · 0 ft</div>
     <h1>hi, I'm<br/>Austin.</h1>
     <p class="tag">
-      Software engineer, Army Reserves officer, lifelong climber of
+      Engineering Manager, Software engineer, Army Reserves officer, lifelong climber of
       mountains both real and metaphorical. Welcome to the trail.
     </p>
+    </div>
     <div class="scroll-cue">begin the climb</div>
   </section>
 
@@ -340,7 +345,7 @@
         while coordinating a mix of internal engineers and subcontractor
         partners toward one program.</p>
       <p class="small">Before leading this program: hands-on engineering at
-        Draper, MathWorks &amp; 101edu. On the side: Officer in the US Army
+        Draper, MathWorks &amp; 101edu. Officer in the US Army
         Reserves (S-3, 325th MI BN).</p>
       <a class="btn" href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true" tabindex="-1">full resume</a>
     </div>
@@ -352,9 +357,8 @@
       <div class="pin green"></div>
       <div class="kicker"><span class="marker">marker 02 · 3,200 ft</span><span>side trail</span></div>
       <h2>The Tinker Pile.</h2>
-      <div class="sub">things I build when no one's paying me to</div>
-      <p>A small, growing garden of personal projects. Card games today;
-        who knows tomorrow.</p>
+      <div class="sub">things I build to keep skills fresh and play with new tools</div>
+      <p>A small, growing garden of personal projects.</p>
       <div class="proj-tiles">
         <a class="ptile" href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true" tabindex="-1">
           <div class="ttl">Spite &amp; Malice</div>
@@ -362,7 +366,7 @@
         </a>
         <a class="ptile" href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true" tabindex="-1">
           <div class="ttl">5 Clowns</div>
-          <div class="desc">party-friendly card game · wild rounds, weirder rules</div>
+          <div class="desc">Also called 5 suited Rummy.</div>
         </a>
       </div>
       <a class="btn" href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true" tabindex="-1">open the pile</a>
@@ -375,7 +379,7 @@
       <div class="tape alt"></div>
       <div class="kicker"><span class="marker">marker 03 · 5,600 ft</span><span>50 states</span></div>
       <h2 id="statesCount">— of 50 states.</h2>
-      <div class="sub">still missing the upper plains &amp; the islands</div>
+      <div class="sub">still missing most of the south and OCONUS</div>
       <div class="pct" id="statesPct"><div class="bar"><i style="width:0%"></i></div><div class="num">—%</div></div>
       <div class="us-map" id="usMap"></div>
       <p class="small" style="margin-top:14px;" id="statesRemaining"></p>
@@ -388,7 +392,7 @@
       <div class="pin red"></div>
       <div class="kicker"><span class="marker">marker 04 · 8,800 ft</span><span>peanuts &amp; crackerjacks</span></div>
       <h2 id="ballparksCount">— of — ballparks.</h2>
-      <div class="sub">there's no place like Fenway at golden hour</div>
+      <div class="sub">Oracle Park is my favorite, it's a father son tradition</div>
       <div class="pct" id="ballparksPct"><div class="bar"><i style="width:0%"></i></div><div class="num">—%</div></div>
       <div class="pennant-grid" id="ballparksGrid"></div>
       <p class="small" style="margin-top:12px;">Next up: Wrigley — it's been
@@ -402,7 +406,7 @@
       <div class="passport-emblem">★</div>
       <div class="kicker"><span class="marker">marker 05 · 11,200 ft</span><span>parks passport</span></div>
       <h2 id="parksCount">— of — parks.</h2>
-      <div class="sub">a stamp on every page is the dream</div>
+      <div class="sub">Seeing all of our nature's beauty is the dream.</div>
       <div class="pct" id="parksPct"><div class="bar"><i style="width:0%"></i></div><div class="num">—%</div></div>
 
       <div class="parks-grid" id="parksGrid"></div>
@@ -417,18 +421,19 @@
       <h2 id="peaksCount">— of the NH 48.</h2>
       <div class="sub">the actual mountains, not metaphor</div>
       <div class="pct" id="peaksPct"><div class="bar"><i style="width:0%"></i></div><div class="num">—%</div></div>
-      <p>Every 4,000-foot peak in New Hampshire. Bag all 48 and you're in
-        the club — Franconia Ridge in one push was the highlight so far.</p>
+      <p>Every 4,000-foot peak in New Hampshire. My favorite weekend pasttime!</p>
       <div class="peaks-list" id="peaksList"></div>
     </div>
   </section>
 
   <!-- 8 · SUMMIT -->
   <section class="summit center" id="summit" data-screen-label="08 Summit" data-alt="14720">
+    <div class="hero-scrim">
     <div class="kicker-base">⌖ summit · 14,720 ft</div>
     <h2>You made it.</h2>
     <p class="tag">There's always another peak. If you want to climb one
-      together — talk shop, swap trail recs, build something — say hi.</p>
+      together — swap trail recs, build something — say hi.</p>
+    </div>
     <div class="summit-links">
       <a href="mailto:hello@example.com">✉ email</a>
       <a href="https://github.com/au5y" target="_blank" rel="noopener">↗ github</a>
@@ -437,7 +442,7 @@
       <a href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true" tabindex="-1">projects</a>
     </div>
     <p style="margin-top:40px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-dim);">
-      © Austin Miller · 2026 · built with too much coffee
+      © Austin Miller · 2026 · built with vanilla JS, SVG, and CSS, and a lot of coffee...
     </p>
   </section>
 
