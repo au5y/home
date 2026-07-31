@@ -72,7 +72,6 @@
     <g id="sky-moon" transform="translate(180,200)">
       <ellipse id="moon-glow" rx="46" ry="46" fill="url(#moonGlowGrad)"/>
       <ellipse id="moon-main" rx="36" ry="36" fill="url(#moonCoreGrad)"/>
-      <ellipse id="moon-shadow" cx="15" cy="-10" rx="32" ry="32" fill="#1a2420" opacity="0.45"/>
       <circle cx="-9" cy="10" r="3.6" fill="#cbb384" opacity="0.4"/>
       <circle cx="4" cy="18" r="2.4" fill="#cbb384" opacity="0.35"/>
       <circle cx="-14" cy="-6" r="2" fill="#cbb384" opacity="0.35"/>
@@ -393,28 +392,14 @@
 
   <!-- 6 · NATIONAL PARKS -->
   <section class="right" data-screen-label="06 National Parks" data-alt="11200" style="--rot:-1.6deg;">
-    <div class="card" data-card style="max-width:520px;">
-      <div class="tape"></div>
-      <div class="pin"></div>
+    <div class="card passport" data-card style="max-width:560px;">
+      <div class="passport-emblem">★</div>
       <div class="kicker"><span class="marker">marker 05 · 11,200 ft</span><span>parks passport</span></div>
       <h2 id="parksCount">— of — parks.</h2>
       <div class="sub">a stamp on every page is the dream</div>
       <div class="pct" id="parksPct"><div class="bar"><i style="width:0%"></i></div><div class="num">—%</div></div>
 
-      <div style="display:flex;gap:14px;margin-top:14px;flex-wrap:wrap;align-items:flex-start;">
-        <div class="polaroid">
-          <div class="img canyon">
-            <svg viewBox="0 0 170 120" width="100%" height="100%">
-              <path d="M0 120 L 0 80 L 30 60 L 50 70 L 80 40 L 110 65 L 140 50 L 170 75 L 170 120 Z" fill="rgba(0,0,0,0.35)"/>
-              <path d="M0 120 L 0 95 L 40 85 L 75 95 L 120 80 L 170 90 L 170 120 Z" fill="rgba(0,0,0,0.25)"/>
-            </svg>
-          </div>
-          <div class="cap">— Grand Canyon, '21</div>
-        </div>
-        <div style="flex:1;min-width:170px;">
-          <p style="margin:0;font-size:14px;"><strong>Visited:</strong> <span id="parksVisitedList"></span></p>
-        </div>
-      </div>
+      <div class="parks-grid" id="parksGrid"></div>
     </div>
   </section>
 

@@ -17,11 +17,16 @@ function hikerSVG(opts){
         .hk-hat{fill:#2d5a3d;stroke:#f4e4b8;stroke-width:1.4;}
         .hk-head{fill:#1a2420;stroke:#f4e4b8;stroke-width:1.8;}
         .hk-pole{stroke:#c4a574;stroke-width:1.8;stroke-linecap:round;}
-        .${id} .leg-front{animation:${id}-front 0.7s infinite ease-in-out;transform-origin:30px 58px;}
-        .${id} .leg-back {animation:${id}-back  0.7s infinite ease-in-out;transform-origin:30px 58px;}
-        .${id} .arm-front{animation:${id}-arm-f 0.7s infinite ease-in-out;transform-origin:30px 40px;}
-        .${id} .arm-back {animation:${id}-arm-b 0.7s infinite ease-in-out;transform-origin:30px 40px;}
-        .${id} .bob      {animation:${id}-bob   0.7s infinite ease-in-out;}
+        .${id} .leg-front{animation:${id}-front 0.7s infinite ease-in-out;animation-play-state:paused;transform-origin:30px 58px;}
+        .${id} .leg-back {animation:${id}-back  0.7s infinite ease-in-out;animation-play-state:paused;transform-origin:30px 58px;}
+        .${id} .arm-front{animation:${id}-arm-f 0.7s infinite ease-in-out;animation-play-state:paused;transform-origin:30px 40px;}
+        .${id} .arm-back {animation:${id}-arm-b 0.7s infinite ease-in-out;animation-play-state:paused;transform-origin:30px 40px;}
+        .${id} .bob      {animation:${id}-bob   0.7s infinite ease-in-out;animation-play-state:paused;}
+        .${id}.walking .leg-front,
+        .${id}.walking .leg-back,
+        .${id}.walking .arm-front,
+        .${id}.walking .arm-back,
+        .${id}.walking .bob{animation-play-state:running;}
         @keyframes ${id}-front{0%,100%{transform:rotate(-22deg);}50%{transform:rotate(24deg);} }
         @keyframes ${id}-back {0%,100%{transform:rotate(22deg);} 50%{transform:rotate(-22deg);} }
         @keyframes ${id}-arm-f{0%,100%{transform:rotate(20deg);} 50%{transform:rotate(-24deg);} }
@@ -29,7 +34,7 @@ function hikerSVG(opts){
         @keyframes ${id}-bob  {0%,100%{transform:translateY(0);} 50%{transform:translateY(-1.5px);} }
       </style>
     </defs>
-    <g class="${id}">
+    <g class="${id} hiker-rig">
       <g class="bob">
         <!-- backpack -->
         <path class="hk-pack" d="M16 38 Q14 36 16 33 L24 30 Q26 30 26 33 L26 56 Q26 58 24 58 L17 58 Q15 58 15 56 Z"/>
