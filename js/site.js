@@ -476,7 +476,8 @@ function initAltimeterTicks() {
     btn.setAttribute('aria-label', 'Jump to ' + (label || 'section'));
     btn.innerHTML = '<span class="tick-label">' + label + '</span>';
     btn.addEventListener('click', () => {
-      s.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      s.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
     });
     track.appendChild(btn);
     return { alt, el: btn };

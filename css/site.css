@@ -22,6 +22,21 @@ html{
   scroll-padding-top:110px;
 }
 
+/* Respect OS-level "reduce motion": disable forced scroll-snap (a known
+   vestibular-disorder trigger), the hiker's walk-cycle keyframe loop, the
+   scroll-cue bounce, and every card/hover transition site-wide. Near-zero
+   duration (not display:none/animation:none) so elements still land on
+   their final state instantly instead of getting stuck mid-transition. */
+@media (prefers-reduced-motion: reduce) {
+  html{scroll-snap-type:none;}
+  *, *::before, *::after{
+    animation-duration:0.001ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:0.001ms!important;
+    scroll-behavior:auto!important;
+  }
+}
+
 /* Mountain bg, fixed. 100dvh keeps the peak from jumping/gapping when mobile
    browser chrome shows/hides; vh stays as a fallback for older browsers. */
 .mountain-bg{position:fixed;inset:0;width:100vw;height:100vh;height:100dvh;z-index:0;pointer-events:none;}
@@ -270,7 +285,9 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
 }
 .pennant:hover::after{opacity:1;transform:translateX(-50%) translateY(0);}
 
-.row-chk{display:flex;align-items:center;gap:6px;color:#8a7a5a;line-height:1.25;}
+/* #6a5a3a (not the original #8a7a5a) — that measured 3.32:1 against the
+   paper background, under WCAG AA's 4.5:1 minimum for this text size. */
+.row-chk{display:flex;align-items:center;gap:6px;color:#6a5a3a;line-height:1.25;}
 .row-chk.done{color:#1a2420;}
 .row-chk .box{
   display:inline-block;width:12px;height:12px;
@@ -319,9 +336,12 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
 }
 .stamp .stamp-icon{
   width:34px;height:34px;border-radius:50%;
-  border:1.5px dashed rgba(232,217,176,0.28);
+  /* 0.4/0.55 alpha (not the original 0.28/0.35) — those measured under
+     4.5:1 (text) / 3:1 (icon outline) against the passport's dark
+     background, failing WCAG AA. */
+  border:1.5px dashed rgba(232,217,176,0.4);
   display:flex;align-items:center;justify-content:center;
-  color:rgba(232,217,176,0.28);
+  color:rgba(232,217,176,0.4);
   transition:transform .15s,border-color .15s,color .15s,background .15s;
 }
 .stamp.done .stamp-icon{
@@ -331,7 +351,7 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
 .stamp:hover .stamp-icon{transform:scale(1.15) rotate(-6deg);}
 .stamp-code{
   font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.06em;
-  color:rgba(232,217,176,0.35);
+  color:rgba(232,217,176,0.55);
 }
 .stamp.done .stamp-code{color:#e8d9b0;}
 
