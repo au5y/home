@@ -16,7 +16,7 @@ function hikerSVG(opts){
         .hk-strap{stroke:#f4e4b8;stroke-width:1.4;fill:none;}
         .hk-hat{fill:#2d5a3d;stroke:#f4e4b8;stroke-width:1.4;}
         .hk-head{fill:#1a2420;stroke:#f4e4b8;stroke-width:1.8;}
-        .hk-pole{stroke:#c4a574;stroke-width:1.8;stroke-linecap:round;}
+        .hk-hand{fill:#f4e4b8;stroke:none;}
         .${id} .leg-front{animation:${id}-front 0.7s infinite ease-in-out;animation-play-state:paused;transform-origin:30px 58px;}
         .${id} .leg-back {animation:${id}-back  0.7s infinite ease-in-out;animation-play-state:paused;transform-origin:30px 58px;}
         .${id} .arm-front{animation:${id}-arm-f 0.7s infinite ease-in-out;animation-play-state:paused;transform-origin:30px 40px;}
@@ -44,14 +44,15 @@ function hikerSVG(opts){
         <path class="hk-body" d="M30 40 L30 58"/>
         <!-- head -->
         <circle class="hk-head" cx="32" cy="32" r="5.5"/>
-        <!-- hat (brim + crown) -->
-        <path class="hk-hat" d="M24 30 L40 30 L36 26 Q32 22 28 26 Z"/>
-        <line class="hk-strap" x1="22" y1="30.5" x2="42" y2="30.5" stroke-width="2"/>
+        <!-- baseball cap: rounded crown + forward-pointing brim -->
+        <path class="hk-hat" d="M26 30 Q26 23 32 22 Q38 23 38 30 Q32 32 26 30 Z"/>
+        <path class="hk-hat" d="M31 29 Q38 28 41.5 30.5 Q37.5 31.8 31 30.5 Z"/>
         <!-- arms -->
         <line class="hk-body arm-back"  x1="30" y1="40" x2="36" y2="52"/>
         <line class="hk-body arm-front" x1="30" y1="40" x2="38" y2="50"/>
-        <!-- hiking pole -->
-        <line class="hk-pole arm-front" x1="38" y1="50" x2="44" y2="76"/>
+        <!-- hands: same transform-origin/animation as their arm, so they swing in sync -->
+        <circle class="hk-hand arm-back"  cx="36" cy="52" r="1.7"/>
+        <circle class="hk-hand arm-front" cx="38" cy="50" r="1.7"/>
       </g>
       <!-- legs (outside bob so feet stay grounded) -->
       <line class="hk-body leg-back"  x1="30" y1="58" x2="26" y2="74"/>

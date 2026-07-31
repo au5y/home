@@ -113,13 +113,77 @@ function renderChecklist(items, listElId, countElId, pctElId, suffix) {
   renderPct(document.getElementById(pctElId), done, items.length);
 }
 
+// Team colors (primary/secondary) and a short abbreviation per MLB team,
+// keyed by the team name as it appears in parens in adventures.md.
+const TEAM_DATA = {
+  'Milwaukee Brewers':        { abbr: 'MIL', primary: '#12284B', secondary: '#FFC52F' },
+  'Los Angeles Angels':       { abbr: 'LAA', primary: '#BA0021', secondary: '#003263' },
+  'St. Louis Cardinals':      { abbr: 'STL', primary: '#C41E3A', secondary: '#0C2340' },
+  'Arizona Diamondbacks':     { abbr: 'AZ',  primary: '#A71930', secondary: '#30B2B0' },
+  'New York Mets':            { abbr: 'NYM', primary: '#002D72', secondary: '#FF5910' },
+  'Philadelphia Phillies':    { abbr: 'PHI', primary: '#E81828', secondary: '#002D72' },
+  'Detroit Tigers':           { abbr: 'DET', primary: '#0C2340', secondary: '#FA4616' },
+  'Colorado Rockies':         { abbr: 'COL', primary: '#333366', secondary: '#C4CED4' },
+  'Houston Astros':           { abbr: 'HOU', primary: '#002D62', secondary: '#EB6E1F' },
+  'Los Angeles Dodgers':      { abbr: 'LAD', primary: '#005A9C', secondary: '#FFFFFF' },
+  'Boston Red Sox':           { abbr: 'BOS', primary: '#BD3039', secondary: '#0C2340' },
+  'Texas Rangers':            { abbr: 'TEX', primary: '#003278', secondary: '#C0111F' },
+  'Cincinnati Reds':          { abbr: 'CIN', primary: '#C6011F', secondary: '#000000' },
+  'Kansas City Royals':       { abbr: 'KC',  primary: '#004687', secondary: '#BD9B60' },
+  'Miami Marlins':            { abbr: 'MIA', primary: '#00A3E0', secondary: '#000000' },
+  'Washington Nationals':     { abbr: 'WSH', primary: '#AB0003', secondary: '#14225A' },
+  'San Francisco Giants':     { abbr: 'SF',  primary: '#FD5A1E', secondary: '#27251F' },
+  'Baltimore Orioles':        { abbr: 'BAL', primary: '#DF4601', secondary: '#000000' },
+  'San Diego Padres':         { abbr: 'SD',  primary: '#2F241D', secondary: '#FFC425' },
+  'Pittsburgh Pirates':       { abbr: 'PIT', primary: '#27251F', secondary: '#FDB827' },
+  'Cleveland Guardians':      { abbr: 'CLE', primary: '#00385D', secondary: '#E31937' },
+  'Chicago White Sox':        { abbr: 'CWS', primary: '#27251F', secondary: '#C4CED4' },
+  'Toronto Blue Jays':        { abbr: 'TOR', primary: '#134A8E', secondary: '#E8291C' },
+  'Athletics':                { abbr: 'ATH', primary: '#003831', secondary: '#EFB21E' },
+  'Seattle Mariners':         { abbr: 'SEA', primary: '#0C2C56', secondary: '#005C5C' },
+  'Minnesota Twins':          { abbr: 'MIN', primary: '#002B5C', secondary: '#D31145' },
+  'Tampa Bay Rays':           { abbr: 'TB',  primary: '#092C5C', secondary: '#F5D130' },
+  'Atlanta Braves':           { abbr: 'ATL', primary: '#13274F', secondary: '#CE1141' },
+  'Chicago Cubs':             { abbr: 'CHC', primary: '#0E3386', secondary: '#CC3433' },
+  'New York Yankees':         { abbr: 'NYY', primary: '#0C2340', secondary: '#FFFFFF' }
+};
+
+function pennantSVG(primary, secondary, abbr) {
+  // Muted, slightly aged tone rather than the raw team colors — blended
+  // toward the card's parchment/ink palette (lerpColor is defined below).
+  const mutedPrimary = lerpColor(primary, '#8a7a5a', 0.28);
+  const mutedSecondary = lerpColor(secondary, '#f4e4b8', 0.2);
+  return '<svg viewBox="0 0 46 30" width="46" height="30" aria-hidden="true">' +
+    '<path d="M2 2 L2 28 L44 15 Z" fill="' + mutedPrimary + '" stroke="' + mutedSecondary + '" stroke-width="2" stroke-linejoin="round"/>' +
+    '<text x="15" y="19.5" text-anchor="middle" font-family="\'JetBrains Mono\',monospace" font-size="10" font-weight="700" fill="' + mutedSecondary + '">' + abbr + '</text>' +
+    '</svg>';
+}
+
 function renderBallparks(items) {
-  // Ballpark entries are formatted "Name (Team)" — show just the name.
-  const shortened = items.map(i => ({
-    label: i.label.replace(/\s*\([^)]*\)\s*$/, ''),
-    done: i.done
-  }));
-  renderChecklist(shortened, 'ballparksList', 'ballparksCount', 'ballparksPct', ' ballparks.');
+  const done = items.filter(i => i.done);
+  const countEl = document.getElementById('ballparksCount');
+  if (countEl) countEl.textContent = done.length + ' of ' + items.length + ' ballparks.';
+  renderPct(document.getElementById('ballparksPct'), done.length, items.length);
+
+  const gridEl = document.getElementById('ballparksGrid');
+  if (gridEl) {
+    gridEl.innerHTML = '';
+    items.forEach(({ label, done }) => {
+      // Ballpark entries are formatted "Park Name (Team Name)".
+      const m = label.match(/^(.+?)\s*\(([^)]+)\)\s*$/);
+      const parkName = m ? m[1].trim() : label;
+      const teamName = m ? m[2].trim() : '';
+      const team = TEAM_DATA[teamName] ||
+        { abbr: teamName.slice(0, 3).toUpperCase() || '?', primary: '#5a4a2b', secondary: '#f4e4b8' };
+
+      const pennant = document.createElement('div');
+      pennant.className = 'pennant' + (done ? ' done' : '');
+      pennant.setAttribute('data-full', parkName + ' — ' + teamName);
+      pennant.title = parkName + ' (' + teamName + ')';
+      pennant.innerHTML = pennantSVG(team.primary, team.secondary, team.abbr);
+      gridEl.appendChild(pennant);
+    });
+  }
 }
 
 // Official NPS 4-letter unit codes, keyed by the park name as it appears

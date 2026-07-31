@@ -182,12 +182,32 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
 .us-map .cell.done{background:#2d5a3d;color:var(--cream);box-shadow:1px 1px 0 rgba(0,0,0,0.2);}
 .us-map .cell.empty{background:transparent;pointer-events:none;}
 
-/* Ballparks list */
-.ballparks-list{
-  margin-top:10px;font-family:'Kalam',cursive;font-size:13px;
-  column-count:2;column-gap:16px;
+/* Ballparks — team pennants */
+.pennant-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));
+  gap:12px 8px;margin-top:14px;
 }
-.ballparks-list .row-chk{break-inside:avoid;padding:2px 0;}
+.pennant{
+  position:relative;cursor:default;
+  filter:grayscale(1) opacity(0.4);
+  transition:filter .15s,transform .15s;
+  transform:rotate(-2deg);
+}
+.pennant.done{filter:none;}
+.pennant:hover{transform:rotate(-4deg) scale(1.1);}
+.pennant svg{display:block;width:100%;height:auto;filter:drop-shadow(1px 2px 0 rgba(0,0,0,0.2));}
+
+.pennant::after{
+  content:attr(data-full);
+  position:absolute;bottom:calc(100% + 7px);left:50%;
+  transform:translateX(-50%) translateY(4px);
+  background:#1a2420;color:#f4e4b8;font-family:'Patrick Hand',cursive;font-size:12px;
+  padding:4px 9px;border-radius:6px;white-space:nowrap;
+  opacity:0;pointer-events:none;transition:opacity .15s,transform .15s;
+  box-shadow:0 3px 8px rgba(0,0,0,0.35);z-index:5;
+}
+.pennant:hover::after{opacity:1;transform:translateX(-50%) translateY(0);}
+
 .row-chk{display:flex;align-items:center;gap:6px;color:#8a7a5a;line-height:1.25;}
 .row-chk.done{color:#1a2420;}
 .row-chk .box{
@@ -316,7 +336,6 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
   .nav-strip .logo{font-size:22px;}
   .nav-strip .links{gap:14px;}
   .us-map{font-size:7px;}
-  .ballparks-list{column-count:1;}
   .peaks-list{columns:1;}
 }
 
