@@ -525,8 +525,11 @@ function initTrailFlags() {
       pole.setAttribute('x2', '0'); pole.setAttribute('y2', '-18');
       g.appendChild(pole);
 
+      // "flag-pennant", not "pennant" — the ballpark grid already owns the
+      // bare .pennant class (filter/transform/hover/tooltip rules) and,
+      // being unscoped, would otherwise bleed onto this unrelated SVG path.
       const pennant = document.createElementNS(SVG_NS, 'path');
-      pennant.setAttribute('class', 'pennant');
+      pennant.setAttribute('class', 'flag-pennant');
       pennant.setAttribute('d', 'M0 -18 L13 -14 L0 -10 Z');
       g.appendChild(pennant);
 
@@ -540,8 +543,16 @@ function initTrailFlags() {
   }
 
   place();
+  // Section/document height shifts once web fonts finish (reflowing text)
+  // and once the async adventures.md fetch populates the data-driven grids
+  // (states map, pennants, stamps, peaks list) — both happen after this
+  // runs at DOMContentLoaded, so re-place once things settle, same as
+  // initHiker's update() does for the same reason.
+  window.addEventListener('load', place);
   window.addEventListener('resize', place);
   window.addEventListener('orientationchange', place);
+  setTimeout(place, 200);
+  setTimeout(place, 800);
 }
 
 // === Hiker scroll tracking ===

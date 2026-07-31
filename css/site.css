@@ -31,9 +31,9 @@ html{
    dim and flag-down until the hiker reaches that checkpoint, then flip to
    the same warm orange as the summit flag. */
 .trail-flag .pole{stroke:#8a7a5a;stroke-width:1.4;transition:stroke .4s ease;}
-.trail-flag .pennant{fill:rgba(244,228,184,0.3);transition:fill .4s ease;}
+.trail-flag .flag-pennant{fill:rgba(244,228,184,0.3);transition:fill .4s ease;}
 .trail-flag.reached .pole{stroke:#c4a574;}
-.trail-flag.reached .pennant{fill:#e89a4a;}
+.trail-flag.reached .flag-pennant{fill:#e89a4a;}
 
 /* Hiker, fixed positioned via JS, walks up trail. z-index sits below main's
    cards (z-index:2) so the hiker always passes behind card content instead
@@ -366,25 +366,6 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
 .proj-tiles .ptile:hover{transform:rotate(-1deg) scale(1.04);}
 .proj-tiles .ptile .ttl{font-family:'Caveat',cursive;font-size:26px;line-height:1.15;margin-bottom:4px;white-space:nowrap;}
 .proj-tiles .ptile .desc{font-family:'Patrick Hand',cursive;font-size:13px;color:#9aa28b;margin-top:2px;}
-
-/* Polaroid */
-.polaroid{
-  display:inline-block;background:#fff;
-  padding:8px 8px 28px;
-  box-shadow:3px 4px 0 rgba(0,0,0,0.2);
-  transform:rotate(-3deg);
-}
-.polaroid .img{
-  width:170px;height:120px;
-  display:flex;align-items:center;justify-content:center;
-}
-.polaroid .img.canyon{background:linear-gradient(180deg,#8a4530 0%,#c47840 50%,#e8a060 100%);}
-.polaroid .img.forest{background:linear-gradient(180deg,#3a5a3a 0%,#5a8a5e 100%);}
-.polaroid .img.sky{background:linear-gradient(180deg,#5a7ab8 0%,#8aa8c4 100%);}
-.polaroid .cap{font-family:'Caveat',cursive;font-size:18px;color:#1a2420;text-align:center;margin-top:6px;line-height:1;}
-
-/* small SVG illustration in polaroid */
-.polaroid svg{display:block;width:100%;height:100%;}
 
 @media (max-width:760px){
   section{padding:60px 24px;}
