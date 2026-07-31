@@ -487,6 +487,63 @@ function initAltimeterTicks() {
   };
 }
 
+// === Checkpoint flags planted on the trail ===
+// One small flag per section (except the summit, which already has its own
+// larger one), placed at the point on the trail path matching that
+// section's scroll-centered position. Flips from dim to "reached" once the
+// hiker's current altitude has caught up to it (called from initHiker's
+// scroll update, which already tracks currentAlt).
+let updateTrailFlags = function () {};
+const SVG_NS = 'http://www.w3.org/2000/svg';
+
+function initTrailFlags() {
+  const trail = document.getElementById('trail-path');
+  const flagsGroup = document.getElementById('trail-flags');
+  const sections = Array.from(document.querySelectorAll('[data-alt]')).filter(s => s.id !== 'summit');
+  if (!trail || !flagsGroup || !sections.length) return;
+
+  const pathLength = trail.getTotalLength();
+
+  function place() {
+    flagsGroup.innerHTML = '';
+    const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+
+    const flags = sections.map(s => {
+      // Same point scroll-snap centers this section on: matches where the
+      // hiker visually sits when this checkpoint is the active one.
+      const centerScrollY = s.offsetTop + s.offsetHeight / 2 - window.innerHeight / 2;
+      const t = Math.max(0, Math.min(1, centerScrollY / maxScroll));
+      const pt = trail.getPointAtLength(pathLength * t);
+
+      const g = document.createElementNS(SVG_NS, 'g');
+      g.setAttribute('class', 'trail-flag');
+      g.setAttribute('transform', 'translate(' + pt.x.toFixed(1) + ',' + pt.y.toFixed(1) + ')');
+
+      const pole = document.createElementNS(SVG_NS, 'line');
+      pole.setAttribute('class', 'pole');
+      pole.setAttribute('x1', '0'); pole.setAttribute('y1', '0');
+      pole.setAttribute('x2', '0'); pole.setAttribute('y2', '-18');
+      g.appendChild(pole);
+
+      const pennant = document.createElementNS(SVG_NS, 'path');
+      pennant.setAttribute('class', 'pennant');
+      pennant.setAttribute('d', 'M0 -18 L13 -14 L0 -10 Z');
+      g.appendChild(pennant);
+
+      flagsGroup.appendChild(g);
+      return { alt: parseInt(s.dataset.alt, 10) || 0, el: g };
+    });
+
+    updateTrailFlags = function (currentAlt) {
+      flags.forEach(f => f.el.classList.toggle('reached', currentAlt >= f.alt));
+    };
+  }
+
+  place();
+  window.addEventListener('resize', place);
+  window.addEventListener('orientationchange', place);
+}
+
 // === Hiker scroll tracking ===
 function initHiker() {
   const wrap = document.getElementById('hikerFixed');
@@ -548,6 +605,7 @@ function initHiker() {
     if (prog) prog.style.height = (t * 100) + '%';
     if (now) now.textContent = currentAlt.toLocaleString() + ' ft';
     setActiveAltTick(currentAlt);
+    updateTrailFlags(currentAlt);
   }
 
   // The hiker's walk-cycle animation only plays while the page is actively
@@ -596,6 +654,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCelestialSizing();
   applySkyColors(skyHourForScrollT(0));
   initAltimeterTicks();
+  initTrailFlags();
   initHiker();
   initCards();
 });

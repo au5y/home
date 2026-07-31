@@ -277,6 +277,12 @@
       <circle cx="502" cy="308" r="1.8"/>
     </g>
 
+    <!-- checkpoint flags: one per section (except the summit, which gets
+         its own larger flag below), planted on the trail by js/site.js
+         initTrailFlags() at the point matching that section's scroll
+         position. Dim until scrolled past, then flip to "reached". -->
+    <g id="trail-flags"></g>
+
     <!-- summit flag -->
     <line x1="500" y1="190" x2="500" y2="140" stroke="#c4a574" stroke-width="3"/>
     <path d="M500 140 L 528 150 L 500 161 Z" fill="#e89a4a"/>
@@ -425,7 +431,7 @@
       together — talk shop, swap trail recs, build something — say hi.</p>
     <div class="summit-links">
       <a href="mailto:hello@example.com">✉ email</a>
-      <a href="#">↗ github</a>
+      <a href="https://github.com/au5y" target="_blank" rel="noopener">↗ github</a>
       <a href="https://www.linkedin.com/in/milleraustink" target="_blank" rel="noopener">↗ linkedin</a>
       <a href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true">resume</a>
       <a href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true">projects</a>
