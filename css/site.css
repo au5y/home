@@ -14,7 +14,13 @@ body{font-family:'Kalam',cursive;-webkit-font-smoothing:antialiased;}
    comes to rest on a checkpoint instead of stopping mid-card. Only the
    settle-point snaps (scroll-snap-stop isn't "always") so a fast flick
    can still sail past several checkpoints at once. */
-html{scroll-snap-type:y mandatory;}
+html{
+  scroll-snap-type:y mandatory;
+  /* Reserves the fixed nav's height from the snap alignment calculation, so
+     a centered section (especially a tall one, like the parks passport)
+     gets pushed down for clearance instead of tucking flush under the nav. */
+  scroll-padding-top:110px;
+}
 
 /* Mountain bg, fixed. 100dvh keeps the peak from jumping/gapping when mobile
    browser chrome shows/hides; vh stays as a fallback for older browsers. */
@@ -41,9 +47,12 @@ html{scroll-snap-type:y mandatory;}
 
 /* Fixed scrim behind the nav strip so the logo/links stay legible no matter
    what color the time-of-day sky gradient behind them currently is. */
+/* Strong enough to keep the nav readable even when a tall card (e.g. the
+   parks passport, dark-on-dark) scrolls flush underneath it — a text-shadow
+   alone only helps against light backgrounds like the mountain art. */
 .nav-scrim{
-  position:fixed;inset:0 0 auto 0;height:110px;z-index:9;pointer-events:none;
-  background:linear-gradient(180deg,rgba(0,0,0,0.42) 0%,rgba(0,0,0,0.22) 55%,rgba(0,0,0,0) 100%);
+  position:fixed;inset:0 0 auto 0;height:120px;z-index:9;pointer-events:none;
+  background:linear-gradient(180deg,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.5) 50%,rgba(0,0,0,0) 100%);
 }
 
 /* Nav */
@@ -57,6 +66,12 @@ html{scroll-snap-type:y mandatory;}
   font-family:'JetBrains Mono',monospace;font-size:10px;
   color:var(--ink-dim);letter-spacing:0.12em;text-transform:uppercase;
   text-shadow:0 1px 3px rgba(0,0,0,0.8),0 0 10px rgba(0,0,0,0.4);
+  /* Own backdrop (not just the page-wide .nav-scrim) so the nav stays
+     legible even over a dark card that's scrolled up flush behind it —
+     the text-shadow alone only helps against light backgrounds. */
+  padding:8px 14px;border-radius:12px;
+  background:rgba(10,15,10,0.55);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
 }
 .nav-strip .logo{
   font-family:'Caveat',cursive;font-size:28px;color:var(--cream);
@@ -126,7 +141,7 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
 /* INTRO */
 .intro{justify-content:flex-start;padding-top:18vh;}
 .intro h1{font-family:'Caveat',cursive;font-size:120px;line-height:0.95;color:var(--cream);margin:0;text-shadow:3px 4px 0 rgba(0,0,0,0.5);transform:rotate(-2deg);}
-.intro .tag{font-family:'Patrick Hand',cursive;font-size:22px;color:var(--ink);max-width:560px;margin:20px auto 0;line-height:1.4;}
+.intro .tag{font-family:'Patrick Hand',cursive;font-size:22px;color:var(--ink);width:100%;max-width:560px;margin:20px auto 0;line-height:1.4;}
 .intro .scroll-cue{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--green-2);margin-top:36px;text-shadow:0 1px 3px rgba(0,0,0,0.7);}
 .intro .scroll-cue::after{content:" ↓";display:inline-block;margin-left:6px;animation:bounce 1.6s infinite ease-in-out;}
 @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(8px);}}
@@ -134,7 +149,7 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
 
 /* SUMMIT */
 .summit h2{font-family:'Caveat',cursive;font-size:130px;line-height:1;color:var(--cream);margin:0;text-shadow:3px 4px 0 rgba(0,0,0,0.5);transform:rotate(-1deg);}
-.summit .tag{font-family:'Patrick Hand',cursive;font-size:22px;color:var(--ink);max-width:600px;margin:40px auto 36px;line-height:1.4;}
+.summit .tag{font-family:'Patrick Hand',cursive;font-size:22px;color:var(--ink);width:100%;max-width:600px;margin:40px auto 36px;line-height:1.4;}
 .summit-links{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
 .summit-links a{
   display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--cream);
@@ -245,7 +260,11 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
   position:absolute;bottom:calc(100% + 7px);left:50%;
   transform:translateX(-50%) translateY(4px);
   background:#1a2420;color:#f4e4b8;font-family:'Patrick Hand',cursive;font-size:12px;
-  padding:4px 9px;border-radius:6px;white-space:nowrap;
+  padding:4px 9px;border-radius:6px;
+  /* Capped + wrapping instead of nowrap: a long "Park — Team" label
+     shouldn't be able to stretch the tooltip's (invisible, but still
+     layout-contributing) box past the grid and inflate page width. */
+  max-width:140px;width:max-content;white-space:normal;text-align:center;line-height:1.3;
   opacity:0;pointer-events:none;transition:opacity .15s,transform .15s;
   box-shadow:0 3px 8px rgba(0,0,0,0.35);z-index:5;
 }
@@ -321,7 +340,8 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
   position:absolute;bottom:calc(100% + 7px);left:50%;
   transform:translateX(-50%) translateY(4px);
   background:#150e08;color:#e8d9b0;font-family:'Patrick Hand',cursive;font-size:12px;
-  padding:4px 9px;border-radius:6px;white-space:nowrap;
+  padding:4px 9px;border-radius:6px;
+  max-width:150px;width:max-content;white-space:normal;text-align:center;line-height:1.3;
   opacity:0;pointer-events:none;transition:opacity .15s,transform .15s;
   box-shadow:0 3px 8px rgba(0,0,0,0.45);z-index:5;
   border:1px solid rgba(201,162,39,0.4);
@@ -372,7 +392,11 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
   .intro h1{font-size:68px;}
   .intro .tag{font-size:18px;}
   .summit h2{font-size:64px;}
-  .card{max-width:100%;}
+  /* !important: several cards set a wider desktop max-width via inline
+     style (e.g. style="max-width:560px"), which otherwise beats this
+     media-query rule regardless of specificity and clips content on
+     narrow viewports instead of letting it shrink to fit. */
+  .card{max-width:100%!important;}
   .card h2{font-size:36px;}
   .altimeter{display:none;}
   .nav-strip{font-size:9px;left:calc(18px + env(safe-area-inset-left));right:calc(18px + env(safe-area-inset-right));}
