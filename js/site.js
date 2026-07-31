@@ -452,6 +452,41 @@ function applySkyColors(hour) {
   positionCelestial(document.getElementById('sky-moon'), celestialArcAt(hour, MOON_WINDOW[0], MOON_WINDOW[1]));
 }
 
+// === Altimeter checkpoint ticks ===
+// One tick per [data-alt] section, positioned along the track by altitude
+// fraction. Clicking a tick jumps straight to that section; setActiveAltTick
+// (called from initHiker's scroll update, which already tracks currentAlt)
+// highlights whichever checkpoint the hiker last passed.
+let setActiveAltTick = function () {};
+
+function initAltimeterTicks() {
+  const track = document.getElementById('altTrack');
+  const sections = Array.from(document.querySelectorAll('[data-alt]'));
+  if (!track || !sections.length) return;
+
+  const maxAlt = Math.max.apply(null, sections.map(s => parseInt(s.dataset.alt, 10) || 0));
+  const ticks = sections.map(s => {
+    const alt = parseInt(s.dataset.alt, 10) || 0;
+    const label = (s.dataset.screenLabel || '').replace(/^\d+\s*/, '');
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'tick';
+    btn.style.top = (maxAlt ? (alt / maxAlt) * 100 : 0) + '%';
+    btn.setAttribute('aria-label', 'Jump to ' + (label || 'section'));
+    btn.innerHTML = '<span class="tick-label">' + label + '</span>';
+    btn.addEventListener('click', () => {
+      s.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+    track.appendChild(btn);
+    return { alt, el: btn };
+  });
+
+  setActiveAltTick = function (currentAlt) {
+    ticks.forEach(t => t.el.classList.toggle('active', t.alt === currentAlt));
+  };
+}
+
 // === Hiker scroll tracking ===
 function initHiker() {
   const wrap = document.getElementById('hikerFixed');
@@ -512,6 +547,7 @@ function initHiker() {
     const now = document.getElementById('altNow');
     if (prog) prog.style.height = (t * 100) + '%';
     if (now) now.textContent = currentAlt.toLocaleString() + ' ft';
+    setActiveAltTick(currentAlt);
   }
 
   // The hiker's walk-cycle animation only plays while the page is actively
@@ -559,6 +595,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadAdventures();
   initCelestialSizing();
   applySkyColors(skyHourForScrollT(0));
+  initAltimeterTicks();
   initHiker();
   initCards();
 });
