@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#1a2420"/>
 <title>Austin Miller — the climb</title>
 <link rel="icon" href="assets/favicon/favicon.ico"/>
-<link rel="stylesheet" href="css/site.css"/>
+<link rel="stylesheet" href="css/site.css?v=20260731"/>
 </head>
 <body>
 
@@ -22,17 +22,35 @@
         <line x1="0" y1="0" x2="0" y2="9" stroke="#0d1f15" stroke-width="1" opacity="0.5"/>
       </pattern>
       <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#0a1810"/>
-        <stop offset="55%" stop-color="#152620"/>
-        <stop offset="100%" stop-color="#1a2420"/>
+        <stop id="sky-stop-top" offset="0%" stop-color="#0a1810"/>
+        <stop id="sky-stop-mid" offset="55%" stop-color="#152620"/>
+        <stop id="sky-stop-bot" offset="100%" stop-color="#1a2420"/>
       </linearGradient>
+      <radialGradient id="sunCoreGrad" cx="35%" cy="32%" r="68%">
+        <stop offset="0%" stop-color="#fff6d8"/>
+        <stop offset="60%" stop-color="#ffdb7a"/>
+        <stop offset="100%" stop-color="#ffb84d"/>
+      </radialGradient>
+      <radialGradient id="sunGlowGrad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#ffcf7f" stop-opacity="0.35"/>
+        <stop offset="100%" stop-color="#ffcf7f" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="moonCoreGrad" cx="32%" cy="30%" r="72%">
+        <stop offset="0%" stop-color="#fffaf0"/>
+        <stop offset="55%" stop-color="#f4e4b8"/>
+        <stop offset="100%" stop-color="#cbb384"/>
+      </radialGradient>
+      <radialGradient id="moonGlowGrad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#f4e4b8" stop-opacity="0.4"/>
+        <stop offset="100%" stop-color="#f4e4b8" stop-opacity="0"/>
+      </radialGradient>
     </defs>
 
     <!-- sky -->
     <rect width="1000" height="1000" fill="url(#sky)"/>
 
-    <!-- stars -->
-    <g fill="#f4e4b8" opacity="0.8">
+    <!-- stars: opacity is fadedn in/out with daylight by js/site.js applySkyColors() -->
+    <g id="sky-stars" fill="#f4e4b8" opacity="0.8">
       <circle cx="120" cy="100" r="1.2"/><circle cx="320" cy="80"  r="1"/>
       <circle cx="540" cy="120" r="1.4"/><circle cx="780" cy="60"  r="1"/>
       <circle cx="900" cy="180" r="1.2"/><circle cx="180" cy="220" r="0.8"/>
@@ -42,61 +60,73 @@
       <circle cx="380" cy="380" r="0.9"/>
     </g>
 
-    <!-- moon -->
-    <circle cx="180" cy="200" r="36" fill="#f4e4b8" opacity="0.9"/>
-    <circle cx="195" cy="190" r="32" fill="#1a2420" opacity="0.4"/>
+    <!-- sun & moon: both travel an arc across the sky and fade at the horizon,
+         positioned every tick by js/site.js applySkyColors(). rx/ry (not r) are
+         used so js/site.js can recompute them on load/resize to counteract this
+         svg's non-uniform preserveAspectRatio="none" stretch — otherwise these
+         would render as ellipses instead of circles on any non-square viewport. -->
+    <g id="sky-sun" transform="translate(820,150)">
+      <ellipse id="sun-glow" rx="56" ry="56" fill="url(#sunGlowGrad)"/>
+      <ellipse id="sun-core" rx="30" ry="30" fill="url(#sunCoreGrad)"/>
+    </g>
+    <g id="sky-moon" transform="translate(180,200)">
+      <ellipse id="moon-glow" rx="46" ry="46" fill="url(#moonGlowGrad)"/>
+      <ellipse id="moon-main" rx="36" ry="36" fill="url(#moonCoreGrad)"/>
+      <ellipse id="moon-shadow" cx="15" cy="-10" rx="32" ry="32" fill="#1a2420" opacity="0.45"/>
+      <circle cx="-9" cy="10" r="3.6" fill="#cbb384" opacity="0.4"/>
+      <circle cx="4" cy="18" r="2.4" fill="#cbb384" opacity="0.35"/>
+      <circle cx="-14" cy="-6" r="2" fill="#cbb384" opacity="0.35"/>
+    </g>
 
-    <!-- FAR ridges -->
+    <!-- FAR ridges (geometry extends 30 units past x=0/1000 so the "rough" filter's
+         displacement map always has real source pixels to sample at the canvas
+         edge — otherwise it leaves a visible seam right at the boundary) -->
     <path filter="url(#rough)"
-      d="M0 1000 L 0 460 L 90 400 L 170 445 L 260 370 L 340 430 L 430 340 L 520 400
-         L 610 310 L 690 380 L 770 330 L 860 410 L 940 355 L 1000 400 L 1000 1000 Z"
+      d="M-30 1000 L -30 430 L 100 380 L 190 420 L 280 350 L 370 400 L 460 320 L 540 370
+         L 630 300 L 710 355 L 790 310 L 870 385 L 950 340 L 1030 380 L 1030 1000 Z"
       fill="#0a1810"/>
 
     <!-- MID ridges -->
     <path filter="url(#rough)"
-      d="M0 1000 L 0 640 L 100 585 L 190 630 L 270 545 L 350 605 L 420 520 L 500 600
-         L 590 500 L 660 570 L 740 490 L 830 560 L 910 500 L 1000 555 L 1000 1000 Z"
+      d="M-30 1000 L -30 610 L 110 560 L 210 605 L 300 515 L 390 580 L 470 490 L 560 575
+         L 650 470 L 730 545 L 810 460 L 900 535 L 970 470 L 1030 520 L 1030 1000 Z"
       fill="#142a22"/>
 
-    <!-- MAIN massif — single dominant summit at (500,190), wide enough near the
-         top for a real switchback trail to climb it; lower secondary peak/shoulder
-         off to the right for realism -->
+    <!-- MAIN massif — widened, ridge-crested silhouette: a broad base flaring out to
+         near the frame edges, a false-summit shoulder at (520,300), and the true
+         summit at (500,150) — comfortably above the trail's end/flag base at
+         (500,190) so the rough-filter's edge displacement never leaves a visible
+         gap between the mountain fill and the flag -->
     <path filter="url(#rough)"
-      d="M0 1000 L 0 880
-         L 90 825 L 170 860 L 240 780 L 300 810 L 360 720 L 410 750
-         L 450 660 L 430 625 L 470 545 L 452 505 L 482 425 L 490 345
-         L 497 265 L 500 190
-         L 512 300 L 505 360 L 525 420 L 518 470 L 545 540 L 560 600
-         L 540 650 L 580 700 L 610 655 L 650 555 L 670 615 L 700 575
-         L 740 655 L 790 605 L 840 695 L 900 645 L 960 725 L 1000 695
-         L 1000 1000 Z"
+      d="M-30 1000 L -30 860
+         L 60 795 L 130 835 L 200 800
+         L 185 750 L 265 650 L 285 550 L 365 450 L 385 350 L 465 250 L 500 150
+         L 565 250 L 585 350 L 665 450 L 685 550 L 765 650 L 785 750
+         L 800 800 L 870 835 L 940 795 L 1030 860
+         L 1030 1000 Z"
       fill="#2d5a3d"/>
     <path filter="url(#rough)"
-      d="M0 1000 L 0 880
-         L 90 825 L 170 860 L 240 780 L 300 810 L 360 720 L 410 750
-         L 450 660 L 430 625 L 470 545 L 452 505 L 482 425 L 490 345
-         L 497 265 L 500 190
-         L 512 300 L 505 360 L 525 420 L 518 470 L 545 540 L 560 600
-         L 540 650 L 580 700 L 610 655 L 650 555 L 670 615 L 700 575
-         L 740 655 L 790 605 L 840 695 L 900 645 L 960 725 L 1000 695
-         L 1000 1000 Z"
+      d="M-30 1000 L -30 860
+         L 60 795 L 130 835 L 200 800
+         L 185 750 L 265 650 L 285 550 L 365 450 L 385 350 L 465 250 L 500 150
+         L 565 250 L 585 350 L 665 450 L 685 550 L 765 650 L 785 750
+         L 800 800 L 870 835 L 940 795 L 1030 860
+         L 1030 1000 Z"
       fill="url(#hatch)" opacity="0.35"/>
 
-    <!-- crag shading: darker facets on the shadowed (right-facing) side of each rib -->
-    <g fill="#1c3d29" opacity="0.55" filter="url(#rough)">
-      <path d="M500 190 L 497 265 L 490 345 L 482 425 L 452 505 L 470 545 L 525 420 L 512 300 Z" opacity="0.35"/>
-      <path d="M430 625 L 470 545 L 452 505 L 482 425 Z" opacity="0.55"/>
-      <path d="M650 555 L 610 655 L 580 700 L 540 650 L 560 600 L 545 540 L 518 470 Z" opacity="0.45"/>
-      <path d="M240 780 L 300 810 L 360 720 L 410 750 L 450 660 L 430 625 Z" opacity="0.35"/>
+    <!-- crag shading: darker facets on the shadowed (right-facing) side of the ridge,
+         and a subtler one on the left flank -->
+    <g fill="#1c3d29" opacity="0.5" filter="url(#rough)">
+      <path d="M500 150 L 565 250 L 585 350 L 665 450 L 685 550 L 765 650 L 700 620 L 630 520 L 570 420 L 535 300 Z" opacity="0.4"/>
+      <path d="M200 800 L 185 750 L 265 650 L 285 550 L 365 450 L 385 350 L 340 470 L 300 610 L 250 730 Z" opacity="0.28"/>
     </g>
 
     <!-- snow caps — jagged patches hugging the ridgeline near each summit -->
-    <path d="M494 260 L 498 210 L 500 190 L 503 215 L 510 300 L 505 250 L 499 275 Z"
+    <path d="M478 215 L 492 175 L 500 150 L 508 175 L 522 215 L 507 195 L 495 202 Z"
       fill="#f4e4b8" opacity="0.9"/>
-    <path d="M486 400 L 490 345 L 497 265 L 494 320 Z" fill="#f4e4b8" opacity="0.5"/>
-    <path d="M636 570 L 645 558 L 650 555 L 658 570 L 665 600 L 652 585 L 641 602 Z"
-      fill="#f4e4b8" opacity="0.65"/>
-    <path d="M446 590 L 452 505 L 460 570 L 456 605 Z" fill="#f4e4b8" opacity="0.45"/>
+    <path d="M448 280 L 465 250 L 480 280 L 462 270 Z" fill="#f4e4b8" opacity="0.55"/>
+    <path d="M552 280 L 565 250 L 580 285 L 562 272 Z" fill="#f4e4b8" opacity="0.5"/>
+    <path d="M570 380 L 585 350 L 600 385 L 583 370 Z" fill="#f4e4b8" opacity="0.4"/>
 
     <!-- foreground evergreens at the base -->
     <g fill="#0a1810" stroke="#1a2420" stroke-width="1">
@@ -124,36 +154,128 @@
         <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
         <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
       </g>
+      <g transform="translate(140,900) scale(0.65)">
+        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
+        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
+      </g>
+      <g transform="translate(280,905) scale(0.75)">
+        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
+        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
+      </g>
+      <g transform="translate(730,905) scale(0.85)">
+        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
+        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
+      </g>
+      <g transform="translate(880,900) scale(0.6)">
+        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
+        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
+      </g>
+      <g transform="translate(30,960) scale(0.55)">
+        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
+        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
+      </g>
+      <g transform="translate(970,970) scale(0.5)">
+        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
+        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
+      </g>
+      <g transform="translate(230,780) scale(0.4)">
+        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
+        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
+      </g>
+      <g transform="translate(790,790) scale(0.4)">
+        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
+        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
+      </g>
     </g>
 
     <!-- TRAIL — a real switchback ascent: wide zigzags low on the wide base,
-         narrowing to a direct final push up the tight summit spike -->
+         narrowing to a direct final push up the ridge crest. Drawn as three layers:
+         a wide dirt tread, a stippled texture pass, then the dashed guide line
+         (id="trail-path", sampled by js/site.js to walk the hiker). -->
+    <path
+      d="M 500 950
+         Q 470 915 445 880
+         C 410 865 395 845 415 815
+         Q 460 792 505 795
+         C 540 797 560 775 545 748
+         Q 510 728 470 735
+         C 435 740 420 718 440 692
+         Q 470 672 500 678
+         C 522 682 535 660 518 638
+         Q 495 618 478 598
+         C 465 582 472 560 495 552
+         Q 512 546 508 522
+         C 505 502 490 492 480 472
+         Q 486 452 500 445
+         C 510 440 512 422 502 410
+         Q 495 398 500 380
+         C 504 366 498 350 490 340
+         Q 496 322 502 308
+         C 507 296 500 280 500 265
+         Q 500 240 500 225
+         L 500 190"
+      stroke="#5a4632" stroke-width="13" fill="none" stroke-linecap="round"
+      filter="url(#rough)" opacity="0.55"/>
+    <path
+      d="M 500 950
+         Q 470 915 445 880
+         C 410 865 395 845 415 815
+         Q 460 792 505 795
+         C 540 797 560 775 545 748
+         Q 510 728 470 735
+         C 435 740 420 718 440 692
+         Q 470 672 500 678
+         C 522 682 535 660 518 638
+         Q 495 618 478 598
+         C 465 582 472 560 495 552
+         Q 512 546 508 522
+         C 505 502 490 492 480 472
+         Q 486 452 500 445
+         C 510 440 512 422 502 410
+         Q 495 398 500 380
+         C 504 366 498 350 490 340
+         Q 496 322 502 308
+         C 507 296 500 280 500 265
+         Q 500 240 500 225
+         L 500 190"
+      stroke="#3e3121" stroke-width="13" fill="none" stroke-linecap="round"
+      filter="url(#rough)" opacity="0.3" stroke-dasharray="0.1 6" stroke-dashoffset="3"/>
     <path id="trail-path"
       d="M 500 950
-         Q 460 900 420 860
-         Q 500 825 570 800
-         Q 500 760 440 730
-         Q 495 690 540 660
-         Q 505 620 475 590
-         Q 500 555 515 530
-         Q 498 495 490 470
-         Q 500 435 505 410
-         Q 500 375 497 350
-         Q 502 315 503 290
-         Q 500 250 500 225
+         Q 470 915 445 880
+         C 410 865 395 845 415 815
+         Q 460 792 505 795
+         C 540 797 560 775 545 748
+         Q 510 728 470 735
+         C 435 740 420 718 440 692
+         Q 470 672 500 678
+         C 522 682 535 660 518 638
+         Q 495 618 478 598
+         C 465 582 472 560 495 552
+         Q 512 546 508 522
+         C 505 502 490 492 480 472
+         Q 486 452 500 445
+         C 510 440 512 422 502 410
+         Q 495 398 500 380
+         C 504 366 498 350 490 340
+         Q 496 322 502 308
+         C 507 296 500 280 500 265
+         Q 500 240 500 225
          L 500 190"
       stroke="#f4e4b8" stroke-width="3.5" fill="none"
       stroke-dasharray="8 8" stroke-linecap="round"/>
 
-    <!-- switchback blazes: small trail markers at each turn -->
+    <!-- switchback blazes: small trail markers at each turn, tapering as the trail climbs -->
     <g fill="#f4e4b8" opacity="0.85">
-      <circle cx="420" cy="860" r="3.2"/>
-      <circle cx="570" cy="800" r="3.2"/>
-      <circle cx="440" cy="730" r="3.2"/>
-      <circle cx="540" cy="660" r="3"/>
-      <circle cx="475" cy="590" r="2.6"/>
-      <circle cx="515" cy="530" r="2.4"/>
-      <circle cx="490" cy="470" r="2"/>
+      <circle cx="445" cy="880" r="3.2"/>
+      <circle cx="505" cy="795" r="3.2"/>
+      <circle cx="470" cy="735" r="3"/>
+      <circle cx="500" cy="678" r="3"/>
+      <circle cx="478" cy="598" r="2.6"/>
+      <circle cx="508" cy="522" r="2.4"/>
+      <circle cx="500" cy="445" r="2.2"/>
+      <circle cx="500" cy="380" r="2"/>
+      <circle cx="502" cy="308" r="1.8"/>
     </g>
 
     <!-- summit flag -->
@@ -166,6 +288,7 @@
 <div class="hiker-fixed" id="hikerFixed" aria-hidden="true"></div>
 
 <!-- =================== NAV =================== -->
+<div class="nav-scrim" aria-hidden="true"></div>
 <header class="nav-strip">
   <span class="logo">Austin Miller</span>
   <nav class="links">
@@ -202,16 +325,18 @@
     <div class="card" data-card>
       <div class="tape"></div>
       <div class="kicker"><span class="marker">marker 01 · 1,400 ft</span><span>day job</span></div>
-      <h2>Engineering at Draper.</h2>
-      <div class="sub">Software Engineer · Cambridge, MA</div>
-      <p>I design and develop secure, high-performance systems with
-        <strong>C++</strong>, <strong>Python</strong>, and modern
-        <strong>DevSecOps</strong> practices.</p>
-      <p>Day-to-day I build robust software architectures and containerized
-        applications, and push CI/CD pipelines forward — all in service of
-        Draper's mission solving important national challenges.</p>
-      <p class="small">Before Draper: MathWorks &amp; 101edu. On the side:
-        Officer in the US Army Reserves (S-3, 325th MI BN).</p>
+      <h2>Leading at Draper.</h2>
+      <div class="sub">Task Lead · Cambridge, MA</div>
+      <p>I lead a <strong>mission-critical</strong> defense program, serving
+        as the technical authority responsible for delivery, quality, and
+        schedule.</p>
+      <p>I run a <strong>badgeless</strong>, cross-organizational team —
+        directly managing and mentoring <strong>8 reports</strong> this year
+        while coordinating a mix of internal engineers and subcontractor
+        partners toward one program.</p>
+      <p class="small">Before leading this program: hands-on engineering at
+        Draper, MathWorks &amp; 101edu. On the side: Officer in the US Army
+        Reserves (S-3, 325th MI BN).</p>
       <a class="btn" href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true">full resume</a>
     </div>
   </section>
@@ -316,7 +441,7 @@
     <div class="summit-links">
       <a href="mailto:hello@example.com">✉ email</a>
       <a href="#">↗ github</a>
-      <a href="#">↗ linkedin</a>
+      <a href="https://www.linkedin.com/in/milleraustink" target="_blank" rel="noopener">↗ linkedin</a>
       <a href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true">resume</a>
       <a href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true">projects</a>
     </div>
@@ -327,7 +452,7 @@
 
 </main>
 
-<script src="js/hiker.js"></script>
-<script src="js/site.js"></script>
+<script src="js/hiker.js?v=20260731"></script>
+<script src="js/site.js?v=20260731"></script>
 </body>
 </html>

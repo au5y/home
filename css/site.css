@@ -15,12 +15,21 @@ body{font-family:'Kalam',cursive;-webkit-font-smoothing:antialiased;}
 .mountain-bg{position:fixed;inset:0;width:100vw;height:100vh;height:100dvh;z-index:0;pointer-events:none;}
 .mountain-bg svg{width:100%;height:100%;display:block;}
 
-/* Hiker, fixed positioned via JS, walks up trail */
+/* Hiker, fixed positioned via JS, walks up trail. z-index sits below main's
+   cards (z-index:2) so the hiker always passes behind card content instead
+   of walking on top of it, but above the mountain-bg (z-index:0). */
 .hiker-fixed{
-  position:fixed;left:0;top:0;z-index:5;pointer-events:none;
+  position:fixed;left:0;top:0;z-index:1;pointer-events:none;
   will-change:transform;
   transform-origin:center center;
   transition:transform 0.08s linear;
+}
+
+/* Fixed scrim behind the nav strip so the logo/links stay legible no matter
+   what color the time-of-day sky gradient behind them currently is. */
+.nav-scrim{
+  position:fixed;inset:0 0 auto 0;height:110px;z-index:9;pointer-events:none;
+  background:linear-gradient(180deg,rgba(0,0,0,0.42) 0%,rgba(0,0,0,0.22) 55%,rgba(0,0,0,0) 100%);
 }
 
 /* Nav */
@@ -33,10 +42,12 @@ body{font-family:'Kalam',cursive;-webkit-font-smoothing:antialiased;}
   z-index:10;
   font-family:'JetBrains Mono',monospace;font-size:10px;
   color:var(--ink-dim);letter-spacing:0.12em;text-transform:uppercase;
+  text-shadow:0 1px 3px rgba(0,0,0,0.8),0 0 10px rgba(0,0,0,0.4);
 }
 .nav-strip .logo{
   font-family:'Caveat',cursive;font-size:28px;color:var(--cream);
   letter-spacing:0;text-transform:none;line-height:1;transform:rotate(-2deg);
+  text-shadow:0 2px 4px rgba(0,0,0,0.85),0 0 12px rgba(0,0,0,0.4);
 }
 .nav-strip .links{display:flex;gap:20px;}
 .nav-strip a{
@@ -50,8 +61,8 @@ body{font-family:'Kalam',cursive;-webkit-font-smoothing:antialiased;}
 .altimeter{position:fixed;right:30px;top:50%;transform:translateY(-50%);z-index:6;pointer-events:none;}
 .altimeter .track{width:3px;height:260px;background:rgba(244,228,184,0.16);border-radius:2px;position:relative;margin:0 auto;}
 .altimeter .progress{position:absolute;left:-2px;top:0;width:7px;background:var(--cream);border-radius:3px;height:0;box-shadow:0 0 8px rgba(244,228,184,0.4);}
-.altimeter .label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-dim);text-align:center;margin-top:8px;}
-.altimeter .alt-now{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cream);text-align:center;margin-top:2px;}
+.altimeter .label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-dim);text-align:center;margin-top:8px;text-shadow:0 1px 3px rgba(0,0,0,0.7);}
+.altimeter .alt-now{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cream);text-align:center;margin-top:2px;text-shadow:0 1px 3px rgba(0,0,0,0.7);}
 
 /* Sections */
 main{position:relative;z-index:2;}
@@ -63,14 +74,20 @@ section.right{justify-content:flex-end;}
 section.left{justify-content:flex-start;}
 section.center{justify-content:center;text-align:center;flex-direction:column;}
 
+/* Keep right-aligned cards clear of the fixed altimeter rail (right:30px);
+   .altimeter is display:none below 760px so no clearance is needed there. */
+@media (min-width:761px){
+  section.right{padding-right:150px;}
+}
+
 /* INTRO */
 .intro{justify-content:flex-start;padding-top:18vh;}
 .intro h1{font-family:'Caveat',cursive;font-size:120px;line-height:0.95;color:var(--cream);margin:0;text-shadow:3px 4px 0 rgba(0,0,0,0.5);transform:rotate(-2deg);}
 .intro .tag{font-family:'Patrick Hand',cursive;font-size:22px;color:var(--ink);max-width:560px;margin:20px auto 0;line-height:1.4;}
-.intro .scroll-cue{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--green-2);margin-top:36px;}
+.intro .scroll-cue{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--green-2);margin-top:36px;text-shadow:0 1px 3px rgba(0,0,0,0.7);}
 .intro .scroll-cue::after{content:" ↓";display:inline-block;margin-left:6px;animation:bounce 1.6s infinite ease-in-out;}
 @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(8px);}}
-.intro .kicker-base{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--green-2);margin-bottom:16px;}
+.intro .kicker-base{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--green-2);margin-bottom:16px;text-shadow:0 1px 3px rgba(0,0,0,0.7);}
 
 /* SUMMIT */
 .summit h2{font-family:'Caveat',cursive;font-size:130px;line-height:1;color:var(--cream);margin:0;text-shadow:3px 4px 0 rgba(0,0,0,0.5);transform:rotate(-1deg);}
