@@ -22,6 +22,10 @@ const STATE_NAME_TO_CODE = {
   'Virginia':'VA','Washington':'WA','West Virginia':'WV','Wisconsin':'WI','Wyoming':'WY'
 };
 
+const STATE_CODE_TO_NAME = Object.fromEntries(
+  Object.entries(STATE_NAME_TO_CODE).map(([name, code]) => [code, name])
+);
+
 const TILE_MAP = [
   ['',  '',  '',  '',  '',  '',  '',  '',  '',  '',  '',  'ME'],
   ['',  '',  '',  '',  '',  '',  '',  '',  '',  'VT','NH', ''  ],
@@ -73,9 +77,11 @@ function renderStates(items) {
         if (!code) {
           div.className = 'cell empty';
         } else {
+          const name = STATE_CODE_TO_NAME[code] || code;
           div.className = 'cell' + (visited.has(code) ? ' done' : '');
           div.textContent = code;
-          div.title = code + (visited.has(code) ? ' ✓' : '');
+          div.setAttribute('data-full', name + (visited.has(code) ? ' ✓' : ''));
+          div.title = name + (visited.has(code) ? ' ✓' : '');
         }
         usMap.appendChild(div);
       });
