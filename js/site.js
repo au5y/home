@@ -92,13 +92,6 @@ function renderStates(items) {
   if (countEl) countEl.textContent = done.length + ' of ' + items.length + ' states.';
   renderPct(document.getElementById('statesPct'), done.length, items.length);
 
-  const remainingEl = document.getElementById('statesRemaining');
-  if (remainingEl) {
-    const remaining = items.filter(i => !i.done).map(i => i.label);
-    remainingEl.textContent = remaining.length
-      ? 'Still on the list: ' + remaining.join(', ') + '.'
-      : 'All 50 states, done.';
-  }
 }
 
 function renderChecklist(items, listElId, countElId, pctElId, suffix) {
@@ -154,14 +147,22 @@ const TEAM_DATA = {
   'New York Yankees':         { abbr: 'NYY', primary: '#0C2340', secondary: '#FFFFFF' }
 };
 
-function pennantSVG(primary, secondary, abbr) {
+// Flat, uniform gray for not-yet-visited pennants — baked in directly
+// instead of desaturating each team's own colors via a CSS filter, since
+// grayscale(1) on wildly different source hues/luminances (a bright team
+// yellow vs. a dark navy) doesn't land on the same gray twice. Every
+// undone pennant should read identically, regardless of team colors.
+const PENNANT_UNDONE_FILL = '#5c5f5a';
+const PENNANT_UNDONE_STROKE = '#bcb48f';
+
+function pennantSVG(primary, secondary, abbr, done) {
   // Muted, slightly aged tone rather than the raw team colors — blended
   // toward the card's parchment/ink palette (lerpColor is defined below).
-  const mutedPrimary = lerpColor(primary, '#8a7a5a', 0.28);
-  const mutedSecondary = lerpColor(secondary, '#f4e4b8', 0.2);
+  const fill = done ? lerpColor(primary, '#8a7a5a', 0.28) : PENNANT_UNDONE_FILL;
+  const stroke = done ? lerpColor(secondary, '#f4e4b8', 0.2) : PENNANT_UNDONE_STROKE;
   return '<svg viewBox="0 0 46 30" width="46" height="30" aria-hidden="true">' +
-    '<path d="M2 2 L2 28 L44 15 Z" fill="' + mutedPrimary + '" stroke="' + mutedSecondary + '" stroke-width="2" stroke-linejoin="round"/>' +
-    '<text x="15" y="19.5" text-anchor="middle" font-family="\'JetBrains Mono\',monospace" font-size="10" font-weight="700" fill="' + mutedSecondary + '">' + abbr + '</text>' +
+    '<path d="M2 2 L2 28 L44 15 Z" fill="' + fill + '" stroke="' + stroke + '" stroke-width="2" stroke-linejoin="round"/>' +
+    '<text x="15" y="19.5" text-anchor="middle" font-family="\'JetBrains Mono\',monospace" font-size="10" font-weight="700" fill="' + stroke + '">' + abbr + '</text>' +
     '</svg>';
 }
 
@@ -186,7 +187,7 @@ function renderBallparks(items) {
       pennant.className = 'pennant' + (done ? ' done' : '');
       pennant.setAttribute('data-full', parkName + ' — ' + teamName);
       pennant.title = parkName + ' (' + teamName + ')';
-      pennant.innerHTML = pennantSVG(team.primary, team.secondary, team.abbr);
+      pennant.innerHTML = pennantSVG(team.primary, team.secondary, team.abbr, done);
       gridEl.appendChild(pennant);
     });
   }

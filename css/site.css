@@ -302,11 +302,9 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
 }
 .pennant{
   position:relative;cursor:default;
-  filter:grayscale(1) contrast(0.9) brightness(1.35);
-  transition:filter .15s,transform .15s;
+  transition:transform .15s;
   transform:rotate(-2deg);
 }
-.pennant.done{filter:none;}
 .pennant:hover{transform:rotate(-4deg) scale(1.1);}
 .pennant svg{display:block;width:100%;height:auto;filter:drop-shadow(1px 2px 0 rgba(0,0,0,0.2));}
 
