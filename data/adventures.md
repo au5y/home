@@ -86,7 +86,6 @@ Here are some of the adventures I'm on.
 - [ ] Sutter Health Park (Athletics)
 - [ ] T-Mobile Park (Seattle Mariners)
 - [ ] Target Field (Minnesota Twins)
-- [ ] Tropicana Field (Tampa Bay Rays)
 - [x] Steinbrenner Field - Temporary Location (Tampa Bay Rays)
 - [x] Truist Park (Atlanta Braves)
 - [ ] Wrigley Field (Chicago Cubs)
