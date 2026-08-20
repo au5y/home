@@ -1,201 +1,202 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<meta name="theme-color" content="#1a2420"/>
-<title>Austin Miller — the climb</title>
-<link rel="icon" href="assets/favicon/favicon.ico"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Kalam:wght@300;400;700&family=Patrick+Hand&family=JetBrains+Mono:wght@400;500&display=swap"/>
-<link rel="stylesheet" href="css/site.css?v=20260731"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#1a2420" />
+  <title>Austin Miller — the climb</title>
+  <link rel="icon" href="assets/favicon/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Kalam:wght@300;400;700&family=Patrick+Hand&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/site.css?v=20260731" />
 </head>
+
 <body>
 
-<!-- =================== MOUNTAIN BACKGROUND (fixed) =================== -->
-<div class="mountain-bg" aria-hidden="true">
-  <svg viewBox="0 0 1000 1000" preserveAspectRatio="none">
-    <defs>
-      <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="7"/>
-        <feDisplacementMap in="SourceGraphic" scale="2.6"/>
-      </filter>
-      <pattern id="hatch" patternUnits="userSpaceOnUse" width="9" height="9" patternTransform="rotate(35)">
-        <line x1="0" y1="0" x2="0" y2="9" stroke="#0d1f15" stroke-width="1" opacity="0.5"/>
-      </pattern>
-      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-        <stop id="sky-stop-top" offset="0%" stop-color="#0a1810"/>
-        <stop id="sky-stop-mid" offset="55%" stop-color="#152620"/>
-        <stop id="sky-stop-bot" offset="100%" stop-color="#1a2420"/>
-      </linearGradient>
-      <radialGradient id="sunCoreGrad" cx="35%" cy="32%" r="68%">
-        <stop offset="0%" stop-color="#fff6d8"/>
-        <stop offset="60%" stop-color="#ffdb7a"/>
-        <stop offset="100%" stop-color="#ffb84d"/>
-      </radialGradient>
-      <radialGradient id="sunGlowGrad" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="#ffcf7f" stop-opacity="0.35"/>
-        <stop offset="100%" stop-color="#ffcf7f" stop-opacity="0"/>
-      </radialGradient>
-      <radialGradient id="moonCoreGrad" cx="32%" cy="30%" r="72%">
-        <stop offset="0%" stop-color="#fffaf0"/>
-        <stop offset="55%" stop-color="#f4e4b8"/>
-        <stop offset="100%" stop-color="#cbb384"/>
-      </radialGradient>
-      <radialGradient id="moonGlowGrad" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="#f4e4b8" stop-opacity="0.4"/>
-        <stop offset="100%" stop-color="#f4e4b8" stop-opacity="0"/>
-      </radialGradient>
-    </defs>
+  <!-- =================== MOUNTAIN BACKGROUND (fixed) =================== -->
+  <div class="mountain-bg" aria-hidden="true">
+    <svg viewBox="0 0 1000 1000" preserveAspectRatio="none">
+      <defs>
+        <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="7" />
+          <feDisplacementMap in="SourceGraphic" scale="2.6" />
+        </filter>
+        <pattern id="hatch" patternUnits="userSpaceOnUse" width="9" height="9" patternTransform="rotate(35)">
+          <line x1="0" y1="0" x2="0" y2="9" stroke="#0d1f15" stroke-width="1" opacity="0.5" />
+        </pattern>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop id="sky-stop-top" offset="0%" stop-color="#0a1810" />
+          <stop id="sky-stop-mid" offset="55%" stop-color="#152620" />
+          <stop id="sky-stop-bot" offset="100%" stop-color="#1a2420" />
+        </linearGradient>
+        <radialGradient id="sunCoreGrad" cx="35%" cy="32%" r="68%">
+          <stop offset="0%" stop-color="#fff6d8" />
+          <stop offset="60%" stop-color="#ffdb7a" />
+          <stop offset="100%" stop-color="#ffb84d" />
+        </radialGradient>
+        <radialGradient id="sunGlowGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffcf7f" stop-opacity="0.35" />
+          <stop offset="100%" stop-color="#ffcf7f" stop-opacity="0" />
+        </radialGradient>
+        <radialGradient id="moonCoreGrad" cx="32%" cy="30%" r="72%">
+          <stop offset="0%" stop-color="#fffaf0" />
+          <stop offset="55%" stop-color="#f4e4b8" />
+          <stop offset="100%" stop-color="#cbb384" />
+        </radialGradient>
+        <radialGradient id="moonGlowGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#f4e4b8" stop-opacity="0.4" />
+          <stop offset="100%" stop-color="#f4e4b8" stop-opacity="0" />
+        </radialGradient>
+      </defs>
 
-    <!-- sky -->
-    <rect width="1000" height="1000" fill="url(#sky)"/>
+      <!-- sky -->
+      <rect width="1000" height="1000" fill="url(#sky)" />
 
-    <!-- stars: opacity is fadedn in/out with daylight by js/site.js applySkyColors() -->
-    <g id="sky-stars" fill="#f4e4b8" opacity="0.8">
-      <circle cx="120" cy="100" r="1.2"/><circle cx="320" cy="80"  r="1"/>
-      <circle cx="540" cy="120" r="1.4"/><circle cx="780" cy="60"  r="1"/>
-      <circle cx="900" cy="180" r="1.2"/><circle cx="180" cy="220" r="0.8"/>
-      <circle cx="640" cy="240" r="1"/>  <circle cx="430" cy="180" r="0.8"/>
-      <circle cx="200" cy="350" r="1"/>  <circle cx="800" cy="320" r="0.9"/>
-      <circle cx="60"  cy="400" r="0.7"/><circle cx="700" cy="420" r="0.8"/>
-      <circle cx="380" cy="380" r="0.9"/>
-    </g>
+      <!-- stars: opacity is fadedn in/out with daylight by js/site.js applySkyColors() -->
+      <g id="sky-stars" fill="#f4e4b8" opacity="0.8">
+        <circle cx="120" cy="100" r="1.2" />
+        <circle cx="320" cy="80" r="1" />
+        <circle cx="540" cy="120" r="1.4" />
+        <circle cx="780" cy="60" r="1" />
+        <circle cx="900" cy="180" r="1.2" />
+        <circle cx="180" cy="220" r="0.8" />
+        <circle cx="640" cy="240" r="1" />
+        <circle cx="430" cy="180" r="0.8" />
+        <circle cx="200" cy="350" r="1" />
+        <circle cx="800" cy="320" r="0.9" />
+        <circle cx="60" cy="400" r="0.7" />
+        <circle cx="700" cy="420" r="0.8" />
+        <circle cx="380" cy="380" r="0.9" />
+      </g>
 
-    <!-- sun & moon: both travel an arc across the sky and fade at the horizon,
+      <!-- sun & moon: both travel an arc across the sky and fade at the horizon,
          positioned every tick by js/site.js applySkyColors(). rx/ry (not r) are
          used so js/site.js can recompute them on load/resize to counteract this
          svg's non-uniform preserveAspectRatio="none" stretch — otherwise these
          would render as ellipses instead of circles on any non-square viewport. -->
-    <g id="sky-sun" transform="translate(820,150)">
-      <ellipse id="sun-glow" rx="56" ry="56" fill="url(#sunGlowGrad)"/>
-      <ellipse id="sun-core" rx="30" ry="30" fill="url(#sunCoreGrad)"/>
-    </g>
-    <g id="sky-moon" transform="translate(180,200)">
-      <ellipse id="moon-glow" rx="46" ry="46" fill="url(#moonGlowGrad)"/>
-      <ellipse id="moon-main" rx="36" ry="36" fill="url(#moonCoreGrad)"/>
-      <circle cx="-9" cy="10" r="3.6" fill="#cbb384" opacity="0.4"/>
-      <circle cx="4" cy="18" r="2.4" fill="#cbb384" opacity="0.35"/>
-      <circle cx="-14" cy="-6" r="2" fill="#cbb384" opacity="0.35"/>
-    </g>
+      <g id="sky-sun" transform="translate(820,150)">
+        <ellipse id="sun-glow" rx="56" ry="56" fill="url(#sunGlowGrad)" />
+        <ellipse id="sun-core" rx="30" ry="30" fill="url(#sunCoreGrad)" />
+      </g>
+      <g id="sky-moon" transform="translate(180,200)">
+        <ellipse id="moon-glow" rx="46" ry="46" fill="url(#moonGlowGrad)" />
+        <ellipse id="moon-main" rx="36" ry="36" fill="url(#moonCoreGrad)" />
+        <circle cx="-9" cy="10" r="3.6" fill="#cbb384" opacity="0.4" />
+        <circle cx="4" cy="18" r="2.4" fill="#cbb384" opacity="0.35" />
+        <circle cx="-14" cy="-6" r="2" fill="#cbb384" opacity="0.35" />
+      </g>
 
-    <!-- FAR ridges (geometry extends 30 units past x=0/1000 so the "rough" filter's
+      <!-- FAR ridges (geometry extends 30 units past x=0/1000 so the "rough" filter's
          displacement map always has real source pixels to sample at the canvas
          edge — otherwise it leaves a visible seam right at the boundary) -->
-    <path filter="url(#rough)"
-      d="M-30 1000 L -30 430 L 100 380 L 190 420 L 280 350 L 370 400 L 460 320 L 540 370
-         L 630 300 L 710 355 L 790 310 L 870 385 L 950 340 L 1030 380 L 1030 1000 Z"
-      fill="#0a1810"/>
+      <path filter="url(#rough)" d="M-30 1000 L -30 430 L 100 380 L 190 420 L 280 350 L 370 400 L 460 320 L 540 370
+         L 630 300 L 710 355 L 790 310 L 870 385 L 950 340 L 1030 380 L 1030 1000 Z" fill="#0a1810" />
 
-    <!-- MID ridges -->
-    <path filter="url(#rough)"
-      d="M-30 1000 L -30 610 L 110 560 L 210 605 L 300 515 L 390 580 L 470 490 L 560 575
-         L 650 470 L 730 545 L 810 460 L 900 535 L 970 470 L 1030 520 L 1030 1000 Z"
-      fill="#142a22"/>
+      <!-- MID ridges -->
+      <path filter="url(#rough)" d="M-30 1000 L -30 610 L 110 560 L 210 605 L 300 515 L 390 580 L 470 490 L 560 575
+         L 650 470 L 730 545 L 810 460 L 900 535 L 970 470 L 1030 520 L 1030 1000 Z" fill="#142a22" />
 
-    <!-- MAIN massif — widened, ridge-crested silhouette: a broad base flaring out to
+      <!-- MAIN massif — widened, ridge-crested silhouette: a broad base flaring out to
          near the frame edges, a false-summit shoulder at (520,300), and the true
          summit at (500,150) — comfortably above the trail's end/flag base at
          (500,190) so the rough-filter's edge displacement never leaves a visible
          gap between the mountain fill and the flag -->
-    <path filter="url(#rough)"
-      d="M-30 1000 L -30 860
+      <path filter="url(#rough)" d="M-30 1000 L -30 860
          L 60 795 L 130 835 L 200 800
          L 185 750 L 265 650 L 285 550 L 365 450 L 385 350 L 465 250 L 500 150
          L 565 250 L 585 350 L 665 450 L 685 550 L 765 650 L 785 750
          L 800 800 L 870 835 L 940 795 L 1030 860
-         L 1030 1000 Z"
-      fill="#2d5a3d"/>
-    <path filter="url(#rough)"
-      d="M-30 1000 L -30 860
+         L 1030 1000 Z" fill="#2d5a3d" />
+      <path filter="url(#rough)" d="M-30 1000 L -30 860
          L 60 795 L 130 835 L 200 800
          L 185 750 L 265 650 L 285 550 L 365 450 L 385 350 L 465 250 L 500 150
          L 565 250 L 585 350 L 665 450 L 685 550 L 765 650 L 785 750
          L 800 800 L 870 835 L 940 795 L 1030 860
-         L 1030 1000 Z"
-      fill="url(#hatch)" opacity="0.35"/>
+         L 1030 1000 Z" fill="url(#hatch)" opacity="0.35" />
 
-    <!-- crag shading: darker facets on the shadowed (right-facing) side of the ridge,
+      <!-- crag shading: darker facets on the shadowed (right-facing) side of the ridge,
          and a subtler one on the left flank -->
-    <g fill="#1c3d29" opacity="0.5" filter="url(#rough)">
-      <path d="M500 150 L 565 250 L 585 350 L 665 450 L 685 550 L 765 650 L 700 620 L 630 520 L 570 420 L 535 300 Z" opacity="0.4"/>
-      <path d="M200 800 L 185 750 L 265 650 L 285 550 L 365 450 L 385 350 L 340 470 L 300 610 L 250 730 Z" opacity="0.28"/>
-    </g>
+      <g fill="#1c3d29" opacity="0.5" filter="url(#rough)">
+        <path d="M500 150 L 565 250 L 585 350 L 665 450 L 685 550 L 765 650 L 700 620 L 630 520 L 570 420 L 535 300 Z"
+          opacity="0.4" />
+        <path d="M200 800 L 185 750 L 265 650 L 285 550 L 365 450 L 385 350 L 340 470 L 300 610 L 250 730 Z"
+          opacity="0.28" />
+      </g>
 
-    <!-- snow caps — jagged patches hugging the ridgeline near each summit -->
-    <path d="M478 215 L 492 175 L 500 150 L 508 175 L 522 215 L 507 195 L 495 202 Z"
-      fill="#f4e4b8" opacity="0.9"/>
-    <path d="M448 280 L 465 250 L 480 280 L 462 270 Z" fill="#f4e4b8" opacity="0.55"/>
-    <path d="M552 280 L 565 250 L 580 285 L 562 272 Z" fill="#f4e4b8" opacity="0.5"/>
-    <path d="M570 380 L 585 350 L 600 385 L 583 370 Z" fill="#f4e4b8" opacity="0.4"/>
+      <!-- snow caps — jagged patches hugging the ridgeline near each summit -->
+      <path d="M478 215 L 492 175 L 500 150 L 508 175 L 522 215 L 507 195 L 495 202 Z" fill="#f4e4b8" opacity="0.9" />
+      <path d="M448 280 L 465 250 L 480 280 L 462 270 Z" fill="#f4e4b8" opacity="0.55" />
+      <path d="M552 280 L 565 250 L 580 285 L 562 272 Z" fill="#f4e4b8" opacity="0.5" />
+      <path d="M570 380 L 585 350 L 600 385 L 583 370 Z" fill="#f4e4b8" opacity="0.4" />
 
-    <!-- foreground evergreens at the base -->
-    <g fill="#0a1810" stroke="#1a2420" stroke-width="1">
-      <g transform="translate(80,920)">
-        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
-        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
+      <!-- foreground evergreens at the base -->
+      <g fill="#0a1810" stroke="#1a2420" stroke-width="1">
+        <g transform="translate(80,920)">
+          <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z" />
+          <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none" />
+        </g>
+        <g transform="translate(200,940) scale(0.8)">
+          <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z" />
+          <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none" />
+        </g>
+        <g transform="translate(820,920) scale(1.2)">
+          <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z" />
+          <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none" />
+        </g>
+        <g transform="translate(920,950) scale(0.9)">
+          <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z" />
+          <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none" />
+        </g>
+        <g transform="translate(380,960) scale(0.7)">
+          <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z" />
+          <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none" />
+        </g>
+        <g transform="translate(630,960) scale(0.7)">
+          <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z" />
+          <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none" />
+        </g>
+        <g transform="translate(140,900) scale(0.65)">
+          <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z" />
+          <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none" />
+        </g>
+        <g transform="translate(280,905) scale(0.75)">
+          <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z" />
+          <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none" />
+        </g>
+        <g transform="translate(730,905) scale(0.85)">
+          <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z" />
+          <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none" />
+        </g>
+        <g transform="translate(880,900) scale(0.6)">
+          <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z" />
+          <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none" />
+        </g>
+        <g transform="translate(30,960) scale(0.55)">
+          <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z" />
+          <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none" />
+        </g>
+        <g transform="translate(970,970) scale(0.5)">
+          <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z" />
+          <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none" />
+        </g>
+        <g transform="translate(230,780) scale(0.4)">
+          <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z" />
+          <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none" />
+        </g>
+        <g transform="translate(790,790) scale(0.4)">
+          <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z" />
+          <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none" />
+        </g>
       </g>
-      <g transform="translate(200,940) scale(0.8)">
-        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
-        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
-      </g>
-      <g transform="translate(820,920) scale(1.2)">
-        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
-        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
-      </g>
-      <g transform="translate(920,950) scale(0.9)">
-        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
-        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
-      </g>
-      <g transform="translate(380,960) scale(0.7)">
-        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
-        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
-      </g>
-      <g transform="translate(630,960) scale(0.7)">
-        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
-        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
-      </g>
-      <g transform="translate(140,900) scale(0.65)">
-        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
-        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
-      </g>
-      <g transform="translate(280,905) scale(0.75)">
-        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
-        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
-      </g>
-      <g transform="translate(730,905) scale(0.85)">
-        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
-        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
-      </g>
-      <g transform="translate(880,900) scale(0.6)">
-        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
-        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
-      </g>
-      <g transform="translate(30,960) scale(0.55)">
-        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
-        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
-      </g>
-      <g transform="translate(970,970) scale(0.5)">
-        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
-        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
-      </g>
-      <g transform="translate(230,780) scale(0.4)">
-        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
-        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
-      </g>
-      <g transform="translate(790,790) scale(0.4)">
-        <path d="M0 -66 L 14 -34 L 6 -34 L 20 -6 L 10 -6 L 22 18 L -22 18 L -10 -6 L -20 -6 L -6 -34 L -14 -34 Z"/>
-        <rect x="-4" y="18" width="8" height="12" fill="#1a2420" stroke="none"/>
-      </g>
-    </g>
 
-    <!-- TRAIL — a real switchback ascent: wide zigzags low on the wide base,
+      <!-- TRAIL — a real switchback ascent: wide zigzags low on the wide base,
          narrowing to a direct final push up the ridge crest. Drawn as three layers:
          a wide dirt tread, a stippled texture pass, then the dashed guide line
          (id="trail-path", sampled by js/site.js to walk the hiker). -->
-    <path
-      d="M 500 950
+      <path d="M 500 950
          Q 470 915 445 880
          C 410 865 395 845 415 815
          Q 460 792 505 795
@@ -215,11 +216,9 @@
          Q 496 322 502 308
          C 507 296 500 280 500 265
          Q 500 240 500 225
-         L 500 190"
-      stroke="#5a4632" stroke-width="13" fill="none" stroke-linecap="round"
-      filter="url(#rough)" opacity="0.55"/>
-    <path
-      d="M 500 950
+         L 500 190" stroke="#5a4632" stroke-width="13" fill="none" stroke-linecap="round" filter="url(#rough)"
+        opacity="0.55" />
+      <path d="M 500 950
          Q 470 915 445 880
          C 410 865 395 845 415 815
          Q 460 792 505 795
@@ -239,11 +238,9 @@
          Q 496 322 502 308
          C 507 296 500 280 500 265
          Q 500 240 500 225
-         L 500 190"
-      stroke="#3e3121" stroke-width="13" fill="none" stroke-linecap="round"
-      filter="url(#rough)" opacity="0.3" stroke-dasharray="0.1 6" stroke-dashoffset="3"/>
-    <path id="trail-path"
-      d="M 500 950
+         L 500 190" stroke="#3e3121" stroke-width="13" fill="none" stroke-linecap="round" filter="url(#rough)"
+        opacity="0.3" stroke-dasharray="0.1 6" stroke-dashoffset="3" />
+      <path id="trail-path" d="M 500 950
          Q 470 915 445 880
          C 410 865 395 845 415 815
          Q 460 792 505 795
@@ -263,192 +260,209 @@
          Q 496 322 502 308
          C 507 296 500 280 500 265
          Q 500 240 500 225
-         L 500 190"
-      stroke="#f4e4b8" stroke-width="3.5" fill="none"
-      stroke-dasharray="8 8" stroke-linecap="round"/>
+         L 500 190" stroke="#f4e4b8" stroke-width="3.5" fill="none" stroke-dasharray="8 8" stroke-linecap="round" />
 
-    <!-- switchback blazes: small trail markers at each turn, tapering as the trail climbs -->
-    <g fill="#f4e4b8" opacity="0.85">
-      <circle cx="445" cy="880" r="3.2"/>
-      <circle cx="505" cy="795" r="3.2"/>
-      <circle cx="470" cy="735" r="3"/>
-      <circle cx="500" cy="678" r="3"/>
-      <circle cx="478" cy="598" r="2.6"/>
-      <circle cx="508" cy="522" r="2.4"/>
-      <circle cx="500" cy="445" r="2.2"/>
-      <circle cx="500" cy="380" r="2"/>
-      <circle cx="502" cy="308" r="1.8"/>
-    </g>
+      <!-- switchback blazes: small trail markers at each turn, tapering as the trail climbs -->
+      <g fill="#f4e4b8" opacity="0.85">
+        <circle cx="445" cy="880" r="3.2" />
+        <circle cx="505" cy="795" r="3.2" />
+        <circle cx="470" cy="735" r="3" />
+        <circle cx="500" cy="678" r="3" />
+        <circle cx="478" cy="598" r="2.6" />
+        <circle cx="508" cy="522" r="2.4" />
+        <circle cx="500" cy="445" r="2.2" />
+        <circle cx="500" cy="380" r="2" />
+        <circle cx="502" cy="308" r="1.8" />
+      </g>
 
-    <!-- checkpoint flags: one per section (except the summit, which gets
+      <!-- checkpoint flags: one per section (except the summit, which gets
          its own larger flag below), planted on the trail by js/site.js
          initTrailFlags() at the point matching that section's scroll
          position. Dim until scrolled past, then flip to "reached". -->
-    <g id="trail-flags"></g>
+      <g id="trail-flags"></g>
 
-    <!-- summit flag -->
-    <line x1="500" y1="190" x2="500" y2="140" stroke="#c4a574" stroke-width="3"/>
-    <path d="M500 140 L 528 150 L 500 161 Z" fill="#e89a4a"/>
-  </svg>
-</div>
+      <!-- summit flag -->
+      <line x1="500" y1="190" x2="500" y2="140" stroke="#c4a574" stroke-width="3" />
+      <path d="M500 140 L 528 150 L 500 161 Z" fill="#e89a4a" />
+    </svg>
+  </div>
 
-<!-- =================== HIKER (animated, follows trail) =================== -->
-<div class="hiker-fixed" id="hikerFixed" aria-hidden="true"></div>
+  <!-- =================== HIKER (animated, follows trail) =================== -->
+  <div class="hiker-fixed" id="hikerFixed" aria-hidden="true"></div>
 
-<!-- =================== NAV =================== -->
-<div class="nav-scrim" aria-hidden="true"></div>
-<header class="nav-strip">
-  <span class="logo">Austin Miller</span>
-  <nav class="links">
-    <a href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true" tabindex="-1">resume</a>
-    <a href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true" tabindex="-1">projects</a>
-    <a href="#summit">contact</a>
-    <a href="canvas.html" style="opacity:0.55;">↗ explorations</a>
-  </nav>
-</header>
-
-<!-- =================== ALTIMETER =================== -->
-<aside class="altimeter" aria-label="Jump to a checkpoint">
-  <div class="track" id="altTrack"><div class="progress" id="altProgress"></div></div>
-  <div class="alt-now" id="altNow">0 ft</div>
-  <div class="label">altitude</div>
-</aside>
-
-<!-- =================== CONTENT =================== -->
-<main>
-
-  <!-- 1 · BASE CAMP -->
-  <section class="intro center" data-screen-label="01 Base Camp" data-alt="0">
-    <div class="hero-scrim">
-    <div class="kicker-base">⌖ Base Camp · 0 ft</div>
-    <h1>hi, I'm<br/>Austin.</h1>
-    <p class="tag">
-      Engineering Manager, Software engineer, Army Reserves officer, lifelong climber of
-      mountains both real and metaphorical. Welcome to the trail.
-    </p>
-    </div>
-    <div class="scroll-cue">begin the climb</div>
-  </section>
-
-  <!-- 2 · DAY JOB -->
-  <section class="right" data-screen-label="02 Day Job" data-alt="1400" style="--rot:-1.5deg;">
-    <div class="card" data-card>
-      <div class="tape"></div>
-      <div class="kicker"><span class="marker">marker 01 · 1,400 ft</span><span>day job</span></div>
-      <h2>Leading at Draper.</h2>
-      <div class="sub">Task Lead · Cambridge, MA</div>
-      <p>I lead a <strong>mission-critical</strong> defense program, serving
-        as the technical authority responsible for delivery, quality, and
-        schedule.</p>
-      <p>I run a <strong>badgeless</strong>, cross-organizational team —
-        directly managing and mentoring <strong>8 reports</strong> this year
-        while coordinating a mix of internal engineers and subcontractor
-        partners toward one program.</p>
-      <p class="small">Before leading this program: hands-on engineering at
-        Draper, MathWorks &amp; 101edu. Officer in the US Army
-        Reserves (S-3, 325th MI BN).</p>
-      <a class="btn" href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true" tabindex="-1">full resume</a>
-    </div>
-  </section>
-
-  <!-- 3 · SIDE PROJECTS -->
-  <section class="left" data-screen-label="03 Side Projects" data-alt="3200" style="--rot:1.6deg;">
-    <div class="card" data-card>
-      <div class="pin green"></div>
-      <div class="kicker"><span class="marker">marker 02 · 3,200 ft</span><span>side trail</span></div>
-      <h2>The Tinker Pile.</h2>
-      <div class="sub">things I build to keep skills fresh and play with new tools</div>
-      <p>A small, growing garden of personal projects.</p>
-      <div class="proj-tiles">
-        <a class="ptile" href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true" tabindex="-1">
-          <div class="ttl">Spite &amp; Malice</div>
-          <div class="desc">a digital take on the classic two-player card game</div>
-        </a>
-        <a class="ptile" href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true" tabindex="-1">
-          <div class="ttl">5 Clowns</div>
-          <div class="desc">Also called 5 suited Rummy.</div>
-        </a>
-      </div>
-      <a class="btn" href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true" tabindex="-1">open the pile</a>
-    </div>
-  </section>
-
-  <!-- 4 · STATES -->
-  <section class="right" data-screen-label="04 States" data-alt="5600" style="--rot:-1deg;">
-    <div class="card" data-card style="max-width:520px;">
-      <div class="tape alt"></div>
-      <div class="kicker"><span class="marker">marker 03 · 5,600 ft</span><span>50 states</span></div>
-      <h2 id="statesCount">— of 50 states.</h2>
-      <div class="sub">still missing most of the south and OCONUS</div>
-      <div class="pct" id="statesPct"><div class="bar"><i style="width:0%"></i></div><div class="num">—%</div></div>
-      <div class="us-map" id="usMap"></div>
-      <p class="small" style="margin-top:14px;">I've driven across the country 15 times, I choose not to
-        think of how much time that's meant in the car...</p>
-    </div>
-  </section>
-
-  <!-- 5 · BALLPARKS -->
-  <section class="left" data-screen-label="05 Ballparks" data-alt="8800" style="--rot:1.4deg;">
-    <div class="card" data-card style="max-width:540px;">
-      <div class="pin red"></div>
-      <div class="kicker"><span class="marker">marker 04 · 8,800 ft</span><span>peanuts &amp; crackerjacks</span></div>
-      <h2 id="ballparksCount">— of — ballparks.</h2>
-      <div class="sub">My dad and I go on a baseball road trip every year.</div>
-      <div class="pct" id="ballparksPct"><div class="bar"><i style="width:0%"></i></div><div class="num">—%</div></div>
-      <div class="pennant-grid" id="ballparksGrid"></div>
-      <p class="small" style="margin-top:12px;">Oracle Park is the best (so far), Go Giants!</p>
-    </div>
-  </section>
-
-  <!-- 6 · NATIONAL PARKS -->
-  <section class="right" data-screen-label="06 National Parks" data-alt="11200" style="--rot:-1.6deg;">
-    <div class="card passport" data-card style="max-width:560px;">
-      <div class="passport-emblem">★</div>
-      <div class="kicker"><span class="marker">marker 05 · 11,200 ft</span><span>parks passport</span></div>
-      <h2 id="parksCount">— of — parks.</h2>
-      <div class="sub">Seeing all of our America's natural beauty is a lifelong journey!</div>
-      <div class="pct" id="parksPct"><div class="bar"><i style="width:0%"></i></div><div class="num">—%</div></div>
-
-      <div class="parks-grid" id="parksGrid"></div>
-    </div>
-  </section>
-
-  <!-- 7 · NH 48 -->
-  <section class="left" data-screen-label="07 NH 48" data-alt="13400" style="--rot:1.2deg;">
-    <div class="card" data-card style="max-width:540px;">
-      <div class="pin green"></div>
-      <div class="kicker"><span class="marker">marker 06 · 13,400 ft</span><span>white mountains</span></div>
-      <h2 id="peaksCount">— of the NH 48.</h2>
-      <div class="sub">the actual mountains, not metaphor</div>
-      <div class="pct" id="peaksPct"><div class="bar"><i style="width:0%"></i></div><div class="num">—%</div></div>
-      <p>Every 4,000-foot peak in New Hampshire. My favorite weekend pasttime!</p>
-      <div class="peaks-list" id="peaksList"></div>
-    </div>
-  </section>
-
-  <!-- 8 · SUMMIT -->
-  <section class="summit center" id="summit" data-screen-label="08 Summit" data-alt="14720">
-    <div class="hero-scrim">
-    <div class="kicker-base">⌖ summit · 14,720 ft</div>
-    <h2>You made it.</h2>
-    <p class="tag">There's always another peak. If you want to climb one
-      together — swap trail recs, build something — say hi.</p>
-    </div>
-    <div class="summit-links">
-      <a href="mailto:hello@example.com">✉ email</a>
-      <a href="https://github.com/au5y" target="_blank" rel="noopener">↗ github</a>
-      <a href="https://www.linkedin.com/in/milleraustink" target="_blank" rel="noopener">↗ linkedin</a>
+  <!-- =================== NAV =================== -->
+  <div class="nav-scrim" aria-hidden="true"></div>
+  <header class="nav-strip">
+    <span class="logo">Austin Miller</span>
+    <nav class="links">
       <a href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true" tabindex="-1">resume</a>
       <a href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true" tabindex="-1">projects</a>
+      <a href="#summit">contact</a>
+      <a href="canvas.html" style="opacity:0.55;">↗ explorations</a>
+    </nav>
+  </header>
+
+  <!-- =================== ALTIMETER =================== -->
+  <aside class="altimeter" aria-label="Jump to a checkpoint">
+    <div class="track" id="altTrack">
+      <div class="progress" id="altProgress"></div>
     </div>
-    <p style="margin-top:40px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-dim);">
-      © Austin Miller · 2026 · built with vanilla JS, SVG, and CSS, and a lot of coffee...
-    </p>
-  </section>
+    <div class="alt-now" id="altNow">0 ft</div>
+    <div class="label">altitude</div>
+  </aside>
 
-</main>
+  <!-- =================== CONTENT =================== -->
+  <main>
 
-<script src="js/hiker.js?v=20260731"></script>
-<script src="js/site.js?v=20260731"></script>
+    <!-- 1 · BASE CAMP -->
+    <section class="intro center" data-screen-label="01 Base Camp" data-alt="0">
+      <div class="hero-scrim">
+        <div class="kicker-base">⌖ Base Camp · 0 ft</div>
+        <h1>hi, I'm<br />Austin.</h1>
+        <p class="tag">
+          Engineering Manager, Software engineer, Army Reserves officer, lifelong climber of
+          mountains both real and metaphorical. Welcome to the trail.
+        </p>
+      </div>
+      <div class="scroll-cue">begin the climb</div>
+    </section>
+
+    <!-- 2 · DAY JOB -->
+    <section class="right" data-screen-label="02 Day Job" data-alt="1400" style="--rot:-1.5deg;">
+      <div class="card" data-card>
+        <div class="tape"></div>
+        <div class="kicker"><span class="marker">marker 01 · 1,400 ft</span><span>day job</span></div>
+        <h2>Leading at Draper.</h2>
+        <div class="sub">Task Lead · Cambridge, MA</div>
+        <p>I lead a <strong>mission-critical</strong> defense program, serving
+          as the technical authority responsible for delivery, quality, and
+          schedule.</p>
+        <p>I run a <strong>badgeless</strong>, cross-organizational team —
+          directly managing and mentoring <strong>8 reports</strong> this year
+          while coordinating a mix of internal engineers and subcontractor
+          partners toward one program.</p>
+        <p class="small">Before leading this program: hands-on engineering at
+          Draper, MathWorks &amp; 101edu. Officer in the US Army
+          Reserves (S-3, 325th MI BN).</p>
+        <a class="btn" href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true" tabindex="-1">full
+          resume</a>
+      </div>
+    </section>
+
+    <!-- 3 · SIDE PROJECTS -->
+    <section class="left" data-screen-label="03 Side Projects" data-alt="3200" style="--rot:1.6deg;">
+      <div class="card" data-card>
+        <div class="pin green"></div>
+        <div class="kicker"><span class="marker">marker 02 · 3,200 ft</span><span>side trail</span></div>
+        <h2>The Tinker Pile.</h2>
+        <div class="sub">things I build to keep skills fresh and play with new tools</div>
+        <p>A small, growing garden of personal projects.</p>
+        <div class="proj-tiles">
+          <a class="ptile" href="/daily/" style="opacity:0.55;pointer-events:none;" aria-disabled="true" tabindex="-1">
+            <div class="ttl">Daily++</div>
+            <div class="desc">Taking a small list of topics and content and reinforcing learning every day.</div>
+          </a>
+          <a class="ptile" href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true" tabindex="-1">
+            <div class="ttl">5 Clowns</div>
+            <div class="desc">Also called 5 suited Rummy.</div>
+          </a>
+        </div>
+        <a class="btn" href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true" tabindex="-1">open the
+          pile</a>
+      </div>
+    </section>
+
+    <!-- 4 · STATES -->
+    <section class="right" data-screen-label="04 States" data-alt="5600" style="--rot:-1deg;">
+      <div class="card" data-card style="max-width:520px;">
+        <div class="tape alt"></div>
+        <div class="kicker"><span class="marker">marker 03 · 5,600 ft</span><span>50 states</span></div>
+        <h2 id="statesCount">— of 50 states.</h2>
+        <div class="sub">still missing most of the south and OCONUS</div>
+        <div class="pct" id="statesPct">
+          <div class="bar"><i style="width:0%"></i></div>
+          <div class="num">—%</div>
+        </div>
+        <div class="us-map" id="usMap"></div>
+        <p class="small" style="margin-top:14px;">I've driven across the country 15 times, I choose not to
+          think of how much time that's meant in the car...</p>
+      </div>
+    </section>
+
+    <!-- 5 · BALLPARKS -->
+    <section class="left" data-screen-label="05 Ballparks" data-alt="8800" style="--rot:1.4deg;">
+      <div class="card" data-card style="max-width:540px;">
+        <div class="pin red"></div>
+        <div class="kicker"><span class="marker">marker 04 · 8,800 ft</span><span>peanuts &amp; crackerjacks</span>
+        </div>
+        <h2 id="ballparksCount">— of — ballparks.</h2>
+        <div class="sub">My dad and I go on a baseball road trip every year.</div>
+        <div class="pct" id="ballparksPct">
+          <div class="bar"><i style="width:0%"></i></div>
+          <div class="num">—%</div>
+        </div>
+        <div class="pennant-grid" id="ballparksGrid"></div>
+        <p class="small" style="margin-top:12px;">Oracle Park is the best (so far), Go Giants!</p>
+      </div>
+    </section>
+
+    <!-- 6 · NATIONAL PARKS -->
+    <section class="right" data-screen-label="06 National Parks" data-alt="11200" style="--rot:-1.6deg;">
+      <div class="card passport" data-card style="max-width:560px;">
+        <div class="passport-emblem">★</div>
+        <div class="kicker"><span class="marker">marker 05 · 11,200 ft</span><span>parks passport</span></div>
+        <h2 id="parksCount">— of — parks.</h2>
+        <div class="sub">Seeing all of our America's natural beauty is a lifelong journey!</div>
+        <div class="pct" id="parksPct">
+          <div class="bar"><i style="width:0%"></i></div>
+          <div class="num">—%</div>
+        </div>
+
+        <div class="parks-grid" id="parksGrid"></div>
+      </div>
+    </section>
+
+    <!-- 7 · NH 48 -->
+    <section class="left" data-screen-label="07 NH 48" data-alt="13400" style="--rot:1.2deg;">
+      <div class="card" data-card style="max-width:540px;">
+        <div class="pin green"></div>
+        <div class="kicker"><span class="marker">marker 06 · 13,400 ft</span><span>white mountains</span></div>
+        <h2 id="peaksCount">— of the NH 48.</h2>
+        <div class="sub">the actual mountains, not metaphor</div>
+        <div class="pct" id="peaksPct">
+          <div class="bar"><i style="width:0%"></i></div>
+          <div class="num">—%</div>
+        </div>
+        <p>Every 4,000-foot peak in New Hampshire. My favorite weekend pasttime!</p>
+        <div class="peaks-list" id="peaksList"></div>
+      </div>
+    </section>
+
+    <!-- 8 · SUMMIT -->
+    <section class="summit center" id="summit" data-screen-label="08 Summit" data-alt="14720">
+      <div class="hero-scrim">
+        <div class="kicker-base">⌖ summit · 14,720 ft</div>
+        <h2>You made it.</h2>
+        <p class="tag">There's always another peak. If you want to climb one
+          together — swap trail recs, build something — say hi.</p>
+      </div>
+      <div class="summit-links">
+        <a href="mailto:hello@example.com">✉ email</a>
+        <a href="https://github.com/au5y" target="_blank" rel="noopener">↗ github</a>
+        <a href="https://www.linkedin.com/in/milleraustink" target="_blank" rel="noopener">↗ linkedin</a>
+        <a href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true" tabindex="-1">resume</a>
+        <a href="#" style="opacity:0.55;pointer-events:none;" aria-disabled="true" tabindex="-1">projects</a>
+      </div>
+      <p
+        style="margin-top:40px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-dim);">
+        © Austin Miller · 2026 · built with vanilla JS, SVG, and CSS, and a lot of coffee...
+      </p>
+    </section>
+
+  </main>
+
+  <script src="js/hiker.js?v=20260731"></script>
+  <script src="js/site.js?v=20260731"></script>
 </body>
+
 </html>

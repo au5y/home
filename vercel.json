@@ -1,9 +1,9 @@
 {
   "redirects": [
-    { "source": "/dailyptr", "destination": "/dailyptr/", "permanent": false }
+    { "source": "/daily", "destination": "/daily/", "permanent": false }
   ],
   "rewrites": [
-    { "source": "/dailyptr/", "destination": "https://dailyptr-origin.au5y.top/" },
-    { "source": "/dailyptr/:path*", "destination": "https://dailyptr-origin.au5y.top/:path*" }
+    { "source": "/daily/", "destination": "https://dailyptr-production.up.railway.app" },
+    { "source": "/daily/:path*", "destination": "https://dailyptr-production.up.railway.app/:path*" }
   ]
 }
