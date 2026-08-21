@@ -1,4 +1,4 @@
-// === Austin Miller personal site — data-driven scroll + hiker ===
+// === Austin Miller personal site — data-driven scroll + trail dot ===
 //
 // All tracker numbers (states, ballparks, national parks, NH 4000-footers)
 // are read at runtime from data/adventures.md — that file is the single
@@ -319,20 +319,6 @@ async function loadAdventures() {
   }
 }
 
-// === Sky color cycles with the real time of day, sunrise through sunset ===
-const SKY_KEYFRAMES = [
-  { t: 0,    top: '#0a1810', mid: '#152620', bot: '#1a2420' }, // midnight
-  { t: 5,    top: '#16213a', mid: '#3a3a5c', bot: '#5c4a5e' }, // predawn
-  { t: 6.5,  top: '#ff9a5a', mid: '#ffb27a', bot: '#ffd9a0' }, // sunrise
-  { t: 8.5,  top: '#8fc4e8', mid: '#bfe0e8', bot: '#eaf3e0' }, // morning
-  { t: 12,   top: '#5aa0d8', mid: '#a8d0e0', bot: '#d8e8d0' }, // midday
-  { t: 16,   top: '#4a7cb0', mid: '#8fb0c8', bot: '#e0c898' }, // afternoon
-  { t: 18,   top: '#d8623a', mid: '#f0925a', bot: '#ffcf7f' }, // sunset
-  { t: 19.5, top: '#3a2050', mid: '#8a4560', bot: '#e08050' }, // dusk
-  { t: 21,   top: '#141c30', mid: '#2a2840', bot: '#4a3850' }, // twilight
-  { t: 24,   top: '#0a1810', mid: '#152620', bot: '#1a2420' }  // back to midnight
-];
-
 function hexToRgb(hex) {
   const n = parseInt(hex.slice(1), 16);
   return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
@@ -344,136 +330,11 @@ function lerpColor(hexA, hexB, f) {
   return '#' + c.map(v => v.toString(16).padStart(2, '0')).join('');
 }
 
-function skyColorsAt(hour) {
-  let lo = SKY_KEYFRAMES[0], hi = SKY_KEYFRAMES[SKY_KEYFRAMES.length - 1];
-  for (let i = 0; i < SKY_KEYFRAMES.length - 1; i++) {
-    if (hour >= SKY_KEYFRAMES[i].t && hour <= SKY_KEYFRAMES[i + 1].t) {
-      lo = SKY_KEYFRAMES[i]; hi = SKY_KEYFRAMES[i + 1];
-      break;
-    }
-  }
-  const span = hi.t - lo.t;
-  const f = span ? (hour - lo.t) / span : 0;
-  return {
-    top: lerpColor(lo.top, hi.top, f),
-    mid: lerpColor(lo.mid, hi.mid, f),
-    bot: lerpColor(lo.bot, hi.bot, f)
-  };
-}
-
-// Stars: fully out at night, fully faded during broad daylight, with a
-// smooth fade across dawn (5-8.5) and dusk (16-21).
-function nightOpacityAt(hour) {
-  if (hour <= 5 || hour >= 21) return 1;
-  if (hour <= 8.5) return 1 - (hour - 5) / 3.5;
-  if (hour <= 16) return 0;
-  if (hour <= 21) return (hour - 16) / 5;
-  return 0;
-}
-
-// Sun/moon travel a rising-and-falling arc across the sky over their
-// respective windows, fading in/out right at the horizon edges of that
-// window. `start`/`end` are hours-of-day (end may exceed 24 to wrap past
-// midnight, e.g. the moon's window runs 17.5 -> 30.5, i.e. 5:30pm -> 6:30am).
-function celestialArcAt(hour, start, end) {
-  let h = hour;
-  if (h < start) h += 24;
-  if (h > end) return null;
-  const p = (h - start) / (end - start);
-  // x range is intentionally off-center (40-860, not 500) so the arc's peak
-  // never lands exactly behind the summit flag at the midpoint of the window.
-  const x = 40 + 820 * p;
-  const y = 700 - 600 * Math.sin(Math.PI * p);
-  const edgeFade = Math.min(1, p / 0.06, (1 - p) / 0.06);
-  return { x, y, opacity: Math.max(0, Math.min(1, edgeFade)) };
-}
-
-const SUN_WINDOW = [5.5, 18.5];
-const MOON_WINDOW = [17.5, 30.5];
-
-function positionCelestial(el, arc) {
-  if (!el) return;
-  if (!arc) { el.style.opacity = 0; return; }
-  el.setAttribute('transform', 'translate(' + arc.x.toFixed(1) + ',' + arc.y.toFixed(1) + ')');
-  el.style.opacity = arc.opacity;
-}
-
-// The mountain-bg <svg> uses preserveAspectRatio="none" so the mountain art
-// stretches to fill the viewport — great for the ridgeline, bad for the sun
-// and moon, which would turn into ellipses. Their rx/ry are recomputed here
-// from the current non-uniform scale so they always render as true circles
-// at a fixed on-screen pixel size, regardless of viewport width/height.
-const CELESTIAL_ELLIPSES = {
-  'sun-glow': { rx: 56, ry: 56 },
-  'sun-core': { rx: 30, ry: 30 },
-  'moon-glow': { rx: 46, ry: 46 },
-  'moon-main': { rx: 36, ry: 36 }
-};
-
-function updateCelestialSizes() {
-  const svg = document.querySelector('.mountain-bg svg');
-  if (!svg) return;
-  const rect = svg.getBoundingClientRect();
-  if (!rect.width || !rect.height) return;
-  const scaleX = rect.width / 1000;
-  const scaleY = rect.height / 1000;
-  Object.keys(CELESTIAL_ELLIPSES).forEach(id => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const spec = CELESTIAL_ELLIPSES[id];
-    el.setAttribute('rx', (spec.rx / scaleX).toFixed(2));
-    el.setAttribute('ry', (spec.ry / scaleY).toFixed(2));
-    if (spec.cx !== undefined) el.setAttribute('cx', (spec.cx / scaleX).toFixed(2));
-    if (spec.cy !== undefined) el.setAttribute('cy', (spec.cy / scaleY).toFixed(2));
-  });
-}
-
-function initCelestialSizing() {
-  updateCelestialSizes();
-  window.addEventListener('resize', updateCelestialSizes);
-  window.addEventListener('orientationchange', updateCelestialSizes);
-  setTimeout(updateCelestialSizes, 200);
-  setTimeout(updateCelestialSizes, 800);
-}
-
-// The sky runs on a "story clock" instead of the real one: scroll progress
-// (t, 0 at base camp -> 1 at the summit) maps onto a full day, so the hike
-// itself carries you from dawn through midday into dusk/night as you climb.
-function skyHourForScrollT(t) {
-  return 5 + t * 15; // 5:00am at the trailhead -> 8:00pm at the summit
-}
-
-// Recoloring the sky gradient + repositioning sun/moon every scroll frame
-// is cheap on desktop but visibly janky on mobile, where it repaints
-// alongside several expensive feTurbulence/feDisplacementMap filters on
-// the mountain geometry. Below this breakpoint (matches the existing CSS
-// mobile cutoff), the sky is left at its initial static state instead of
-// animating with scroll.
-const mobileSkyQuery = window.matchMedia('(max-width: 760px)');
-let skyAnimates = !mobileSkyQuery.matches;
-mobileSkyQuery.addEventListener('change', e => { skyAnimates = !e.matches; });
-
-function applySkyColors(hour) {
-  const colors = skyColorsAt(hour);
-  const top = document.getElementById('sky-stop-top');
-  const mid = document.getElementById('sky-stop-mid');
-  const bot = document.getElementById('sky-stop-bot');
-  if (top) top.setAttribute('stop-color', colors.top);
-  if (mid) mid.setAttribute('stop-color', colors.mid);
-  if (bot) bot.setAttribute('stop-color', colors.bot);
-
-  const stars = document.getElementById('sky-stars');
-  if (stars) stars.style.opacity = nightOpacityAt(hour);
-
-  positionCelestial(document.getElementById('sky-sun'), celestialArcAt(hour, SUN_WINDOW[0], SUN_WINDOW[1]));
-  positionCelestial(document.getElementById('sky-moon'), celestialArcAt(hour, MOON_WINDOW[0], MOON_WINDOW[1]));
-}
-
 // === Altimeter checkpoint ticks ===
 // One tick per [data-alt] section, positioned along the track by altitude
 // fraction. Clicking a tick jumps straight to that section; setActiveAltTick
-// (called from initHiker's scroll update, which already tracks currentAlt)
-// highlights whichever checkpoint the hiker last passed.
+// (called from initTrailDot's scroll update, which already tracks currentAlt)
+// highlights whichever checkpoint the trail dot last passed.
 let setActiveAltTick = function () {};
 
 function initAltimeterTicks() {
@@ -505,86 +366,16 @@ function initAltimeterTicks() {
   };
 }
 
-// === Checkpoint flags planted on the trail ===
-// One small flag per section (except the summit, which already has its own
-// larger one), placed at the point on the trail path matching that
-// section's scroll-centered position. Flips from dim to "reached" once the
-// hiker's current altitude has caught up to it (called from initHiker's
-// scroll update, which already tracks currentAlt).
-let updateTrailFlags = function () {};
-const SVG_NS = 'http://www.w3.org/2000/svg';
-
-function initTrailFlags() {
-  const trail = document.getElementById('trail-path');
-  const flagsGroup = document.getElementById('trail-flags');
-  const sections = Array.from(document.querySelectorAll('[data-alt]')).filter(s => s.id !== 'summit');
-  if (!trail || !flagsGroup || !sections.length) return;
-
-  const pathLength = trail.getTotalLength();
-
-  function place() {
-    flagsGroup.innerHTML = '';
-    const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-
-    const flags = sections.map(s => {
-      // Same point scroll-snap centers this section on: matches where the
-      // hiker visually sits when this checkpoint is the active one.
-      const centerScrollY = s.offsetTop + s.offsetHeight / 2 - window.innerHeight / 2;
-      const t = Math.max(0, Math.min(1, centerScrollY / maxScroll));
-      const pt = trail.getPointAtLength(pathLength * t);
-
-      const g = document.createElementNS(SVG_NS, 'g');
-      g.setAttribute('class', 'trail-flag');
-      g.setAttribute('transform', 'translate(' + pt.x.toFixed(1) + ',' + pt.y.toFixed(1) + ')');
-
-      const pole = document.createElementNS(SVG_NS, 'line');
-      pole.setAttribute('class', 'pole');
-      pole.setAttribute('x1', '0'); pole.setAttribute('y1', '0');
-      pole.setAttribute('x2', '0'); pole.setAttribute('y2', '-18');
-      g.appendChild(pole);
-
-      // "flag-pennant", not "pennant" — the ballpark grid already owns the
-      // bare .pennant class (filter/transform/hover/tooltip rules) and,
-      // being unscoped, would otherwise bleed onto this unrelated SVG path.
-      const pennant = document.createElementNS(SVG_NS, 'path');
-      pennant.setAttribute('class', 'flag-pennant');
-      pennant.setAttribute('d', 'M0 -18 L13 -14 L0 -10 Z');
-      g.appendChild(pennant);
-
-      flagsGroup.appendChild(g);
-      return { alt: parseInt(s.dataset.alt, 10) || 0, el: g };
-    });
-
-    updateTrailFlags = function (currentAlt) {
-      flags.forEach(f => f.el.classList.toggle('reached', currentAlt >= f.alt));
-    };
-  }
-
-  place();
-  // Section/document height shifts once web fonts finish (reflowing text)
-  // and once the async adventures.md fetch populates the data-driven grids
-  // (states map, pennants, stamps, peaks list) — both happen after this
-  // runs at DOMContentLoaded, so re-place once things settle, same as
-  // initHiker's update() does for the same reason.
-  window.addEventListener('load', place);
-  window.addEventListener('resize', place);
-  window.addEventListener('orientationchange', place);
-  setTimeout(place, 200);
-  setTimeout(place, 800);
-}
-
-// === Hiker scroll tracking ===
-function initHiker() {
-  const wrap = document.getElementById('hikerFixed');
+// === Trail dot scroll tracking ===
+function initTrailDot() {
+  const wrap = document.getElementById('trailDot');
   if (!wrap) return;
-  wrap.innerHTML = window.hikerSVG({ size: 76, facing: 'right' });
 
   const svg = document.querySelector('.mountain-bg svg');
   const trail = document.getElementById('trail-path');
   if (!svg || !trail) return;
 
   const pathLength = trail.getTotalLength();
-  let currentFacing = 1;
   let lastAlt = -1;
 
   // getScreenCTM() forces a style/layout recalc and never changes from
@@ -615,33 +406,15 @@ function initHiker() {
     const max = document.documentElement.scrollHeight - window.innerHeight;
     const t = Math.max(0, Math.min(1, scroll / Math.max(1, max)));
 
-    if (skyAnimates) applySkyColors(skyHourForScrollT(t));
-
     if (!ctm) return;
 
     const pt = trail.getPointAtLength(pathLength * t);
-    const pt2 = trail.getPointAtLength(Math.min(pathLength, pathLength * t + 4));
 
     const sp1 = svg.createSVGPoint();
     sp1.x = pt.x; sp1.y = pt.y;
     const screen1 = sp1.matrixTransform(ctm);
 
-    const sp2 = svg.createSVGPoint();
-    sp2.x = pt2.x; sp2.y = pt2.y;
-    const screen2 = sp2.matrixTransform(ctm);
-
-    // facing direction = horizontal component of travel
-    const dx = screen2.x - screen1.x;
-    if (Math.abs(dx) > 0.5) {
-      currentFacing = dx > 0 ? 1 : -1;
-    }
-
-    // Hiker is ~76×114; anchor feet to the trail point
-    const x = screen1.x - 38;
-    const y = screen1.y - 100;
-
-    wrap.style.transform =
-      'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) scaleX(' + currentFacing + ')';
+    wrap.style.transform = 'translate(' + screen1.x.toFixed(1) + 'px,' + screen1.y.toFixed(1) + 'px)';
 
     // Altimeter
     const thresholdY = scroll + window.innerHeight * 0.55;
@@ -657,17 +430,7 @@ function initHiker() {
       lastAlt = currentAlt;
       if (nowEl) nowEl.textContent = currentAlt.toLocaleString() + ' ft';
       setActiveAltTick(currentAlt);
-      updateTrailFlags(currentAlt);
     }
-  }
-
-  // The hiker's walk-cycle animation only plays while the page is actively
-  // scrolling; it freezes mid-stride once scrolling stops (see .walking in
-  // hiker.js) rather than looping in place forever.
-  let walkStopTimer = null;
-  function setWalking(active) {
-    const rig = wrap.querySelector('.hiker-rig');
-    if (rig) rig.classList.toggle('walking', active);
   }
 
   // Native scroll events can fire far more often than the display repaints
@@ -684,9 +447,6 @@ function initHiker() {
   }
 
   function onScroll() {
-    setWalking(true);
-    clearTimeout(walkStopTimer);
-    walkStopTimer = setTimeout(() => setWalking(false), 150);
     scheduleUpdate();
   }
 
@@ -726,10 +486,7 @@ function initCards() {
 // boot
 document.addEventListener('DOMContentLoaded', () => {
   loadAdventures();
-  initCelestialSizing();
-  applySkyColors(skyHourForScrollT(0));
   initAltimeterTicks();
-  initTrailFlags();
-  initHiker();
+  initTrailDot();
   initCards();
 });

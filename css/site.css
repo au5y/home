@@ -1,8 +1,8 @@
 :root{
-  --bg:#1a2420; --bg-2:#0d1f15; --green:#2d5a3d; --green-2:#6b9b6c;
-  --cream:#f4e4b8; --paper:#f4e4b8; --paper-2:#ede0b5;
-  --paper-text:#2a261b; --ink:#e6dfc8; --ink-dim:#9aa28b;
-  --warn:#e89a4a; --red:#c45a5a; --blue:#6a8aa8;
+  --bg:#161e26; --blue-2:#9ecbe8;
+  --accent:#3a6f9c; --accent-dark:#274b68;
+  --cream:#f4e4b8; --paper:#f4e4b8;
+  --paper-text:#2a261b; --ink:#e6dfc8; --ink-dim:#b9c4cc;
 }
 *{box-sizing:border-box;}
 html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);overflow-x:hidden;}
@@ -21,8 +21,8 @@ html{
 }
 
 /* Respect OS-level "reduce motion": disable forced scroll-snap (a known
-   vestibular-disorder trigger), the hiker's walk-cycle keyframe loop, the
-   scroll-cue bounce, and every card/hover transition site-wide. Near-zero
+   vestibular-disorder trigger), the scroll-cue bounce, and every
+   card/hover transition site-wide. Near-zero
    duration (not display:none/animation:none) so elements still land on
    their final state instantly instead of getting stuck mid-transition. */
 @media (prefers-reduced-motion: reduce) {
@@ -35,33 +35,28 @@ html{
   }
 }
 
-/* Mountain bg, fixed. 100dvh keeps the peak from jumping/gapping when mobile
-   browser chrome shows/hides; vh stays as a fallback for older browsers. */
-.mountain-bg{position:fixed;inset:0;width:100vw;height:100vh;height:100dvh;z-index:0;pointer-events:none;}
-.mountain-bg svg{width:100%;height:100%;display:block;}
+/* Mountain bg, fixed: the real Tetons photo. 100dvh keeps the peak from
+   jumping/gapping when mobile browser chrome shows/hides; vh stays as a
+   fallback for older browsers. A dark scrim is layered under the SVG trail
+   overlay so the red line and cream flags stay legible against the photo. */
+.mountain-bg{
+  position:fixed;inset:0;width:100vw;height:100vh;height:100dvh;z-index:0;pointer-events:none;
+  background:var(--bg) url('../assets/images/tetons.jpg') center 25%/cover no-repeat;
+}
+.mountain-bg::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(10,15,10,0.35) 0%,rgba(10,15,10,0.15) 40%,rgba(10,15,10,0.55) 100%);
+}
+.mountain-bg svg{position:relative;width:100%;height:100%;display:block;}
 
-/* These repaint every scroll-driven frame (sky color, sun/moon position,
-   star opacity) while sitting in the same SVG as several expensive
-   feTurbulence/feDisplacementMap filters on the static mountain geometry.
-   will-change hints the browser to composite them on their own layer so
-   the filtered paths aren't re-rasterized alongside them each frame. */
-#sky-sun, #sky-moon, #sky-stars{will-change:opacity,transform;}
-
-/* Checkpoint flags planted along the trail (js/site.js initTrailFlags) —
-   dim and flag-down until the hiker reaches that checkpoint, then flip to
-   the same warm orange as the summit flag. */
-.trail-flag .pole{stroke:#8a7a5a;stroke-width:1.4;transition:stroke .4s ease;}
-.trail-flag .flag-pennant{fill:rgba(244,228,184,0.3);transition:fill .4s ease;}
-.trail-flag.reached .pole{stroke:#c4a574;}
-.trail-flag.reached .flag-pennant{fill:#e89a4a;}
-
-/* Hiker, fixed positioned via JS, walks up trail. z-index sits below main's
-   cards (z-index:2) so the hiker always passes behind card content instead
-   of walking on top of it, but above the mountain-bg (z-index:0). */
-.hiker-fixed{
+/* Trail dot, fixed positioned via JS, travels up the red trail line as you
+   scroll. z-index sits below main's cards (z-index:2) so it always passes
+   behind card content, but above the mountain-bg (z-index:0). */
+.trail-dot{
   position:fixed;left:0;top:0;z-index:1;pointer-events:none;
+  width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;
+  background:#c0392b;box-shadow:0 0 0 3px rgba(192,57,43,0.3),0 0 10px rgba(192,57,43,0.7);
   will-change:transform;
-  transform-origin:center center;
   transition:transform 0.08s linear;
 }
 
@@ -106,12 +101,35 @@ html{
 }
 .nav-strip a:hover{color:var(--cream);border-bottom-color:var(--cream);}
 
-/* Altitude indicator (right rail) */
-.altimeter{position:fixed;right:30px;top:50%;transform:translateY(-50%);z-index:6;pointer-events:none;}
-.altimeter .track{width:3px;height:260px;background:rgba(244,228,184,0.16);border-radius:2px;position:relative;margin:0 auto;}
-.altimeter .progress{position:absolute;left:-2px;top:0;width:7px;background:var(--cream);border-radius:3px;height:0;box-shadow:0 0 8px rgba(244,228,184,0.4);}
-.altimeter .label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-dim);text-align:center;margin-top:8px;text-shadow:0 1px 3px rgba(0,0,0,0.7);}
-.altimeter .alt-now{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cream);text-align:center;margin-top:2px;text-shadow:0 1px 3px rgba(0,0,0,0.7);}
+/* Altitude indicator (right rail) — now doubles as a small checkpoint
+   legend: its own translucent panel (like .nav-strip's) holds the track
+   and every section's label, always visible so the trail is a navigable
+   map rather than just a progress bar. Desktop-only; collapses to
+   display:none with the rest of .altimeter below 760px. */
+.altimeter{
+  position:fixed;right:30px;top:50%;transform:translateY(-50%);z-index:6;pointer-events:none;
+  background:rgba(10,15,10,0.5);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  border-radius:14px;
+  padding:20px 16px 20px 104px;
+}
+.altimeter .track{width:3px;height:260px;background:rgba(158,198,224,0.18);border-radius:2px;position:relative;margin:0 auto;}
+.altimeter .progress{position:absolute;left:-2px;top:0;width:7px;background:var(--blue-2);border-radius:3px;height:0;box-shadow:0 0 8px rgba(158,198,224,0.45);}
+
+/* Fixed width + tabular-nums so "0 ft" -> "14,720 ft" only re-centers the
+   digits within a constant-size box instead of resizing the panel/track. */
+.altimeter .alt-now{
+  width:82px;margin:10px auto 0;
+  font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums;
+  font-size:12px;color:var(--cream);text-align:center;white-space:nowrap;
+  text-shadow:0 1px 3px rgba(0,0,0,0.9),0 0 8px rgba(0,0,0,0.6);
+}
+.altimeter .label{
+  width:82px;margin:2px auto 0;
+  font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.18em;
+  text-transform:uppercase;color:var(--ink-dim);text-align:center;
+  text-shadow:0 1px 3px rgba(0,0,0,0.9),0 0 8px rgba(0,0,0,0.6);
+}
 
 /* Checkpoint ticks — one per section, positioned along the track by
    altitude fraction. Clickable to jump straight to that section. */
@@ -126,26 +144,31 @@ html{
 }
 .altimeter .tick:hover{transform:translate(-50%,-50%) scale(1.35);}
 .altimeter .tick.active{
-  background:var(--cream);border-color:var(--cream);
-  box-shadow:0 0 9px rgba(244,228,184,0.65);
+  background:var(--blue-2);border-color:var(--blue-2);
+  box-shadow:0 0 9px rgba(158,198,224,0.65);
 }
+/* Labels stay on at all times (not just hover) so the panel reads as a
+   legend of checkpoints, not just a progress bar. */
 .altimeter .tick-label{
   position:absolute;right:100%;top:50%;margin-right:9px;
   transform:translateY(-50%);
   font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.06em;
   color:var(--ink-dim);white-space:nowrap;
-  opacity:0;pointer-events:none;transition:opacity .15s;
-  text-shadow:0 1px 3px rgba(0,0,0,0.8);
+  /* auto (not none): hovering the label text is a descendant of .tick, so
+     it drives the same :hover state (dot scale-up + label highlight) as
+     hovering the dot itself — and is clickable, matching the dot's jump
+     behavior. */
+  pointer-events:auto;cursor:pointer;transition:color .15s;
 }
 .altimeter .tick:hover .tick-label,.altimeter .tick.active .tick-label{
-  opacity:1;color:var(--cream);
+  color:var(--blue-2);
 }
 
 /* Sections */
 main{position:relative;z-index:2;}
 section{
-  min-height:90vh;min-height:90dvh;display:flex;align-items:center;
-  padding:64px 60px;position:relative;
+  min-height:76vh;min-height:76dvh;display:flex;align-items:center;
+  padding:40px 60px;position:relative;
   scroll-snap-align:center;
 }
 section.right{justify-content:flex-end;}
@@ -155,31 +178,32 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
 /* Keep right-aligned cards clear of the fixed altimeter rail (right:30px);
    .altimeter is display:none below 760px so no clearance is needed there. */
 @media (min-width:761px){
-  section.right{padding-right:150px;}
+  section.right{padding-right:210px;}
 }
 
 /* INTRO */
 .intro{justify-content:flex-start;padding-top:18vh;}
-/* Solid (not blurred) scrim behind the base-camp and summit text — both
-   sit directly on the open sky (no card underneath), which cycles through
-   bright dawn/dusk colors, and text-shadow alone isn't enough contrast
-   against a light patch of sky. Shared between the two open-sky sections
-   since neither has a paper card giving it a built-in backdrop already.
-   Deliberately not backdrop-filter: this sits over the fixed sky gradient
-   that's still animating on desktop scroll, and a blur here would mean
-   resampling that gradient every frame it's on screen. */
+
 .hero-scrim{
-  background:rgba(10,15,10,0.42);
+  background:rgba(8,12,8,0.52);
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);
   border-radius:26px;
   padding:28px 40px 32px;
   max-width:640px;
 }
 .intro h1{font-family:'Caveat',cursive;font-size:120px;line-height:0.95;color:var(--cream);margin:0;text-shadow:3px 4px 0 rgba(0,0,0,0.5);transform:rotate(-2deg);}
 .intro .tag{font-family:'Patrick Hand',cursive;font-size:22px;color:var(--ink);width:100%;max-width:560px;margin:20px auto 0;line-height:1.4;}
-.intro .scroll-cue{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--green-2);margin-top:36px;text-shadow:0 1px 3px rgba(0,0,0,0.7);}
+.intro .scroll-cue{
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--cream);margin-top:36px;
+  text-shadow:0 1px 3px rgba(0,0,0,0.9);
+  display:inline-flex;align-items:center;align-self:center;padding:8px 16px;border-radius:20px;
+  background:rgba(10,15,10,0.55);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+}
 .intro .scroll-cue::after{content:" ↓";display:inline-block;margin-left:6px;animation:bounce 1.6s infinite ease-in-out;}
-@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(8px);}}
-.intro .kicker-base{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--green-2);margin-bottom:16px;text-shadow:0 1px 3px rgba(0,0,0,0.7);}
+@keyframes bounce{0%,100%{transform:translateY(-3px);}50%{transform:translateY(5px);}}
+.intro .kicker-base{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--blue-2);margin-bottom:16px;text-shadow:0 1px 3px rgba(0,0,0,0.7);}
 
 /* SUMMIT */
 .summit h2{font-family:'Caveat',cursive;font-size:130px;line-height:1;color:var(--cream);margin:0;text-shadow:3px 4px 0 rgba(0,0,0,0.5);transform:rotate(-1deg);}
@@ -195,7 +219,7 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
   transform:rotate(-0.6deg);
 }
 .summit-links a:hover{background:rgba(244,228,184,0.1);transform:rotate(-1.4deg);}
-.summit .kicker-base{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--green-2);margin-bottom:20px;}
+.summit .kicker-base{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--blue-2);margin-bottom:20px;}
 
 /* CARD — paper index card */
 .card{
@@ -214,7 +238,7 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
 
 .card .tape{
   position:absolute;top:-14px;left:50%;transform:translateX(-50%) rotate(-3deg);
-  width:120px;height:24px;background:rgba(154,200,180,0.55);
+  width:120px;height:24px;background:rgba(120,166,201,0.55);
   border:1px solid rgba(0,0,0,0.06);box-shadow:0 2px 0 rgba(0,0,0,0.15);
 }
 .card .tape.alt{
@@ -226,7 +250,7 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
   background:radial-gradient(circle at 30% 30%,#ffc89a,#e89a4a 55%,#a05a1c 100%);
   box-shadow:inset -2px -2px 0 rgba(0,0,0,0.25),3px 4px 4px rgba(0,0,0,0.4);
 }
-.card .pin.green{background:radial-gradient(circle at 30% 30%,#b8d49a,#6b9b6c 55%,#365a36 100%);}
+.card .pin.green{background:radial-gradient(circle at 30% 30%,#a9cbe0,#5f8fb0 55%,#2c4f68 100%);}
 .card .pin.red{background:radial-gradient(circle at 30% 30%,#ffaaaa,#c45a5a 55%,#7a2a2a 100%);}
 
 .card .kicker{
@@ -243,7 +267,7 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
 
 .card .pct{display:flex;align-items:center;gap:12px;margin:14px 0 10px;}
 .card .pct .bar{flex:1;height:9px;background:rgba(0,0,0,0.13);border-radius:5px;position:relative;overflow:hidden;}
-.card .pct .bar i{position:absolute;left:0;top:0;bottom:0;background:#2d5a3d;border-radius:5px;}
+.card .pct .bar i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:5px;}
 .card .pct .num{font-family:'JetBrains Mono',monospace;font-size:14px;color:#1a2420;font-weight:600;}
 
 .card a.btn{
@@ -272,7 +296,7 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
   transition:transform .15s,background .15s;
 }
 .us-map .cell:hover{transform:scale(1.15);z-index:2;}
-.us-map .cell.done{background:#2d5a3d;color:var(--cream);box-shadow:1px 1px 0 rgba(0,0,0,0.2);}
+.us-map .cell.done{background:var(--accent);color:var(--cream);box-shadow:1px 1px 0 rgba(0,0,0,0.2);}
 .us-map .cell.empty{background:transparent;pointer-events:none;}
 
 /* Full state name on hover, same pattern as .pennant::after/.stamp::after.
@@ -308,6 +332,18 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
 .pennant:hover{transform:rotate(-4deg) scale(1.1);}
 .pennant svg{display:block;width:100%;height:auto;filter:drop-shadow(1px 2px 0 rgba(0,0,0,0.2));}
 
+/* Same checkmark badge language as .row-chk .box::after and .stamp.done —
+   ::before (not ::after, already used by the tooltip below) placed over
+   the pennant's top-right corner. */
+.pennant.done:hover::before{
+  content:"✓";position:absolute;top:-6px;right:-4px;z-index:2;
+  width:15px;height:15px;border-radius:50%;
+  background:var(--accent);color:var(--cream);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Caveat',cursive;font-size:13px;font-weight:700;line-height:1;
+  box-shadow:0 1px 3px rgba(0,0,0,0.5);
+}
+
 .pennant::after{
   content:attr(data-full);
   position:absolute;bottom:calc(100% + 7px);left:50%;
@@ -332,30 +368,17 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
   border:1.5px solid #5a4a2b;flex:0 0 12px;
   transform:rotate(-2deg);position:relative;
 }
-.row-chk.done .box{background:#2d5a3d;border-color:#2d5a3d;}
+.row-chk.done .box{background:var(--accent);border-color:var(--accent);}
 .row-chk.done .box::after{
   content:"✓";position:absolute;left:-1px;top:-9px;
   color:var(--cream);font-family:'Caveat',cursive;
   font-size:17px;line-height:1;font-weight:700;
 }
 
-/* Passport card — national parks */
-.card.passport{
-  background:#241811;color:#e8d9b0;
-  background-image:
-    repeating-linear-gradient(0deg,rgba(255,255,255,0.02) 0,rgba(255,255,255,0.02) 1px,transparent 1px,transparent 28px),
-    radial-gradient(circle at 15% 20%,rgba(255,255,255,0.05),transparent 55%),
-    radial-gradient(circle at 85% 80%,rgba(0,0,0,0.3),transparent 55%);
-  border:2px solid #8a6a2c;
-  box-shadow:6px 9px 0 rgba(0,0,0,0.5),0 0 0 1px rgba(0,0,0,0.2),inset 0 0 0 4px rgba(201,162,39,0.18);
-}
-.card.passport .kicker{color:#c9a227;}
-.card.passport .kicker .marker{color:#e8d9b0;}
-.card.passport h2{color:#f0dfa8;}
-.card.passport .sub{color:#b8a06a;}
-.card.passport .pct .bar{background:rgba(255,255,255,0.1);}
-.card.passport .pct .bar i{background:#c9a227;}
-.card.passport .pct .num{color:#f0dfa8;}
+/* Passport card — national parks. Same paper/yellow as every other card
+   (no bespoke dark theme); only the gold emblem + stamp accents carry the
+   "passport" identity now. */
+.card.passport .pct .bar i{background:#8a6a2c;}
 .passport-emblem{
   position:absolute;top:-16px;left:50%;transform:translateX(-50%) rotate(-2deg);
   width:34px;height:34px;border-radius:50%;
@@ -373,36 +396,44 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
   position:relative;cursor:default;
 }
 .stamp .stamp-icon{
+  position:relative;
   width:34px;height:34px;border-radius:50%;
-  /* 0.4/0.55 alpha (not the original 0.28/0.35) — those measured under
-     4.5:1 (text) / 3:1 (icon outline) against the passport's dark
-     background, failing WCAG AA. */
-  border:1.5px dashed rgba(232,217,176,0.4);
+  border:1.5px dashed rgba(90,74,43,0.4);
   display:flex;align-items:center;justify-content:center;
-  color:rgba(232,217,176,0.4);
+  color:rgba(90,74,43,0.4);
   transition:transform .15s,border-color .15s,color .15s,background .15s;
 }
 .stamp.done .stamp-icon{
-  border:1.5px solid #c9a227;background:rgba(201,162,39,0.1);
-  color:#e8c65a;transform:rotate(-6deg);
+  border:1.5px solid #8a6a2c;background:rgba(138,106,44,0.12);
+  color:#8a6a2c;transform:rotate(-6deg);
+}
+/* Same checkmark badge language as .row-chk .box::after, so "completed"
+   reads identically across the states, ballparks, and parks trackers. */
+.stamp.done:hover .stamp-icon::after{
+  content:"✓";position:absolute;right:-5px;bottom:-5px;
+  width:15px;height:15px;border-radius:50%;
+  background:var(--accent);color:var(--cream);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Caveat',cursive;font-size:13px;font-weight:700;line-height:1;
+  transform:rotate(6deg);
+  box-shadow:0 1px 3px rgba(0,0,0,0.5);
 }
 .stamp:hover .stamp-icon{transform:scale(1.15) rotate(-6deg);}
 .stamp-code{
   font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.06em;
-  color:rgba(232,217,176,0.55);
+  color:#6a5a3a;
 }
-.stamp.done .stamp-code{color:#e8d9b0;}
+.stamp.done .stamp-code{color:#1a2420;}
 
 .stamp::after{
   content:attr(data-full);
   position:absolute;bottom:calc(100% + 7px);left:50%;
   transform:translateX(-50%) translateY(4px);
-  background:#150e08;color:#e8d9b0;font-family:'Patrick Hand',cursive;font-size:12px;
+  background:#1a2420;color:#f4e4b8;font-family:'Patrick Hand',cursive;font-size:12px;
   padding:4px 9px;border-radius:6px;
   max-width:150px;width:max-content;white-space:normal;text-align:center;line-height:1.3;
   opacity:0;pointer-events:none;transition:opacity .15s,transform .15s;
-  box-shadow:0 3px 8px rgba(0,0,0,0.45);z-index:5;
-  border:1px solid rgba(201,162,39,0.4);
+  box-shadow:0 3px 8px rgba(0,0,0,0.35);z-index:5;
 }
 .stamp:hover::after{opacity:1;transform:translateX(-50%) translateY(0);}
 
@@ -471,14 +502,6 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
      background, which the .nav-scrim gradient behind it already helps
      keep legible without the blur. */
   .nav-strip{background:rgba(10,15,10,0.82);-webkit-backdrop-filter:none;backdrop-filter:none;}
-
-  /* The feTurbulence/feDisplacementMap "rough edge" filters (7 of them)
-     on the mountain art are expensive to rasterize on mobile GPUs, and
-     sit in a position:fixed layer behind the whole page — a candidate
-     for continuous repaint cost during scroll. Disabled on mobile;
-     the shapes still render, just with clean edges instead of the
-     hand-drawn wobble. */
-  .mountain-bg svg [filter]{filter:none;}
 }
 
 @media (max-width:420px){
