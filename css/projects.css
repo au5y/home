@@ -68,11 +68,6 @@ body.projects-page{
 .tile:not(.dashed):not(.next-peak):hover{transform:translateY(-2px);}
 .tile[aria-disabled="true"]{cursor:default;}
 
-/* Featured card is a div (not an <a>) so its "gh" badge can be its own
-   real link — nesting an <a> inside an <a> is invalid HTML. This
-   invisible overlay makes the rest of the card clickable like before;
-   .gh sits in a later stacking layer so it still intercepts its own
-   clicks instead of the overlay swallowing them. */
 .tile-hit{position:absolute;inset:0;z-index:1;}
 
 .tile.featured{
@@ -104,6 +99,11 @@ body.projects-page{
 }
 .thumb.thumb-img{background:#0e1517;}
 .thumb-img img{width:100%;height:100%;object-fit:cover;object-position:center;}
+.thumb.mahjong img {
+  object-position: bottom;
+  transform: scale(1.15); /* Zooms in by 15% */
+  transform-origin: bottom; /* Ensures it zooms from the bottom up */
+}
 .tile.featured .thumb-img img{object-position:top;}
 
 .ttl{font-family:'Caveat',cursive;font-weight:700;font-size:24px;color:var(--cream);margin:10px 0 4px;line-height:1;}
