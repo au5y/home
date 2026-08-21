@@ -546,10 +546,7 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
   .intro h1{font-size:68px;}
   .intro .tag{font-size:18px;}
   .summit h2{font-size:64px;}
-  /* !important: several cards set a wider desktop max-width via inline
-     style (e.g. style="max-width:560px"), which otherwise beats this
-     media-query rule regardless of specificity and clips content on
-     narrow viewports instead of letting it shrink to fit. */
+
   .card{max-width:100%!important;}
   .card h2{font-size:36px;}
   /* The parks passport (63 stamps) runs ~1.5x the height of a typical
