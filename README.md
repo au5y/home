@@ -11,8 +11,8 @@ No build step, no static site generator: plain HTML/CSS/JS served as-is.
   fetches and parses this file at page load and renders the counts,
   percentages, and lists on the homepage from it. To update progress, just
   edit the checkboxes in this file and push — nothing else needs to change.
-* `mountain/` — a separate, in-progress personal workflow (games and other
-  tabs), developed independently of the homepage.
+* `projects/index.html`, `css/projects.css` — the "Side & Hobby Projects"
+  page, linked from the homepage's Tinker Pile section.
 
 ## Local Development
 

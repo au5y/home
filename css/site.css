@@ -41,7 +41,7 @@ html{
    overlay so the red line and cream flags stay legible against the photo. */
 .mountain-bg{
   position:fixed;inset:0;width:100vw;height:100vh;height:100dvh;z-index:0;pointer-events:none;
-  background:var(--bg) url('../assets/images/tetons.jpg') center 25%/cover no-repeat;
+  background:var(--bg) url('../assets/images/adventures/tetons.jpg') center 25%/cover no-repeat;
 }
 .mountain-bg::after{
   content:'';position:absolute;inset:0;
@@ -367,15 +367,20 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
 .row-chk{display:flex;align-items:center;gap:6px;color:#6a5a3a;line-height:1.25;}
 .row-chk.done{color:#1a2420;}
 .row-chk .box{
-  display:inline-block;width:12px;height:12px;
-  border:1.5px solid #5a4a2b;flex:0 0 12px;
-  transform:rotate(-2deg);position:relative;
+  display:inline-flex;align-items:center;justify-content:center;
+  width:14px;height:14px;
+  border:1.5px solid #5a4a2b;flex:0 0 14px;
+  transform:rotate(-2deg);
 }
 .row-chk.done .box{background:var(--accent);border-color:var(--accent);}
+/* Was absolutely positioned with a fixed top/left offset tuned to nothing
+   in particular, which put most of the cursive "✓" glyph above the 12px
+   box — cream-on-cream against the page, invisible except for a sliver
+   over the blue fill. Flex-centering the pseudo-element inside a slightly
+   bigger box keeps the whole glyph on the visible fill instead. */
 .row-chk.done .box::after{
-  content:"✓";position:absolute;left:-1px;top:-9px;
-  color:var(--cream);font-family:'Caveat',cursive;
-  font-size:17px;line-height:1;font-weight:700;
+  content:"✓";color:var(--cream);font-family:'Caveat',cursive;
+  font-size:15px;line-height:1;font-weight:700;
 }
 
 /* Passport card — national parks. Same paper/yellow as every other card
