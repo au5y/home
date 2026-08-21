@@ -108,27 +108,24 @@ html{
    display:none with the rest of .altimeter below 760px. */
 .altimeter{
   position:fixed;right:30px;top:50%;transform:translateY(-50%);z-index:6;pointer-events:none;
-  background:rgba(10,15,10,0.5);
-  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
-  border-radius:14px;
   padding:20px 16px 20px 104px;
 }
 .altimeter .track{width:3px;height:260px;background:rgba(158,198,224,0.18);border-radius:2px;position:relative;margin:0 auto;}
 .altimeter .progress{position:absolute;left:-2px;top:0;width:7px;background:var(--blue-2);border-radius:3px;height:0;box-shadow:0 0 8px rgba(158,198,224,0.45);}
 
-/* Fixed width + tabular-nums so "0 ft" -> "14,720 ft" only re-centers the
+/* Fixed width + tabular-nums so "0 ft" -> "13,775 ft" only re-centers the
    digits within a constant-size box instead of resizing the panel/track. */
 .altimeter .alt-now{
   width:82px;margin:10px auto 0;
   font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums;
   font-size:12px;color:var(--cream);text-align:center;white-space:nowrap;
-  text-shadow:0 1px 3px rgba(0,0,0,0.9),0 0 8px rgba(0,0,0,0.6);
+  text-shadow:0 1px 4px rgba(0,0,0,0.95),0 0 6px rgba(0,0,0,0.9),0 0 14px rgba(0,0,0,0.7);
 }
 .altimeter .label{
   width:82px;margin:2px auto 0;
   font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.18em;
   text-transform:uppercase;color:var(--ink-dim);text-align:center;
-  text-shadow:0 1px 3px rgba(0,0,0,0.9),0 0 8px rgba(0,0,0,0.6);
+  text-shadow:0 1px 4px rgba(0,0,0,0.95),0 0 6px rgba(0,0,0,0.9),0 0 14px rgba(0,0,0,0.7);
 }
 
 /* Checkpoint ticks — one per section, positioned along the track by
@@ -154,6 +151,7 @@ html{
   transform:translateY(-50%);
   font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.06em;
   color:var(--ink-dim);white-space:nowrap;
+  text-shadow:0 1px 4px rgba(0,0,0,0.95),0 0 6px rgba(0,0,0,0.9),0 0 14px rgba(0,0,0,0.7);
   /* auto (not none): hovering the label text is a descendant of .tick, so
      it drives the same :hover state (dot scale-up + label highlight) as
      hovering the dot itself — and is clickable, matching the dot's jump
@@ -220,6 +218,11 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
 }
 .summit-links a:hover{background:rgba(244,228,184,0.1);transform:rotate(-1.4deg);}
 .summit .kicker-base{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--blue-2);margin-bottom:20px;}
+/* flex-direction:column on section.center doesn't collapse margins, so this
+   is the only gap between the scrim box and the button row below it — it
+   was too small and the scrim's rounded bottom corner read as clipping
+   the "projects"/"résumé" pills. */
+.summit .hero-scrim{margin-bottom:28px;}
 
 /* CARD — paper index card */
 .card{
@@ -389,7 +392,7 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
 
 .parks-grid{
   display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));
-  gap:14px 8px;margin-top:16px;
+  gap:20px 8px;margin-top:16px;
 }
 .stamp{
   display:flex;flex-direction:column;align-items:center;gap:5px;
@@ -455,6 +458,80 @@ section.center{justify-content:center;text-align:center;flex-direction:column;}
 .proj-tiles .ptile:hover{transform:rotate(-1deg) scale(1.04);}
 .proj-tiles .ptile .ttl{font-family:'Caveat',cursive;font-size:26px;line-height:1.15;margin-bottom:4px;white-space:nowrap;}
 .proj-tiles .ptile .desc{font-family:'Patrick Hand',cursive;font-size:13px;color:#9aa28b;margin-top:2px;}
+
+.polaroid-cluster{position:absolute;display:none;z-index:1;}
+@media (min-width:1150px){.polaroid-cluster{display:block;}}
+
+.polaroid{
+  position:absolute;width:148px;margin:0;
+  background:#f7f3e8;padding:10px 10px 32px;
+  border-radius:2px;
+  box-shadow:4px 7px 16px rgba(0,0,0,0.5),0 0 0 1px rgba(0,0,0,0.06);
+  transform:rotate(var(--rot,-5deg));
+  transition:transform .2s;
+}
+.polaroid:hover{transform:rotate(var(--rot,-5deg)) scale(1.06);z-index:2;}
+/* Same pin/tape language as .card .pin / .card .tape, via ::before so no
+   extra markup is needed — add class="polaroid pin" or "polaroid tape" to
+   pick which one a given photo gets. */
+.polaroid.pin::before{
+  content:'';position:absolute;top:-10px;left:50%;transform:translateX(-50%);
+  width:18px;height:18px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,#ffc89a,#e89a4a 55%,#a05a1c 100%);
+  box-shadow:inset -2px -2px 0 rgba(0,0,0,0.25),2px 3px 4px rgba(0,0,0,0.45);
+}
+.polaroid.pin.blue::before{background:radial-gradient(circle at 30% 30%,#a9cbe0,#5f8fb0 55%,#2c4f68 100%);}
+.polaroid.pin.red::before{background:radial-gradient(circle at 30% 30%,#ffaaaa,#c45a5a 55%,#7a2a2a 100%);}
+.polaroid.pin.green::before{background:radial-gradient(circle at 30% 30%,#b9d9a0,#6f9a4a 55%,#3a5c1c 100%);}
+.polaroid.tape::before{
+  content:'';position:absolute;top:-11px;left:50%;transform:translateX(-50%) rotate(-4deg);
+  width:64px;height:20px;background:rgba(120,166,201,0.55);
+  border:1px solid rgba(0,0,0,0.06);box-shadow:0 2px 0 rgba(0,0,0,0.15);
+}
+.polaroid.tape.alt::before{background:rgba(232,154,74,0.55);transform:translateX(-50%) rotate(5deg);}
+.polaroid img{display:block;width:100%;height:148px;object-fit:cover;border-radius:1px;}
+.polaroid figcaption{
+  display:block;text-align:center;margin-top:8px;
+  font-family:'Caveat',cursive;font-size:18px;line-height:1;color:#2a261b;
+}
+/* Empty placeholder — same footprint as a real photo so the two ballpark
+   slots hold their spot in the layout until real images are dropped in. */
+.polaroid.placeholder{background:#efe9da;}
+.polaroid .polaroid-empty{
+  width:100%;height:148px;border-radius:1px;
+  background:repeating-linear-gradient(45deg,rgba(0,0,0,0.05) 0 8px,transparent 8px 16px);
+  border:1.5px dashed rgba(0,0,0,0.25);
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;color:rgba(0,0,0,0.3);
+}
+
+.cluster-nh48{bottom:60%;right:40%;}
+
+/* All four park photos live on the left, hugging the passport card's left
+   edge rather than the far edge of the screen — the card (section 6) is
+   right-aligned, so "left:40px" put the photos in the empty far-left
+   corner, disconnected from the card they're illustrating. Positioned via
+   `right` (not `left`) so the gap to the card stays constant regardless
+   of viewport width, since both the card and the cluster are offset from
+   the same right edge: card's left edge sits at 210px (reserved gutter)
+   + 560px (max card width) = 770px from the right edge, so anchoring the
+   cluster at right:790px leaves a ~20px gap next to the card, with the
+   fan cascading further left (larger right offsets) from there. The
+   right-hand side itself is still off-limits — verified against a live
+   screenshot, that gutter is too narrow and shared with the altimeter. */
+.cluster-parks-left{top:4%;bottom:4%;right:65%;}
+.cluster-parks-left .polaroid:nth-child(1){top:0;right:0;--rot:-6deg;}
+.cluster-parks-left .polaroid:nth-child(2){top:24%;right:130px;--rot:4deg;}
+.cluster-parks-left .polaroid:nth-child(3){top:50%;right:30px;--rot:6deg;}
+.cluster-parks-left .polaroid:nth-child(4){top:74%;right:140px;--rot:-5deg;}
+
+/* Fanned side-by-side (not stacked) and both hugging the section's bottom
+   corner: the altimeter rail's vertical band leaves only a shallow strip
+   clear near the bottom of the section, too shallow for two photos
+   stacked with vertical offset — verified against a live screenshot. */
+.cluster-ballparks{bottom:30%;right:20%;}
+.cluster-ballparks .polaroid:nth-child(1){bottom:0;right:0;--rot:5deg;}
+.cluster-ballparks .polaroid:nth-child(2){bottom:20px;right:165px;--rot:-4deg;}
 
 @media (max-width:760px){
   /* Without scroll-snap-stop, a fast swipe can sail past several cards
