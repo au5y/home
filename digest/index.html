@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Austin's Daily Digest — August 24, 2026</title>
+<style>
+  :root{
+    --bg:#17181C; --wash:#1E2024; --ink:#EDEBE6; --ink-soft:#A6A49B; --ink-grey:#6E6D66;
+    --hairline:#2E3036; --clay:#E0835F; --clay-hover:#EC9A79;
+    --left:#7FB0DE; --right:#E28A7E; --center:#B3AFA1; --official:#8FC79A;
+    --left-bg:rgba(127,176,222,.16); --right-bg:rgba(226,138,126,.16);
+    --center-bg:rgba(179,175,161,.18); --official-bg:rgba(143,199,154,.16);
+  }
+  body.light-mode{
+    --bg:#FCFCFB; --wash:#F9F9F7; --ink:#2E2C27; --ink-soft:#6B6A63; --ink-grey:#B4B3A8;
+    --hairline:#E4E3DC; --clay:#C6613F; --clay-hover:#AE5133;
+    --left:#3B6FA0; --right:#B0473B; --center:#7A7566; --official:#4C7A55;
+    --left-bg:rgba(59,111,160,.12); --right-bg:rgba(176,71,59,.12);
+    --center-bg:rgba(122,117,102,.14); --official-bg:rgba(76,122,85,.13);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    line-height:1.5; transition:background .2s ease, color .2s ease;
+  }
+  .band{padding:28px 20px;}
+  .band.top{background:var(--wash); border-bottom:1px solid var(--hairline);}
+  .wrap{max-width:900px; margin:0 auto;}
+  .date-line{font-size:13px; color:var(--ink-soft); margin-bottom:6px;}
+  h1{
+    font-family:Georgia,"Iowan Old Style","Times New Roman",serif;
+    font-weight:600; font-size:34px; margin:0 0 6px 0; color:var(--ink);
+  }
+  .sub{color:var(--ink-soft); font-size:14px; margin-bottom:20px; max-width:640px;}
+  .filters{display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; align-items:center;}
+  .chip{
+    border:1px solid var(--hairline); background:var(--bg); color:var(--ink-soft);
+    font-size:13px; padding:7px 13px; border-radius:8px; cursor:pointer;
+    font-family:inherit; transition:all .15s ease;
+  }
+  .chip:hover{border-color:var(--clay); color:var(--ink);}
+  .chip.active{background:var(--clay); border-color:var(--clay); color:#17181C;}
+  #themeToggle{
+    border:1px solid var(--hairline); background:var(--bg); color:var(--ink);
+    font-size:13px; padding:7px 13px; border-radius:8px; cursor:pointer;
+    font-family:inherit; white-space:nowrap; margin-left:auto;
+  }
+  #themeToggle:hover{border-color:var(--clay);}
+  section.category{padding:34px 20px; border-bottom:1px solid var(--hairline); scroll-margin-top:16px;}
+  section.category:last-of-type{border-bottom:none;}
+  section.category h2{
+    font-size:12px; text-transform:uppercase; letter-spacing:.09em;
+    color:var(--ink-soft); font-weight:600; margin:0 0 18px 0; scroll-margin-top:16px;
+  }
+  h3.subhead{
+    font-size:15px; font-weight:600; color:var(--ink); margin:26px 0 10px 0; scroll-margin-top:16px;
+  }
+  h3.subhead:first-of-type{margin-top:0;}
+  .story{margin-bottom:16px; padding-bottom:16px; border-bottom:1px solid var(--hairline);}
+  .story:last-child{border-bottom:none; margin-bottom:0; padding-bottom:0;}
+  .story-head{display:flex; justify-content:space-between; align-items:flex-start; gap:14px;}
+  .story-title{flex:1; font-weight:600; font-size:15.5px; margin:0 0 4px 0; color:var(--ink);}
+  .story-body{font-size:14px; color:var(--ink-soft); margin:0;}
+  .source-badge{
+    flex-shrink:0; font-size:11px; font-weight:600; color:var(--ink-soft);
+    border:1px solid var(--hairline); background:var(--bg); padding:3px 9px 3px 8px;
+    border-radius:6px; text-decoration:none; white-space:nowrap; margin-top:1px;
+  }
+  .source-badge:hover{color:var(--clay); border-color:var(--clay);}
+  .tag{
+    display:inline-block; font-size:10.5px; font-weight:600; letter-spacing:.03em;
+    padding:2px 7px; border-radius:5px; margin-left:6px; vertical-align:middle;
+    text-transform:uppercase; position:relative; top:-1px;
+  }
+  .tag.left{background:var(--left-bg); color:var(--left);}
+  .tag.right{background:var(--right-bg); color:var(--right);}
+  .tag.center{background:var(--center-bg); color:var(--center);}
+  .tag.official{background:var(--official-bg); color:var(--official);}
+  .lead{
+    background:var(--wash); border:1px solid var(--hairline); border-radius:10px;
+    padding:18px 20px; margin-bottom:22px;
+  }
+  .lead .story-title{font-size:17px;}
+  a{color:inherit;}
+  footer{padding:26px 20px 90px; text-align:center;}
+  footer p{color:var(--ink-grey); font-size:12.5px; max-width:560px; margin:0 auto;}
+
+  .navbtns{position:fixed; right:18px; bottom:24px; display:flex; flex-direction:column; gap:9px; z-index:50;}
+  .navbtn{
+    width:44px; height:44px; border-radius:50%; background:var(--clay); color:#17181C;
+    border:none; font-size:17px; cursor:pointer; box-shadow:0 3px 10px rgba(0,0,0,.3);
+    display:flex; align-items:center; justify-content:center; font-weight:700;
+  }
+  body.light-mode .navbtn{color:#FCFCFB;}
+  .navbtn:hover{background:var(--clay-hover);}
+  .navbtn:active{transform:scale(.94);}
+
+  @media (max-width:640px){
+    h1{font-size:26px;}
+    .band, section.category{padding-left:16px; padding-right:16px;}
+    .story-head{flex-direction:column; gap:4px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="band top">
+  <div class="wrap">
+    <div class="date-line">Monday · August 24, 2026</div>
+    <h1>Austin's Daily Digest</h1>
+    <div class="sub">Trimmed to the stories that matter, from wire services, major broadcasters/newspapers, and recognized trade press only — no partisan blogs or SEO aggregators. Source badges on the right link to the original. Use the ▲▼ buttons (bottom right) to jump between sections.</div>
+    <div class="filters" id="filters">
+      <button class="chip active" data-cat="all">All</button>
+      <button class="chip" data-cat="world">World &amp; Markets</button>
+      <button class="chip" data-cat="tech">Tech &amp; Software</button>
+      <button class="chip" data-cat="embedded">Embedded &amp; C++</button>
+      <button class="chip" data-cat="sports">Sports</button>
+      <button class="chip" data-cat="politics">Politics</button>
+      <button id="themeToggle">☀ Light mode</button>
+    </div>
+  </div>
+</div>
+
+<section class="category" data-cat="world">
+  <div class="wrap">
+    <h2>World &amp; Markets</h2>
+
+    <div class="lead">
+      <div class="story-head">
+        <p class="story-title">Treasury vows "economic D-Day" on Iran as Hormuz tensions escalate</p>
+        <a class="source-badge" href="https://www.aljazeera.com/news/liveblog/2026/8/24/iran-war-live-iranian-assembly-advances-plans-for-hormuz-service-fees" target="_blank" rel="noopener">Al Jazeera ↗</a>
+      </div>
+      <p class="story-body">Treasury Secretary Scott Bessent is set to unveil sweeping new sanctions meant to "sever every economic lifeline" sustaining Iran, calling the campaign an "economic D-Day" in a Financial Times op-ed. Iran's parliament is advancing legislation to charge vessels a service fee for transiting the Strait of Hormuz and has warned ships that defy its terms could face fines, detention, or confiscation. The UAE suspended trade and financial transactions with Iran last week, and US gas prices are up nearly a dollar year-over-year as Hormuz traffic stays low.</p>
+    </div>
+
+    <h3 class="subhead">Markets</h3>
+    <div class="story">
+      <div class="story-head">
+        <p class="story-title">Futures slide as Iran sanctions and a US-Canada trade blowup hit sentiment</p>
+        <a class="source-badge" href="https://finance.yahoo.com/markets/live/stock-market-today-monday-august-24-dow-sp-500-nasdaq-080306047.html" target="_blank" rel="noopener">Yahoo Finance ↗</a>
+      </div>
+      <p class="story-body">Nasdaq futures fell 0.7% and the S&amp;P 500 dipped 0.2% to start the week. US-Canada trade talks collapsed over the weekend, prompting new US tariffs on Canadian goods; PM Mark Carney suspended talks and pledged matching retaliation.</p>
+    </div>
+    <div class="story">
+      <div class="story-head">
+        <p class="story-title">Nvidia earnings and the Fed's Jackson Hole symposium headline the week ahead</p>
+        <a class="source-badge" href="https://finance.yahoo.com/markets/live/stock-market-today-monday-august-24-dow-sp-500-nasdaq-080306047.html" target="_blank" rel="noopener">Yahoo Finance ↗</a>
+      </div>
+      <p class="story-body">Nvidia reports Wednesday — a bellwether for the AI trade that's been driving much of this year's market performance — alongside the Fed's closely watched Jackson Hole gathering.</p>
+    </div>
+  </div>
+</section>
+
+<section class="category" data-cat="tech">
+  <div class="wrap">
+    <h2>Software &amp; Tech</h2>
+
+    <div class="story">
+      <div class="story-head">
+        <p class="story-title">Uber faces nearly $1B in fines over automated driver suspensions</p>
+        <a class="source-badge" href="https://techcrunch.com/" target="_blank" rel="noopener">TechCrunch ↗</a>
+      </div>
+      <p class="story-body">Regulators are targeting Uber's automated system for suspending drivers, with penalties approaching a billion dollars.</p>
+    </div>
+    <div class="story">
+      <div class="story-head">
+        <p class="story-title">A mystery stealth AI model, "Ox Alpha," surfaces</p>
+        <a class="source-badge" href="https://techcrunch.com/" target="_blank" rel="noopener">TechCrunch ↗</a>
+      </div>
+      <p class="story-body">A new model appeared with no public details about who built it, fueling speculation across the AI community.</p>
+    </div>
+    <div class="story">
+      <div class="story-head">
+        <p class="story-title">DOJ examines a16z's board-seat practices</p>
+        <a class="source-badge" href="https://techcrunch.com/" target="_blank" rel="noopener">TechCrunch ↗</a>
+      </div>
+      <p class="story-body">Federal investigators are reviewing whether the venture firm's approach to board seats across portfolio companies raises antitrust concerns.</p>
+    </div>
+    <div class="story">
+      <div class="story-head">
+        <p class="story-title">Waymo unveils its own custom robotaxi chip</p>
+        <a class="source-badge" href="https://techcrunch.com/" target="_blank" rel="noopener">TechCrunch ↗</a>
+      </div>
+      <p class="story-body">A proprietary semiconductor marks a strategic step for the self-driving unit as it looks to control more of its own hardware stack.</p>
+    </div>
+  </div>
+</section>
+
+<section class="category" data-cat="embedded">
+  <div class="wrap">
+    <h2>Embedded World &amp; C++</h2>
+
+    <div class="lead">
+      <div class="story-head">
+        <p class="story-title">C++26 is technically complete — the "Fab Four" land</p>
+        <a class="source-badge" href="https://herbsutter.com/2026/03/29/c26-is-done-trip-report-march-2026-iso-c-standards-meeting-london-croydon-uk/" target="_blank" rel="noopener">Herb Sutter ↗</a>
+      </div>
+      <p class="story-body">The ISO committee finished C++26 in March and it's heading toward publication. Compile-time <strong>reflection</strong> is the headline feature — Sutter calls it "the most transformative turning point in the language's history." Alongside it: a <strong>hardened standard library</strong> adding bounds safety to vector/span/string (Google reports 1,000+ bugs fixed and a 30% segfault reduction), <strong>contracts</strong> (passed 114–12), and <strong>std::execution</strong>, a unified async/concurrency model. GCC and Clang already implement large parts of it.</p>
+    </div>
+
+    <h3 class="subhead">Hardware notes</h3>
+    <div class="story">
+      <div class="story-head">
+        <p class="story-title">Espressif previews Linux support for its RISC-V ESP32</p>
+        <a class="source-badge" href="https://www.cnx-software.com/" target="_blank" rel="noopener">CNX Software ↗</a>
+      </div>
+      <p class="story-body">A developer preview brings a Linux BSP to the dual-core RISC-V chip's MMU-equipped variant — notable for embedded devs who've wanted a fuller OS on Espressif silicon.</p>
+    </div>
+    <div class="story">
+      <div class="story-head">
+        <p class="story-title">AAEON's uCOM-Q6490 targets robotics and industrial gear</p>
+        <a class="source-badge" href="https://www.cnx-software.com/" target="_blank" rel="noopener">CNX Software ↗</a>
+      </div>
+      <p class="story-body">A new SMARC 2.1 module built on Qualcomm's Dragonwing QCS6490 SoC, aimed at robotics and industrial automation designs.</p>
+    </div>
+    <div class="story">
+      <div class="story-head">
+        <p class="story-title">Linux 7.2 ships with a batch of embedded-relevant driver fixes</p>
+        <a class="source-badge" href="https://www.cnx-software.com/" target="_blank" rel="noopener">CNX Software ↗</a>
+      </div>
+      <p class="story-body">The new kernel brings architecture improvements and numerous driver fixes across ARM, RISC-V, and MIPS platforms.</p>
+    </div>
+  </div>
+</section>
+
+<section class="category" data-cat="sports">
+  <div class="wrap">
+    <h2>Sports</h2>
+
+    <h3 class="subhead">⚾ Baseball (MLB)</h3>
+    <div class="story">
+      <div class="story-head">
+        <p class="story-title">Dodgers, Cubs, Phillies surging as wild-card races tighten</p>
+        <a class="source-badge" href="https://www.foxsports.com/stories/mlb/mlb-postseason-wild-card-playoffs-standings-2026" target="_blank" rel="noopener">Fox Sports ↗</a>
+      </div>
+      <p class="story-body">LA blew its NL West lead back open to 8 games with an 11-5 win over Colorado, the Cubs have ridden Pete Crow-Armstrong's MVP-caliber season to back-to-back 10-game win streaks, and the Phillies are chasing Atlanta in the NL East. The real chaos is the AL Wild Card, where Texas, Detroit, Minnesota, and Cleveland are packed within 1.5 games of each other.</p>
+    </div>
+
+    <h3 class="subhead">⚾ SF Giants</h3>
+    <div class="story">
+      <div class="story-head">
+        <p class="story-title">Tidwell shines in MLB debut, but bullpen blows it in a walk-off loss</p>
+        <a class="source-badge" href="https://www.mlb.com/giants/news" target="_blank" rel="noopener">MLB.com ↗</a>
+      </div>
+      <p class="story-body">Blade Tidwell impressed in his debut start, but the Red Sox walked it off 3-2. Willy Adames hit his 200th career home run (20th of the season) in a 5-2 loss to Cleveland, and former Giant Rafael Devers homered in his return to Fenway against his old team.</p>
+    </div>
+
+    <h3 class="subhead">🏒 PWHL Boston Fleet</h3>
+    <div class="story">
+      <div class="story-head">
+        <p class="story-title">Off-season community push while the roster takes shape</p>
+        <a class="source-badge" href="https://www.thepwhl.com/en/teams/boston-fleet/news" target="_blank" rel="noopener">PWHL.com ↗</a>
+      </div>
+      <p class="story-body">With the season still weeks away, Shay Maloney and Amanda Boulier spent time in Boston Harbor learning to sail with USA Sailing, and Maloney joined a Dorchester backpack drive with the Corey C. Griffin Foundation. On the roster side, 10th overall pick Grace Dwyer becomes the first ECAC defender the club has drafted.</p>
+    </div>
+
+    <h3 class="subhead">⚽ Women's Soccer (general)</h3>
+    <div class="story">
+      <div class="story-head">
+        <p class="story-title">NWSL sees its latest goal ever — a 97th-minute penalty</p>
+        <a class="source-badge" href="https://www.boston.com/sports/boston-legacy-football-club/2026/08/22/boston-legacy-north-carolina-courage/" target="_blank" rel="noopener">Boston.com ↗</a>
+      </div>
+      <p class="story-body">Ashley Sanchez's stoppage-time penalty for North Carolina set the record for the latest goal in NWSL history, a reminder of how tight this year's playoff races are league-wide.</p>
+    </div>
+    <div class="story">
+      <div class="story-head">
+        <p class="story-title">Sam Kerr is heading back to the NWSL</p>
+        <a class="source-badge" href="https://www.espn.com/soccer/league/_/name/usa.nwsl" target="_blank" rel="noopener">ESPN ↗</a>
+      </div>
+      <p class="story-body">The Australian star agreed to rejoin Gotham FC after her stint at Chelsea, one of the league's bigger offseason storylines heading into the playoff stretch.</p>
+    </div>
+
+    <h3 class="subhead">⚽ Boston Legacy FC</h3>
+    <div class="story">
+      <div class="story-head">
+        <p class="story-title">Heartbreaker in Cary: Legacy fall 2-1 on that record-late goal</p>
+        <a class="source-badge" href="https://www.boston.com/sports/boston-legacy-football-club/2026/08/22/boston-legacy-north-carolina-courage/" target="_blank" rel="noopener">Boston.com ↗</a>
+      </div>
+      <p class="story-body">Boston had just equalized through Aïssata Traoré in the 92nd minute before North Carolina's 97th-minute penalty won it. It's the expansion club's third straight loss, dropping them to 5-11-5 (20 points) despite controlling 51% possession and six saves from Casey Murphy. They host Angel City at Gillette Stadium on August 31, looking to turn it around.</p>
+    </div>
+
+    <h3 class="subhead">🏈 NFL (light touch)</h3>
+    <div class="story">
+      <div class="story-head">
+        <p class="story-title">Roster-cut season is here</p>
+        <a class="source-badge" href="https://sports.yahoo.com/articles/nfl-announces-change-53-man-115521311.html" target="_blank" rel="noopener">Yahoo Sports ↗</a>
+      </div>
+      <p class="story-body">Teams are trimming to the 53-man limit ahead of the season — the usual late-August churn of camp battles and roster bubble decisions.</p>
+    </div>
+  </div>
+</section>
+
+<section class="category" data-cat="politics">
+  <div class="wrap">
+    <h2>Politics — National, Massachusetts &amp; Reno</h2>
+
+    <h3 class="subhead">National</h3>
+    <div class="story">
+      <div class="story-head">
+        <p class="story-title">Iran sanctions and the US-Canada trade rift are the dominant storylines</p>
+        <a class="source-badge" href="https://www.aljazeera.com/news/liveblog/2026/8/24/iran-war-live-iranian-assembly-advances-plans-for-hormuz-service-fees" target="_blank" rel="noopener">Al Jazeera ↗</a>
+      </div>
+      <p class="story-body">See World &amp; Markets above — both the Iran sanctions push and the collapsed US-Canada trade talks are drawing sharply different reactions depending on outlet; worth reading more than one source on either.</p>
+    </div>
+
+    <h3 class="subhead">Massachusetts &amp; Boston</h3>
+    <div class="story">
+      <div class="story-head">
+        <p class="story-title">GOP primary for governor heats up ahead of Sept. 1 <span class="tag center">Center</span></p>
+        <a class="source-badge" href="https://www.wbur.org/news/2026/08/10/governor-race-mike-minogue-brian-shortsleeve-gop-candidates-issues" target="_blank" rel="noopener">WBUR ↗</a>
+      </div>
+      <p class="story-body">Mike Minogue and Brian Shortsleeve are competing to challenge Gov. Healey. Both back tax cuts and oppose tariffs, but split on abortion — Shortsleeve is pro-choice, Minogue opposes abortion but hasn't detailed a policy stance — and on campaign funding: Minogue has $8.1M on hand to Shortsleeve's $527K.</p>
+    </div>
+    <div class="story">
+      <div class="story-head">
+        <p class="story-title">Healey's abortion law and Beacon Hill's MassHealth watch <span class="tag official">Official / Center</span></p>
+        <a class="source-badge" href="https://www.wbur.org/news/2026/08/11/gov-healey-abortion-24-weeks-massachusetts-law" target="_blank" rel="noopener">WBUR ↗</a>
+      </div>
+      <p class="story-body">Healey's law easing late-pregnancy abortion rules, signed August 10, continues to draw debate. Separately, the state is watching for MassHealth budget fallout as Beacon Hill's legislative session moves into its final stretch, with Healey positioning herself as the legislature's chief defender.</p>
+    </div>
+
+    <h3 class="subhead">Reno &amp; Nevada</h3>
+    <div class="story">
+      <div class="story-head">
+        <p class="story-title">Homelessness is rising sharply in Clark County</p>
+        <a class="source-badge" href="https://thenevadaindependent.com/" target="_blank" rel="noopener">Nevada Independent ↗</a>
+      </div>
+      <p class="story-body">Nearly 60% of Clark County's homeless population is now unsheltered, part of a statewide rise in homelessness.</p>
+    </div>
+    <div class="story">
+      <div class="story-head">
+        <p class="story-title">Lombardo is investing heavily in Latino outreach for 2026</p>
+        <a class="source-badge" href="https://thenevadaindependent.com/" target="_blank" rel="noopener">Nevada Independent ↗</a>
+      </div>
+      <p class="story-body">The governor is putting real money into courting Latino voters ahead of what's expected to be a highly competitive re-election race.</p>
+    </div>
+    <div class="story">
+      <div class="story-head">
+        <p class="story-title">Other Nevada threads</p>
+        <a class="source-badge" href="https://thenevadaindependent.com/" target="_blank" rel="noopener">Nevada Independent ↗</a>
+      </div>
+      <p class="story-body">Las Vegas water regulators are fining heavy water users $9 per 1,000 gallons over seasonal limits, drawing legal challenges; the Trump administration walked back a claim of 16,000 noncitizen voters in Nevada down to 185 potential cases; and a federal appeals court has upheld its ruling that Sigal Chattah's US attorney appointment violated federal law.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Built for Austin · sourced only from wire services, major broadcasters/newspapers, official releases, and recognized trade press — no partisan blogs or SEO aggregators. Tell me anytime to add a category, drop one, go deeper on a team, or change the political balance — this refreshes daily.</p>
+</footer>
+
+<div class="navbtns">
+  <button class="navbtn" id="navUp" title="Previous section">▲</button>
+  <button class="navbtn" id="navDown" title="Next section">▼</button>
+</div>
+
+<script>
+  const chips = document.querySelectorAll('.chip');
+  const sections = document.querySelectorAll('section.category');
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const cat = chip.dataset.cat;
+      sections.forEach(sec => {
+        sec.style.display = (cat === 'all' || sec.dataset.cat === cat) ? '' : 'none';
+      });
+    });
+  });
+
+  const themeToggle = document.getElementById('themeToggle');
+  themeToggle.addEventListener('click', () => {
+    const isLight = document.body.classList.toggle('light-mode');
+    themeToggle.textContent = isLight ? '● Dark mode' : '☀ Light mode';
+  });
+
+  function getNavpoints(){
+    return Array.from(document.querySelectorAll('section.category h2, section.category h3.subhead'))
+      .filter(el => el.offsetParent !== null);
+  }
+  document.getElementById('navDown').addEventListener('click', () => {
+    const pts = getNavpoints();
+    const here = window.scrollY + 24;
+    const next = pts.find(el => el.getBoundingClientRect().top + window.scrollY > here);
+    if(next) next.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+  document.getElementById('navUp').addEventListener('click', () => {
+    const pts = getNavpoints();
+    const here = window.scrollY - 24;
+    const prevMatches = pts.filter(el => el.getBoundingClientRect().top + window.scrollY < here);
+    const prev = prevMatches[prevMatches.length - 1];
+    if(prev) prev.scrollIntoView({behavior:'smooth', block:'start'});
+    else window.scrollTo({top:0, behavior:'smooth'});
+  });
+</script>
+
+</body>
+</html>
