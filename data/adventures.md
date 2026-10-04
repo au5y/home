@@ -184,7 +184,7 @@ Here are some of the adventures I'm on.
 - [ ] South Carter Mountain
 - [ ] Wildcat Mountain (A Peak)
 - [ ] Mount Hancock
-- [ ] South Kinsman Mountain
+- [x] South Kinsman Mountain
 - [ ] Mount Field
 - [ ] Mount Osceola
 - [x] Mount Flume
@@ -198,7 +198,7 @@ Here are some of the adventures I'm on.
 - [ ] Mount Cabot
 - [ ] East Osceola
 - [ ] Middle Tripyramid
-- [ ] Cannon Mountain
+- [x] Cannon Mountain
 - [ ] Mount Hale
 - [ ] Mount Jackson
 - [ ] Mount Tom
