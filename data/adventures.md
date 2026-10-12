@@ -182,7 +182,7 @@ Here are some of the adventures I'm on.
 - [x] Mount Garfield
 - [x] Mount Liberty
 - [ ] South Carter Mountain
-- [ ] Wildcat Mountain (A Peak)
+- [x] Wildcat Mountain (A Peak)
 - [ ] Mount Hancock
 - [x] South Kinsman Mountain
 - [ ] Mount Field
@@ -195,14 +195,14 @@ Here are some of the adventures I'm on.
 - [ ] Bondcliff
 - [ ] Zealand Mountain
 - [ ] North Tripyramid
-- [ ] Mount Cabot
+- [x] Mount Cabot
 - [ ] East Osceola
 - [ ] Middle Tripyramid
 - [x] Cannon Mountain
 - [ ] Mount Hale
 - [ ] Mount Jackson
 - [ ] Mount Tom
-- [ ] Wildcat D
+- [x] Wildcat D
 - [ ] Mount Moriah
 - [x] Mount Passaconaway
 - [ ] Owl's Head
